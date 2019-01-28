@@ -1,77 +1,77 @@
 <template>
   <div class="page">
     <div>
-      ´´½¨·ÖÖ§£º $ git branch mybranch
-      ÇĞ»»·ÖÖ§£º $ git checkout mybranch
-      ´´½¨²¢ÇĞ»»·ÖÖ§£º $ git checkout -b mybranch
-      ¸üĞÂmasterÖ÷ÏßÉÏµÄ¶«Î÷µ½¸Ã·ÖÖ§ÉÏ£º$git rebase master
-      ÇĞ»»µ½master·ÖÖ§£º$git checkout master
-      ¸üĞÂmybranch·ÖÖ§ÉÏµÄ¶«Î÷µ½masterÉÏ£º$git rebase mybranch
-      Ìá½»£ºgit commit -a
-      ¶Ô×î½üÒ»´ÎcommitµÄ½øĞĞĞŞ¸Ä£ºgit commit -a ¨Camend
-      commitÖ®ºó£¬Èç¹ûÏë³·Ïú×î½üÒ»´ÎÌá½»(¼´ÍË»Øµ½ÉÏÒ»´Î°æ±¾)²¢±¾µØ±£Áô´úÂë£ºgit reset HEAD^
-      ºÏ²¢·ÖÖ§£º(merge from) $ git checkout master
+      åˆ›å»ºåˆ†æ”¯ï¼š $ git branch mybranch
+      åˆ‡æ¢åˆ†æ”¯ï¼š $ git checkout mybranch
+      åˆ›å»ºå¹¶åˆ‡æ¢åˆ†æ”¯ï¼š $ git checkout -b mybranch
+      æ›´æ–°masterä¸»çº¿ä¸Šçš„ä¸œè¥¿åˆ°è¯¥åˆ†æ”¯ä¸Šï¼š$git rebase master
+      åˆ‡æ¢åˆ°masteråˆ†æ”¯ï¼š$git checkout master
+      æ›´æ–°mybranchåˆ†æ”¯ä¸Šçš„ä¸œè¥¿åˆ°masterä¸Šï¼š$git rebase mybranch
+      æäº¤ï¼šgit commit -a
+      å¯¹æœ€è¿‘ä¸€æ¬¡commitçš„è¿›è¡Œä¿®æ”¹ï¼šgit commit -a â€“amend
+      commitä¹‹åï¼Œå¦‚æœæƒ³æ’¤é”€æœ€è¿‘ä¸€æ¬¡æäº¤(å³é€€å›åˆ°ä¸Šä¸€æ¬¡ç‰ˆæœ¬)å¹¶æœ¬åœ°ä¿ç•™ä»£ç ï¼šgit reset HEAD^
+      åˆå¹¶åˆ†æ”¯ï¼š(merge from) $ git checkout master
       $ git merge mybranch (merge from mybranch)
-      É¾³ı·ÖÖ§£º $ git branch -d mybranch
-      Ç¿ÖÆÉ¾³ı·ÖÖ§£º $ git branch -D mybranch
-      ÁĞ³öËùÓĞ·ÖÖ§£º $ git branch
-      ²é¿´¸÷¸ö·ÖÖ§×îºóÒ»´ÎÌá½»£º $ git branch -v
-      ²é¿´ÄÄĞ©·ÖÖ§ºÏ²¢Èëµ±Ç°·ÖÖ§£º $ git branch ¨Cmerged
-      ²é¿´ÄÄĞ©·ÖÖ§Î´ºÏ²¢Èëµ±Ç°·ÖÖ§£º $ git branch ¨Cno-merged
-      ¸üĞÂÔ¶³Ì¿âµ½±¾µØ£º $ git fetch origin
-      ÍÆËÍ·ÖÖ§£º $ git push origin mybranch
-      È¡Ô¶³Ì·ÖÖ§ºÏ²¢µ½±¾µØ£º $ git merge origin/mybranch
-      È¡Ô¶³Ì·ÖÖ§²¢·Ö»¯Ò»¸öĞÂ·ÖÖ§£º $ git checkout -b mybranch origin/mybranch
-      É¾³ıÔ¶³Ì·ÖÖ§£º $ git push origin :mybranch
-      1 °ÑÄ¿Â¼±ä³ÉGit¿ÉÒÔ¹ÜÀíµÄ²Ö¿â git init
-      2 °ÑÔ¶³Ì·ÖÖ§¿ËÂ¡µ½±¾µØ git clone http://qiyue@git.vanke.com/VBIM-webApp/bimPlus.git
-      3 ²é¿´±¾µØ·ÖÖ§ git branch
-      4 ²é¿´±¾µØÓëÔ¶³Ì²Ö¿âµÄËùÓĞ·ÖÖ§ git branch -a
-      5 ÇĞ»»·ÖÖ§ git checkout v0.3.2
-      6 ´´½¨²¢ÇĞ»»·ÖÖ§ git checkout -b 'v0.3.3'
-      7 ¸üĞÂÔ¶³Ì·ÖÖ§µ½±¾µØ²¢É¾³ı±¾µØ´æÔÚÔ¶³Ì²»´æÔÚµÄ·ÖÖ§ git fetch -p
-      8 À­È¡Ô¶³Ì·ÖÖ§´úÂë git pull origin v0.3.2
-      9 ²é¿´¸Ä¶¯µÄËùÓĞÎÄ¼ş git status
-      10 ½«Ö¸¶¨ÎÄ¼şÌí¼Óµ½±¾µØ²Ö¿â git add .|| git add readme.txt
-      11 git commit -m 'Ìá½»×¢ÊÍ'
-      12 °Ñ±¾µØ²Ö¿â´úÂëÍÆËÍµ½Ô¶³Ì·ÖÖ§ git push origin v0.3.2
-      13 É¾³ı±¾µØ·ÖÖ§ git branch -d v0.3.0
-      14 É¾³ıÔ¶³Ì·ÖÖ§ git push origin :v0.3.3
-      15 µ±Ç°·ÖÖ§ºÏ²¢µ½Ö¸¶¨·ÖÖ§ git merge v0.3.4
-      16 ²é¿´Ìá½»ÀúÊ· git log --oneline
-      17 ²é¿´ÃüÁîÀúÊ· git reflog
-      18 »Ø¹öµ½Ö¸¶¨µÄ°æ±¾ git reset 937dd8e --hard
-      Ìá½»´úÂëµ½Ô¶³Ì²Ö¿â
+      åˆ é™¤åˆ†æ”¯ï¼š $ git branch -d mybranch
+      å¼ºåˆ¶åˆ é™¤åˆ†æ”¯ï¼š $ git branch -D mybranch
+      åˆ—å‡ºæ‰€æœ‰åˆ†æ”¯ï¼š $ git branch
+      æŸ¥çœ‹å„ä¸ªåˆ†æ”¯æœ€åä¸€æ¬¡æäº¤ï¼š $ git branch -v
+      æŸ¥çœ‹å“ªäº›åˆ†æ”¯åˆå¹¶å…¥å½“å‰åˆ†æ”¯ï¼š $ git branch â€“merged
+      æŸ¥çœ‹å“ªäº›åˆ†æ”¯æœªåˆå¹¶å…¥å½“å‰åˆ†æ”¯ï¼š $ git branch â€“no-merged
+      æ›´æ–°è¿œç¨‹åº“åˆ°æœ¬åœ°ï¼š $ git fetch origin
+      æ¨é€åˆ†æ”¯ï¼š $ git push origin mybranch
+      å–è¿œç¨‹åˆ†æ”¯åˆå¹¶åˆ°æœ¬åœ°ï¼š $ git merge origin/mybranch
+      å–è¿œç¨‹åˆ†æ”¯å¹¶åˆ†åŒ–ä¸€ä¸ªæ–°åˆ†æ”¯ï¼š $ git checkout -b mybranch origin/mybranch
+      åˆ é™¤è¿œç¨‹åˆ†æ”¯ï¼š $ git push origin :mybranch
+      1 æŠŠç›®å½•å˜æˆGitå¯ä»¥ç®¡ç†çš„ä»“åº“ git init
+      2 æŠŠè¿œç¨‹åˆ†æ”¯å…‹éš†åˆ°æœ¬åœ° git clone http://qiyue@git.vanke.com/VBIM-webApp/bimPlus.git
+      3 æŸ¥çœ‹æœ¬åœ°åˆ†æ”¯ git branch
+      4 æŸ¥çœ‹æœ¬åœ°ä¸è¿œç¨‹ä»“åº“çš„æ‰€æœ‰åˆ†æ”¯ git branch -a
+      5 åˆ‡æ¢åˆ†æ”¯ git checkout v0.3.2
+      6 åˆ›å»ºå¹¶åˆ‡æ¢åˆ†æ”¯ git checkout -b 'v0.3.3'
+      7 æ›´æ–°è¿œç¨‹åˆ†æ”¯åˆ°æœ¬åœ°å¹¶åˆ é™¤æœ¬åœ°å­˜åœ¨è¿œç¨‹ä¸å­˜åœ¨çš„åˆ†æ”¯ git fetch -p
+      8 æ‹‰å–è¿œç¨‹åˆ†æ”¯ä»£ç  git pull origin v0.3.2
+      9 æŸ¥çœ‹æ”¹åŠ¨çš„æ‰€æœ‰æ–‡ä»¶ git status
+      10 å°†æŒ‡å®šæ–‡ä»¶æ·»åŠ åˆ°æœ¬åœ°ä»“åº“ git add .|| git add readme.txt
+      11 git commit -m 'æäº¤æ³¨é‡Š'
+      12 æŠŠæœ¬åœ°ä»“åº“ä»£ç æ¨é€åˆ°è¿œç¨‹åˆ†æ”¯ git push origin v0.3.2
+      13 åˆ é™¤æœ¬åœ°åˆ†æ”¯ git branch -d v0.3.0
+      14 åˆ é™¤è¿œç¨‹åˆ†æ”¯ git push origin :v0.3.3
+      15 å½“å‰åˆ†æ”¯åˆå¹¶åˆ°æŒ‡å®šåˆ†æ”¯ git merge v0.3.4
+      16 æŸ¥çœ‹æäº¤å†å² git log --oneline
+      17 æŸ¥çœ‹å‘½ä»¤å†å² git reflog
+      18 å›æ»šåˆ°æŒ‡å®šçš„ç‰ˆæœ¬ git reset 937dd8e --hard
+      æäº¤ä»£ç åˆ°è¿œç¨‹ä»“åº“
       git init
       git add README.md
       git commit -m "first commit"
       git remote add origin https://github.com/huanggg/react.git
       git push -u origin master
-      Git ºÏ²¢Ô¶³Ì·ÖÖ§
-      ÓĞµÄÊ±ºòÎÒÃÇĞèÒª¸ú±ğÈËºÏ×÷½øĞĞ¿ª·¢£¬È»ºó·Ö±ğÊ¹ÓÃ²»Í¬µÄGit·ÖÖ§£¬µÈÏîÄ¿Íê³ÉÊ±£¬
-      ĞèÒª½øĞĞ´úÂëºÏ²¢£¬¾ÍĞèÒªÖªµÀGitÈçºÎºÏ²¢Ô¶³Ì·ÖÖ§¡£
-      ²½Öè
-      µÚÒ»²½ ÇĞ»»µ½·ÖÖ§b
+      Git åˆå¹¶è¿œç¨‹åˆ†æ”¯
+      æœ‰çš„æ—¶å€™æˆ‘ä»¬éœ€è¦è·Ÿåˆ«äººåˆä½œè¿›è¡Œå¼€å‘ï¼Œç„¶ååˆ†åˆ«ä½¿ç”¨ä¸åŒçš„Gitåˆ†æ”¯ï¼Œç­‰é¡¹ç›®å®Œæˆæ—¶ï¼Œ
+      éœ€è¦è¿›è¡Œä»£ç åˆå¹¶ï¼Œå°±éœ€è¦çŸ¥é“Gitå¦‚ä½•åˆå¹¶è¿œç¨‹åˆ†æ”¯ã€‚
+      æ­¥éª¤
+      ç¬¬ä¸€æ­¥ åˆ‡æ¢åˆ°åˆ†æ”¯b
       git checkout b
-      ¸ÃÖ¸ÁîµÄÒâË¼£º´´½¨Ò»¸ö±¾µØ·ÖÖ§£¬²¢½«Ô¶³Ì·ÖÖ§·Åµ½¸Ã·ÖÖ§ÀïÃæÈ¥¡£
-      µÚ¶ş²½ ½«Ô¶³Ì´úÂëpullµ½±¾µØ
+      è¯¥æŒ‡ä»¤çš„æ„æ€ï¼šåˆ›å»ºä¸€ä¸ªæœ¬åœ°åˆ†æ”¯ï¼Œå¹¶å°†è¿œç¨‹åˆ†æ”¯æ”¾åˆ°è¯¥åˆ†æ”¯é‡Œé¢å»ã€‚
+      ç¬¬äºŒæ­¥ å°†è¿œç¨‹ä»£ç pullåˆ°æœ¬åœ°
       git pull origin b
-      µÚÈı²½ ·µ»Øµ½ÄãµÄ·ÖÖ§a
+      ç¬¬ä¸‰æ­¥ è¿”å›åˆ°ä½ çš„åˆ†æ”¯a
       git checkout a
-      µÚËÄ²½ ºÏ²¢·ÖÖ§aÓë·ÖÖ§b
+      ç¬¬å››æ­¥ åˆå¹¶åˆ†æ”¯aä¸åˆ†æ”¯b
       git merge b
-      ¸ÃÖ¸ÁîµÄÒâË¼£ºµ±Ç°ËùÔÚ·ÖÖ§Óëb½øĞĞºÏ²¢¡£
-      µÚÎå²½ °Ñ±¾µØµÄ·ÖÖ§aÍ¬²½µ½Ô¶³Ì
+      è¯¥æŒ‡ä»¤çš„æ„æ€ï¼šå½“å‰æ‰€åœ¨åˆ†æ”¯ä¸bè¿›è¡Œåˆå¹¶ã€‚
+      ç¬¬äº”æ­¥ æŠŠæœ¬åœ°çš„åˆ†æ”¯aåŒæ­¥åˆ°è¿œç¨‹
       git push origin a
-      Git ·ÖÖ§
-      Git À­È¥´úÂëµÄÁ÷³Ì
-      Çé¾°Ò»£ººÏ²¢Ö÷·ÖÖ§´úÂë
+      Git åˆ†æ”¯
+      Git æ‹‰å»ä»£ç çš„æµç¨‹
+      æƒ…æ™¯ä¸€ï¼šåˆå¹¶ä¸»åˆ†æ”¯ä»£ç 
       Git fetch -p
       Git pull origin v3.0
       Git checkout v0.3.2
       Git merge v3.0
-      Çé¾°¶ş£ºĞ­×÷¹ı³ÌÖĞºÏ²¢¶Ô·½´úÂë
-      1¡¢±¾µØµÄ´úÂëÏÈÌá½»
+      æƒ…æ™¯äºŒï¼šåä½œè¿‡ç¨‹ä¸­åˆå¹¶å¯¹æ–¹ä»£ç 
+      1ã€æœ¬åœ°çš„ä»£ç å…ˆæäº¤
       Git add .
       Git commit -m 'add the new page'
       Git push origin v0.3.2
@@ -79,14 +79,14 @@
       Git pull origin v0.3.0
       Git checkout v0.3.2
       Git merge v0.3.0
-      2¡¢±¾µØµÄ´úÂë²»Ìá½»
+      2ã€æœ¬åœ°çš„ä»£ç ä¸æäº¤
       Git stash
       Git checkout elaine-v3
       Git pull origin felaine-v3
       Git checkout kun-v3
       Git merge elaine-v3
       Git stash pop
-      Çé¾°Èı£º´úÂëºÏ²¢µ½Ö÷·ÖÖ§
+      æƒ…æ™¯ä¸‰ï¼šä»£ç åˆå¹¶åˆ°ä¸»åˆ†æ”¯
       Git add .
       Git commit -m 'modal A complate'
       Git push origin kun-v3
@@ -94,15 +94,15 @@
       Git pull origin v3
       Git merge kun-v3
       Git push origin v3
-      Git Ìá½»Ê±»ú
-      Ã¿ÌìÔçÉÏ¿ªÊ¼¹¤×÷Ç°£¬ÏÈÀ­È¥ºÏ²¢µÄ´úÂë
-      ÏÂ°àÇ°£¬±ØĞëÌá½»±¾µØ´úÂë
-      Íê³ÉÒ»¸ö¹¦ÄÜ£¬»òÕßÒ»¸öÄ£¿é£¬£¨×îµÍ±ê×¼¾ÍÊÇÔËĞĞÃ»ÓĞÎÊÌâ£¬²»»áÓ°ÏìÆäËûÄ£¿éµÄ
-      Çé¿öÏÂ£©ºÏ²¢µ½Ö÷·ÖÖ§
-      ±£Ö¤´úÂëÔÚÍÆÉÏÈ¥Ö®Ç°½â¾öÁË eslint µÄ¾¯¸æÎÊÌâ
-      Commit ¼òÒªµÄĞ´´Ë´ÎµÄÌá½»ĞÅÏ¢
+      Git æäº¤æ—¶æœº
+      æ¯å¤©æ—©ä¸Šå¼€å§‹å·¥ä½œå‰ï¼Œå…ˆæ‹‰å»åˆå¹¶çš„ä»£ç 
+      ä¸‹ç­å‰ï¼Œå¿…é¡»æäº¤æœ¬åœ°ä»£ç 
+      å®Œæˆä¸€ä¸ªåŠŸèƒ½ï¼Œæˆ–è€…ä¸€ä¸ªæ¨¡å—ï¼Œï¼ˆæœ€ä½æ ‡å‡†å°±æ˜¯è¿è¡Œæ²¡æœ‰é—®é¢˜ï¼Œä¸ä¼šå½±å“å…¶ä»–æ¨¡å—çš„
+      æƒ…å†µä¸‹ï¼‰åˆå¹¶åˆ°ä¸»åˆ†æ”¯
+      ä¿è¯ä»£ç åœ¨æ¨ä¸Šå»ä¹‹å‰è§£å†³äº† eslint çš„è­¦å‘Šé—®é¢˜
+      Commit ç®€è¦çš„å†™æ­¤æ¬¡çš„æäº¤ä¿¡æ¯
     </div>
-    <!-- ·ÖÒ³ -->
+    <!-- åˆ†é¡µ -->
     <div class="pagination">
       <pagination
         @size-change="handleSizeChange"
@@ -141,19 +141,19 @@
 export default {
   data () {
     return {
-      /* ·ÖÒ³ */
+      /* åˆ†é¡µ */
       pageInfo: {
-        // Ò³Âë
+        // é¡µç 
         page: 1,
-        // Ã¿Ò³ÏÔÊ¾µÄÌõÊı
+        // æ¯é¡µæ˜¾ç¤ºçš„æ¡æ•°
         limit: 20,
-        // ×Ü¹²µÄÌõÊı
+        // æ€»å…±çš„æ¡æ•°
         total: 100
       },
-      // ±à¼­ĞŞ¸ÄÊ±Ä¬ÈÏµÄÑ¡ÖĞÏî
+      // ç¼–è¾‘ä¿®æ”¹æ—¶é»˜è®¤çš„é€‰ä¸­é¡¹
       default_checked_keys: [],
       default_expanded_keys: [],
-      // ±à¼­ĞŞ¸ÄÊ±Ä¬ÈÏµÄÑ¡ÖĞÏî
+      // ç¼–è¾‘ä¿®æ”¹æ—¶é»˜è®¤çš„é€‰ä¸­é¡¹
       AddRoles: [],
       defaultProps: {
         children: 'chirlds',
@@ -174,7 +174,7 @@ export default {
       if (node.level >= 3) { return resolve([]) }
       if (node.data.type === 'BUILD') {
         if (node.data.children) {
-          // ½á¹¹Ê÷Â¥²ã½Ó¿Ú
+          // ç»“æ„æ ‘æ¥¼å±‚æ¥å£
           axios('/page/project/floor/list', params, 'POST').then(res => {
             if (res.data.resultCode === '0000') {
               node.data.children = res.data.data
@@ -204,7 +204,7 @@ export default {
         })
       }
     },
-    // À­È¡½á¹¹Ê÷
+    // æ‹‰å–ç»“æ„æ ‘
     tree () {
       const params = {
         productId: this.id
@@ -228,7 +228,7 @@ export default {
         }
       })
     },
-    // ¹´Ñ¡½á¹¹Ê÷¸´Ñ¡¿ò
+    // å‹¾é€‰ç»“æ„æ ‘å¤é€‰æ¡†
     handleCheckChange (checkedNodes, checkedKeys, halfCheckedNodes, halfCheckedKeys) {
       this.halfCheckedNodes = []
       checkedKeys.halfCheckedNodes.forEach(item1 => {
@@ -244,7 +244,7 @@ export default {
         this.halfCheckedNodes = Array.from(new Set(this.halfCheckedNodes))
       })
     },
-    // ²é¿´½á¹¹Ê÷
+    // æŸ¥çœ‹ç»“æ„æ ‘
     treeList () {
       const params = {
         roleId: sessionStorage.getItem('produclisttId'),
@@ -252,9 +252,9 @@ export default {
       }
       this.$http('/page/product/queryRoleRelMenu', params, 'POST').then(res => {
         if (res.data.resultCode === '0000') {
-          // Ä¬ÈÏÑ¡ÖĞÏî
+          // é»˜è®¤é€‰ä¸­é¡¹
           this.default_checked_keys = treeContruct(res.data.data.list)
-          // Ä¬ÈÏÕ¹¿ªÏî
+          // é»˜è®¤å±•å¼€é¡¹
           this.default_expanded_keys = treeContruct(res.data.data.list, 1)
           
           this.AddRoles = treeStatus(res.data.data.list)
@@ -272,7 +272,7 @@ export default {
         this.$refs.propScroll.wrap.scrollTop = this.$refs.propScroll.$refs.resize.clientHeight
       })
     },
-    // ±í¸ñ
+    // è¡¨æ ¼
     List () {
       const params = {
         'levelReq1': sessionStorage.getItem('levelReq1') ? sessionStorage.getItem('levelReq1').split(',') : [],
