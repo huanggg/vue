@@ -5,14 +5,14 @@ import VueRouter from 'vue-router'
 // import login from '@/components/login.vue'
 // import home from '@/components/homed.vue'
 
-// 项目数据路由
-import projectdata from './projectdata'
-// 数据管理路由
-import Datamanagement from './Datamanagement'
-// 角色管理路由
-import AuthorityManagement from './AuthorityManagement'
-// 产品管理路由
-import ProductManagement from './ProductManagement'
+// // 项目数据路由
+// import projectdata from './projectdata'
+// // 数据管理路由
+// import Datamanagement from './Datamanagement'
+// // 角色管理路由
+// import AuthorityManagement from './AuthorityManagement'
+// // 产品管理路由
+// import ProductManagement from './ProductManagement'
 import store from '@/store/index'
 Vue.use(VueRouter)
 const router = new VueRouter({
@@ -22,7 +22,7 @@ const router = new VueRouter({
       path: '/home',
       name: 'home',
       // component: home,
-      component: (resolve) => require(['@/components/homed.vue'], resolve),
+      // component: (resolve) => require(['@/components/homed.vue'], resolve),
       meta: { title: '首页', noCache: true, requiresAuth: true }
     },
     // 登录页
@@ -31,7 +31,7 @@ const router = new VueRouter({
       name: 'login',
       // component: login,
       // 按需加载
-      component: (resolve) => require(['@/components/login.vue'], resolve),
+      // component: (resolve) => require(['@/components/login.vue'], resolve),
       meta: { title: '登陆页', noCache: true }
     },
     {
@@ -39,14 +39,14 @@ const router = new VueRouter({
       path: '/layout',
       name: 'layout',
       // component: layout,
-      component: (resolve) => require(['@/components/layout'], resolve),
+      // component: (resolve) => require(['@/components/layout'], resolve),
       meta: { title: '控制中心', noCache: true, requiresAuth: true },
       //  Datamanagement
       children: [].concat(
-        projectdata,
-        Datamanagement,
-        AuthorityManagement,
-        ProductManagement
+        // projectdata,
+        // Datamanagement,
+        // AuthorityManagement,
+        // ProductManagement
       )
     }
   ]

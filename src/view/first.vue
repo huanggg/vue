@@ -1,6 +1,13 @@
 <template>
   <div class="page">
     <div>
+      cnpm install vuex --save
+      cnpm install vue-router
+      cnpm i element-ui -S
+      cnpm install --save axios
+      cnpm install crypto-js
+      cnpm install less less-loader --save
+      cnpm install moment --save
       创建分支： $ git branch mybranch
       切换分支： $ git checkout mybranch
       创建并切换分支： $ git checkout -b mybranch
@@ -104,16 +111,16 @@
     </div>
     <!-- 分页 -->
     <div class="pagination">
-      <pagination
+      <!-- <pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :currentPage="pageInfo.page"
         :pagesize="pageInfo.limit"
         :total="pageInfo.total"
-      ></pagination>
+      ></pagination> -->
     </div>
     <div>
-      <el-scrollbar style="height:100%;width: 100%">
+      <!-- <el-scrollbar style="height:100%;width: 100%">
         <el-tree
           :data="AddRoles"
           :default-checked-keys="default_checked_keys"
@@ -132,7 +139,7 @@
             </span>
           </span>
         </el-tree>
-      </el-scrollbar>
+      </el-scrollbar> -->
     </div>
   </div>
 </template>
@@ -165,148 +172,148 @@ export default {
 
   },
   methods: {
-    loadNode (node, resolve) {
-      const params = {
-        buildNo: node.data.innerNo,
-        floorNo: node.data.innerNo,
-        menuType: 'DATA'
-      }
-      if (node.level >= 3) { return resolve([]) }
-      if (node.data.type === 'BUILD') {
-        if (node.data.children) {
-          // 结构树楼层接口
-          axios('/page/project/floor/list', params, 'POST').then(res => {
-            if (res.data.resultCode === '0000') {
-              node.data.children = res.data.data
-              node.data.children.forEach(item => {
-                item.icon = require('static/images/icon-1.png')
-              })
-              if (node.level === 1) {
-                return resolve(node.data.children)
-              }
-            }
-          })
-        }
-      }
-      // 
-      if (node.data.type === 'FLOOR') {
-        axios('/page/project/room/list', params, 'POST').then(res => {
-          if (res.data.resultCode === '0000') {
-            node.data.children = res.data.data
-            node.data.children.forEach(arritem => {
-              arritem.icon = require('static/images/icon-2.png')
-              arritem.leaf = true
-            })
-            if (node.level === 2) {
-              return resolve(node.data.children)
-            }
-          }
-        })
-      }
-    },
-    // 拉取结构树
-    tree () {
-      const params = {
-        productId: this.id
-      }
-      this.$http('/page/product/queryRoleRelMenu', params, 'POST').then(res => {
-        if (res.data.resultCode === '0000') {
-          this.AddRoles = res.data.data.list
-          if (this.default_checked_keys.length === 0 && this.default_expanded_keys.length === 0) {
-            this.default_checked_keys = treeContruct(res.data.data.list)
-            this.default_expanded_keys = treeContruct(res.data.data.list, 1)
-          }
-          this.AddRoles.forEach(item => {
-            item.icon = require('static/images/icon-1.png')
-            item.chirlds.forEach(Elements => {
-              Elements.icon = require('static/images/icon-1.png')
-              Elements.chirlds.forEach(items => {
-                items.icon = require('static/images/icon-2.png')
-              })
-            })
-          })
-        }
-      })
-    },
-    // 勾选结构树复选框
-    handleCheckChange (checkedNodes, checkedKeys, halfCheckedNodes, halfCheckedKeys) {
-      this.halfCheckedNodes = []
-      checkedKeys.halfCheckedNodes.forEach(item1 => {
-        this.halfCheckedNodes.push(item1.id)
-        this.halfCheckedNodes = Array.from(new Set(this.halfCheckedNodes))
-      })
+    // loadNode (node, resolve) {
+    //   const params = {
+    //     buildNo: node.data.innerNo,
+    //     floorNo: node.data.innerNo,
+    //     menuType: 'DATA'
+    //   }
+    //   if (node.level >= 3) { return resolve([]) }
+    //   if (node.data.type === 'BUILD') {
+    //     if (node.data.children) {
+    //       // 结构树楼层接口
+    //       axios('/page/project/floor/list', params, 'POST').then(res => {
+    //         if (res.data.resultCode === '0000') {
+    //           node.data.children = res.data.data
+    //           node.data.children.forEach(item => {
+    //             item.icon = require('static/images/icon-1.png')
+    //           })
+    //           if (node.level === 1) {
+    //             return resolve(node.data.children)
+    //           }
+    //         }
+    //       })
+    //     }
+    //   }
+    //   // 
+    //   if (node.data.type === 'FLOOR') {
+    //     axios('/page/project/room/list', params, 'POST').then(res => {
+    //       if (res.data.resultCode === '0000') {
+    //         node.data.children = res.data.data
+    //         node.data.children.forEach(arritem => {
+    //           arritem.icon = require('static/images/icon-2.png')
+    //           arritem.leaf = true
+    //         })
+    //         if (node.level === 2) {
+    //           return resolve(node.data.children)
+    //         }
+    //       }
+    //     })
+    //   }
+    // },
+    // // 拉取结构树
+    // tree () {
+    //   const params = {
+    //     productId: this.id
+    //   }
+    //   this.$http('/page/product/queryRoleRelMenu', params, 'POST').then(res => {
+    //     if (res.data.resultCode === '0000') {
+    //       this.AddRoles = res.data.data.list
+    //       if (this.default_checked_keys.length === 0 && this.default_expanded_keys.length === 0) {
+    //         this.default_checked_keys = treeContruct(res.data.data.list)
+    //         this.default_expanded_keys = treeContruct(res.data.data.list, 1)
+    //       }
+    //       this.AddRoles.forEach(item => {
+    //         item.icon = require('static/images/icon-1.png')
+    //         item.chirlds.forEach(Elements => {
+    //           Elements.icon = require('static/images/icon-1.png')
+    //           Elements.chirlds.forEach(items => {
+    //             items.icon = require('static/images/icon-2.png')
+    //           })
+    //         })
+    //       })
+    //     }
+    //   })
+    // },
+    // // 勾选结构树复选框
+    // handleCheckChange (checkedNodes, checkedKeys, halfCheckedNodes, halfCheckedKeys) {
+    //   this.halfCheckedNodes = []
+    //   checkedKeys.halfCheckedNodes.forEach(item1 => {
+    //     this.halfCheckedNodes.push(item1.id)
+    //     this.halfCheckedNodes = Array.from(new Set(this.halfCheckedNodes))
+    //   })
 
-      this.checkedNodes = []
-      checkedKeys.checkedNodes.forEach(item1 => {
-        this.checkedNodes.push(item1.id)
-        this.checkedNodes = Array.from(new Set(this.checkedNodes))
-        this.halfCheckedNodes.push(item1.id)
-        this.halfCheckedNodes = Array.from(new Set(this.halfCheckedNodes))
-      })
-    },
-    // 查看结构树
-    treeList () {
-      const params = {
-        roleId: sessionStorage.getItem('produclisttId'),
-        'productId': this.data.id
-      }
-      this.$http('/page/product/queryRoleRelMenu', params, 'POST').then(res => {
-        if (res.data.resultCode === '0000') {
-          // 默认选中项
-          this.default_checked_keys = treeContruct(res.data.data.list)
-          // 默认展开项
-          this.default_expanded_keys = treeContruct(res.data.data.list, 1)
-          
-          this.AddRoles = treeStatus(res.data.data.list)
-        }
-      })
-    },
-    add (index) {
-      this.itemsNum.push(
-        {
-          paramKey: '',
-          paramValue: ''
-        }
-      )
-      this.$nextTick(() => {
-        this.$refs.propScroll.wrap.scrollTop = this.$refs.propScroll.$refs.resize.clientHeight
-      })
-    },
-    // 表格
-    List () {
-      const params = {
-        'levelReq1': sessionStorage.getItem('levelReq1') ? sessionStorage.getItem('levelReq1').split(',') : [],
-        'levelReq2': sessionStorage.getItem('levelReq2') ? sessionStorage.getItem('levelReq2').split(',') : [],
-        'levelReq3': sessionStorage.getItem('levelReq3') ? sessionStorage.getItem('levelReq3').split(',') : [],
-        'levelReq4': sessionStorage.getItem('levelReq4') ? sessionStorage.getItem('levelReq4').split(',') : [],
-        'levelReq5': sessionStorage.getItem('levelReq5') ? sessionStorage.getItem('levelReq5').split(',') : [],
-        'startTime': sessionStorage.getItem('startTime'),
-        'endTime': sessionStorage.getItem('endTime'),
-        pageNo: this.pageInfo.page,
-        pageSize: this.pageInfo.limit,
-      }
-      this.$http('/componentPool/list', params, 'POST').then(res => {
-        if (res.data.resultCode === '0000') {
-          console.log('99999', res.data.data)
-          this.pageInfo.total = res.data.data.totalSize
-          this.tableData = res.data.data.pageList
-          if (this.$refs['myScrollbar']) {
-            this.$refs['myScrollbar'].wrap.scrollTop = 0
-          }
+    //   this.checkedNodes = []
+    //   checkedKeys.checkedNodes.forEach(item1 => {
+    //     this.checkedNodes.push(item1.id)
+    //     this.checkedNodes = Array.from(new Set(this.checkedNodes))
+    //     this.halfCheckedNodes.push(item1.id)
+    //     this.halfCheckedNodes = Array.from(new Set(this.halfCheckedNodes))
+    //   })
+    // },
+    // // 查看结构树
+    // treeList () {
+    //   const params = {
+    //     roleId: sessionStorage.getItem('produclisttId'),
+    //     'productId': this.data.id
+    //   }
+    //   this.$http('/page/product/queryRoleRelMenu', params, 'POST').then(res => {
+    //     if (res.data.resultCode === '0000') {
+    //       // 默认选中项
+    //       this.default_checked_keys = treeContruct(res.data.data.list)
+    //       // 默认展开项
+    //       this.default_expanded_keys = treeContruct(res.data.data.list, 1)
 
-          this.isloading = false
-        }
-      })
-    },
-    handleSizeChange (val) {
-      this.pageInfo.limit = val
-      this.pageInfo.page = 1
-      this.List()
-    },
-    handleCurrentChange (val) {
-      this.pageInfo.page = val
-      this.List()
-    }
+    //       this.AddRoles = treeStatus(res.data.data.list)
+    //     }
+    //   })
+    // },
+    // add (index) {
+    //   this.itemsNum.push(
+    //     {
+    //       paramKey: '',
+    //       paramValue: ''
+    //     }
+    //   )
+    //   this.$nextTick(() => {
+    //     this.$refs.propScroll.wrap.scrollTop = this.$refs.propScroll.$refs.resize.clientHeight
+    //   })
+    // },
+    // // 表格
+    // List () {
+    //   const params = {
+    //     'levelReq1': sessionStorage.getItem('levelReq1') ? sessionStorage.getItem('levelReq1').split(',') : [],
+    //     'levelReq2': sessionStorage.getItem('levelReq2') ? sessionStorage.getItem('levelReq2').split(',') : [],
+    //     'levelReq3': sessionStorage.getItem('levelReq3') ? sessionStorage.getItem('levelReq3').split(',') : [],
+    //     'levelReq4': sessionStorage.getItem('levelReq4') ? sessionStorage.getItem('levelReq4').split(',') : [],
+    //     'levelReq5': sessionStorage.getItem('levelReq5') ? sessionStorage.getItem('levelReq5').split(',') : [],
+    //     'startTime': sessionStorage.getItem('startTime'),
+    //     'endTime': sessionStorage.getItem('endTime'),
+    //     pageNo: this.pageInfo.page,
+    //     pageSize: this.pageInfo.limit,
+    //   }
+    //   this.$http('/componentPool/list', params, 'POST').then(res => {
+    //     if (res.data.resultCode === '0000') {
+    //       console.log('99999', res.data.data)
+    //       this.pageInfo.total = res.data.data.totalSize
+    //       this.tableData = res.data.data.pageList
+    //       if (this.$refs['myScrollbar']) {
+    //         this.$refs['myScrollbar'].wrap.scrollTop = 0
+    //       }
+
+    //       this.isloading = false
+    //     }
+    //   })
+    // },
+    // handleSizeChange (val) {
+    //   this.pageInfo.limit = val
+    //   this.pageInfo.page = 1
+    //   this.List()
+    // },
+    // handleCurrentChange (val) {
+    //   this.pageInfo.page = val
+    //   this.List()
+    // }
   }
 }
 </script>
