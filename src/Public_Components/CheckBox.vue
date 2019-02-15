@@ -1,7 +1,8 @@
 <template>
+  <!-- 关系设置、关系调整公共组件 -->
   <div class="CheckBox">
     <div class="tableheader">
-      <div style="font-weight:bold"></div>
+      <div style="font-weight:bold">添加关联构件模型</div>
       <div style="display:flex;align-items:center">
         <div style="width:22px;height:22px;cursor:pointer" @click="layer(false,false)">
           <img src="/static/images/close.png" style="width:100%;height:100%">
@@ -11,12 +12,12 @@
     <div class="search">
       <div class="top" style="display: flex;justify-content: space-between;">
         <div style="display:flex;margin-right:47px;" class="left">
-          <div style="min-width:92px"></div>
+          <div style="min-width:92px">基础参数</div>
           <div style="max-width:202px;margin-right:4px;">
             <!-- 请选择类别(C) -->
             <el-select
               v-model="major_first_list_value"
-              placeholder
+              placeholder="请选择类别(C)"
               @change="changeselect_first"
               multiple
               filterable
@@ -29,10 +30,13 @@
                 :value="item.levelId"
               ></el-option>
             </el-select>
+            <!-- 请选择类别(C) -->
           </div>
           <div style="max-width:202px;margin-right:4px;">
+            <!-- 请选择族(F) -->
             <el-select
               v-model="major_second_list_value"
+              placeholder="请选择族(F)"
               @change="changeselect_second"
               multiple
               filterable
@@ -45,11 +49,13 @@
                 :value="item.levelId"
               ></el-option>
             </el-select>
+            <!-- 请选择族(F) -->
           </div>
           <div style="max-width:202px;margin-right:36px;">
+            <!-- 请选择类型(T) -->
             <el-select
               v-model="major_three_list_value"
-              placeholder
+              placeholder="请选择类型(T)"
               multiple
               filterable
               collapse-tags
@@ -61,8 +67,9 @@
                 :value="item.levelId"
               ></el-option>
             </el-select>
+            <!-- 请选择类型(T) -->
           </div>
-          <div style="min-width:108px"></div>
+          <div style="min-width:108px">系统类型名称(ST)</div>
           <div style="max-width:202px;margin-right:4px;">
             <el-select
               v-model="SystemTypelist_value"
@@ -91,7 +98,7 @@
         </div>
       </div>
       <div class="searchfooter" style="display: flex;margin-top:16px;">
-        <div style="min-width:92px"></div>
+        <div style="min-width:92px">共享参数(实例)</div>
         <div style="max-width:202px;margin-right:4px;">
           <el-select
             v-model="SharedParameterList_value"
@@ -122,14 +129,15 @@
           @select-all="selectAll"
           @select="handleSelectionChange"
           v-loading="loading"
+          @row-click="SelectionRow"
         >
           <el-table-column type="selection" width="55"></el-table-column>
           <el-table-column type="index" width="50" label="序号" align="center"></el-table-column>
-          <el-table-column prop="category" label=" " show-overflow-tooltip></el-table-column>
-          <el-table-column prop="family" label show-overflow-tooltip></el-table-column>
-          <el-table-column prop="type" label=" " show-overflow-tooltip></el-table-column>
-          <el-table-column prop="systemParam" label=" " show-overflow-tooltip></el-table-column>
-          <el-table-column prop="shareParam" label=" " show-overflow-tooltip></el-table-column>
+          <el-table-column prop="category" label=" 类别(C)" show-overflow-tooltip></el-table-column>
+          <el-table-column prop="family" label="族(F)" show-overflow-tooltip></el-table-column>
+          <el-table-column prop="type" label="类型(T) " show-overflow-tooltip></el-table-column>
+          <el-table-column prop="systemParam" label="系统类型名称(ST)  " show-overflow-tooltip></el-table-column>
+          <el-table-column prop="shareParam" label="共享参数(实例) " show-overflow-tooltip></el-table-column>
         </el-table>
       </el-scrollbar>
     </div>
@@ -171,11 +179,15 @@
                       tooltip-effect="dark"
                     >
                       <el-table-column type="index" width="50" label="序号" align="center"></el-table-column>
-                      <el-table-column prop="category" label show-overflow-tooltip></el-table-column>
-                      <el-table-column prop="family" label show-overflow-tooltip></el-table-column>
-                      <el-table-column prop="type" label=" " show-overflow-tooltip></el-table-column>
-                      <el-table-column prop="systemParam" label="  " show-overflow-tooltip></el-table-column>
-                      <el-table-column prop="shareParam" label=" " show-overflow-tooltip></el-table-column>
+                      <el-table-column prop="category" label=" 类别(C)" show-overflow-tooltip></el-table-column>
+                      <el-table-column prop="family" label="族(F)" show-overflow-tooltip></el-table-column>
+                      <el-table-column prop="type" label="类型(T) " show-overflow-tooltip></el-table-column>
+                      <el-table-column
+                        prop="systemParam"
+                        label="系统类型名称(ST)  "
+                        show-overflow-tooltip
+                      ></el-table-column>
+                      <el-table-column prop="shareParam" label="共享参数(实例) " show-overflow-tooltip></el-table-column>
                       <el-table-column label=" 操作 " width="70">
                         <template slot-scope="scope">
                           <span
@@ -189,7 +201,7 @@
                 </div>
               </div>
               <el-badge :value="num" slot="reference" :hidden="!num">
-                <el-button size="small" type="text" style="color: #687385;"></el-button>
+                <el-button size="small" type="text" style="color: #687385;">已选构件</el-button>
               </el-badge>
             </el-popover>
           </div>
@@ -240,10 +252,10 @@ export default {
       major_second_list: [],
       // 三级节点列表数据
       major_three_list: [],
-
+      // 系统参数列表
       SystemTypelist: [],
       SystemTypelist_value: [],
-      // 
+      // 共享参数列表
       SharedParameterList: [],
       SharedParameterList_value: [],
       LayerTable: [],
@@ -383,7 +395,7 @@ export default {
         this.List(false)
       }
     },
-    // 
+    // 二级节点列表选中项改变时接口
     changeselect_second (val) {
       this.major_three_list_value = []
       this.major_three_list = []
@@ -411,7 +423,7 @@ export default {
         })
       }
     },
-    // (ST)
+    // 系统类型名称(ST)
     SystemTypeName () {
       if (this.type === 'Relationshipadjust') {
         this.params5 = {
@@ -429,7 +441,7 @@ export default {
         }
       })
     },
-    // 
+    // 共享参数列表
     SharedParameterName () {
       const params = {
       }
@@ -532,19 +544,33 @@ export default {
       }
     },
     // 选中
-    handleSelectionChange (row, index) {
+    handleSelectionChange (selection,row) {
       let flag = true
       for (const i of this.multipleSelection) {
-        if (i.id === index.id) {
+        if (i.id === row.id) {
           flag = false
         }
         // flag = i.id === index.id ? false : true
       }
+      console.log(flag)
       if (flag) {
-        this.multipleSelection.push(index)
+        this.multipleSelection.push(row)
       } else {
-        this.multipleSelection.splice(this.multipleSelection.findIndex(v => v.id === index.id), 1)
+        this.multipleSelection.splice(this.multipleSelection.findIndex(v => v.id === row.id), 1)
       }
+    },
+    SelectionRow (row, event, column) {
+      console.log('单前行', row, event)
+      this.handleSelectionChange('',row)
+      let flag = false
+      for (const i of this.multipleSelection) {
+        if (i.id === row.id) {
+          flag = true
+        }
+        // flag = i.id === index.id ? false : true
+      }
+      this.$refs.multipleTable.toggleRowSelection(row, flag)
+
     },
     smalldeleteditem (index, rowdata) {
       this.multipleSelection.splice(index, 1)
