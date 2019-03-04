@@ -24,6 +24,12 @@ export default function treeToArray (
     if (parent) {
       Vue.set(record, 'parent', parent)
     }
+//  默认展开项
+//         if（record.pooid==='1215'）{
+//           Vue.set(record.parent._expanded, '_expanded', ture)
+//           Vue.set(record.parent.parent._expanded, '_expanded', ture)
+//         }
+    // 根据搜索条件展开
 //      if (record._level === 2) {
 //       // 查询
 //       if (sessionStorage.getItem('major_three')) {
