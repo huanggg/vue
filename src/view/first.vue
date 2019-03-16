@@ -113,6 +113,9 @@
       ></pagination>
     </div>
     <div>
+    时间转换：{{hh|formatDate}}
+    </div>
+    <div>
       <el-scrollbar style="height:100%;width: 100%">
         <el-tree
           :data="AddRoles"
@@ -163,6 +166,17 @@ export default {
   },
   components: {
 
+  },
+  filters:{
+    formatDate:function(val){
+    let time=''
+      if(val){
+        time=moment(Number(val)).format('YYY-MM-DD')
+      }esle{
+        time=''
+      }
+    return time
+    }
   },
   methods: {
     loadNode (node, resolve) {
