@@ -52,21 +52,29 @@ axios.interceptors.response.use(
   }
 )
 
+// export default (url, data = {}, method = 'get') => {
+//   let options = {}
+//   if (method === 'get') {
+//     options = { method }
+//   } else {
+//     options = {
+//       method,
+//       data
+//     }
+//   }
+//   return axios(url, options)
+//     .then(response => {
+//       return response
+//     })
+//     .catch(err => {
+//       return { err }
+//     })
+// }
+
 export default (url, data = {}, method = 'get') => {
-  let options = {}
   if (method === 'get') {
-    options = { method }
-  } else {
-    options = {
-      method,
-      data
-    }
+    return axios.get(url,data)
+  }else{
+    return axios.post(url,data)
   }
-  return axios(url, options)
-    .then(response => {
-      return response
-    })
-    .catch(err => {
-      return { err }
-    })
 }
