@@ -62,10 +62,12 @@
       <svg version="1.1" style="background:blue;width:100%;height:100%;">
         <polygon
           points="0,30 50,30 50,0 100,50 50,100 50,70 0,70 "
-          style="fill:white;stroke:red;stroke-width:-0.8;transform:scale(4,1)"
+          style="fill:red;stroke:red;stroke-width:-0.8;transform:scale(4,1)"
         ></polygon>
       </svg>
-    </div>
+    </div>vxe-table
+    vue-treeselect
+    vue-crpopper
   </div>
 </template>
 <script>
