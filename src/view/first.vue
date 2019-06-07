@@ -1,329 +1,372 @@
 <template>
-  <div class="page">
-    <div>
-      创建分支： $ git branch mybranch
-      切换分支： $ git checkout mybranch
-      创建并切换分支： $ git checkout -b mybranch
-      更新master主线上的东西到该分支上：$git rebase master
-      切换到master分支：$git checkout master
-      更新mybranch分支上的东西到master上：$git rebase mybranch
-      提交：git commit -a
-      对最近一次commit的进行修改：git commit -a –amend
-      commit之后，如果想撤销最近一次提交(即退回到上一次版本)并本地保留代码：git reset HEAD^
-      合并分支：(merge from) $ git checkout master
-      $ git merge mybranch (merge from mybranch)
-      删除分支： $ git branch -d mybranch
-      强制删除分支： $ git branch -D mybranch
-      列出所有分支： $ git branch
-      查看各个分支最后一次提交： $ git branch -v
-      查看哪些分支合并入当前分支： $ git branch –merged
-      查看哪些分支未合并入当前分支： $ git branch –no-merged
-      更新远程库到本地： $ git fetch origin
-      推送分支： $ git push origin mybranch
-      取远程分支合并到本地： $ git merge origin/mybranch
-      取远程分支并分化一个新分支： $ git checkout -b mybranch origin/mybranch
-      删除远程分支： $ git push origin :mybranch
-      1 把目录变成Git可以管理的仓库 git init
-      2 把远程分支克隆到本地 git clone http://qiyue@git.vanke.com/VBIM-webApp/bimPlus.git
-      3 查看本地分支 git branch
-      4 查看本地与远程仓库的所有分支 git branch -a
-      5 切换分支 git checkout v0.3.2
-      6 创建并切换分支 git checkout -b 'v0.3.3'
-      7 更新远程分支到本地并删除本地存在远程不存在的分支 git fetch -p
-      8 拉取远程分支代码 git pull origin v0.3.2
-      9 查看改动的所有文件 git status
-      10 将指定文件添加到本地仓库 git add .|| git add readme.txt
-      11 git commit -m '提交注释'
-      12 把本地仓库代码推送到远程分支 git push origin v0.3.2
-      13 删除本地分支 git branch -d v0.3.0
-      14 删除远程分支 git push origin :v0.3.3
-      15 当前分支合并到指定分支 git merge v0.3.4
-      16 查看提交历史 git log --oneline
-      17 查看命令历史 git reflog
-      18 回滚到指定的版本 git reset 937dd8e --hard
-      提交代码到远程仓库
-      git init
-      git add README.md
-      git commit -m "first commit"
-      git remote add origin https://github.com/huanggg/react.git
-      git push -u origin master
-      Git 合并远程分支
-      有的时候我们需要跟别人合作进行开发，然后分别使用不同的Git分支，等项目完成时，
-      需要进行代码合并，就需要知道Git如何合并远程分支。
-      步骤
-      第一步 切换到分支b
-      git checkout b
-      该指令的意思：创建一个本地分支，并将远程分支放到该分支里面去。
-      第二步 将远程代码pull到本地
-      git pull origin b
-      第三步 返回到你的分支a
-      git checkout a
-      第四步 合并分支a与分支b
-      git merge b
-      该指令的意思：当前所在分支与b进行合并。
-      第五步 把本地的分支a同步到远程
-      git push origin a
-      Git 分支
-      Git 拉去代码的流程
-      情景一：合并主分支代码
-      Git fetch -p
-      Git pull origin v3.0
-      Git checkout v0.3.2
-      Git merge v3.0
-      情景二：协作过程中合并对方代码
-      1、本地的代码先提交
-      Git add .
-      Git commit -m 'add the new page'
-      Git push origin v0.3.2
-      Git checkout v0.3.0
-      Git pull origin v0.3.0
-      Git checkout v0.3.2
-      Git merge v0.3.0
-      2、本地的代码不提交
-      Git stash
-      Git checkout elaine-v3
-      Git pull origin felaine-v3
-      Git checkout kun-v3
-      Git merge elaine-v3
-      Git stash pop
-      情景三：代码合并到主分支
-      Git add .
-      Git commit -m 'modal A complate'
-      Git push origin kun-v3
-      Git checkout v3
-      Git pull origin v3
-      Git merge kun-v3
-      Git push origin v3
-      Git 提交时机
-      每天早上开始工作前，先拉去合并的代码
-      下班前，必须提交本地代码
-      完成一个功能，或者一个模块，（最低标准就是运行没有问题，不会影响其他模块的
-      情况下）合并到主分支
-      保证代码在推上去之前解决了 eslint 的警告问题
-      Commit 简要的写此次的提交信息
-    </div>
-    <!-- 分页 -->
-    <div class="pagination">
-      <pagination
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :currentPage="pageInfo.page"
-        :pagesize="pageInfo.limit"
-        :total="pageInfo.total"
-      ></pagination>
-    </div>
-    <div>
-    时间转换：{{hh|formatDate}}
-    </div>
-    <div>
-      <el-scrollbar style="height:100%;width: 100%">
-        <el-tree
-          :data="AddRoles"
-          :default-checked-keys="default_checked_keys"
-          :default-expanded-keys="default_expanded_keys"
-          show-checkbox
-          node-key="id"
-          ref="tree"
-          :props="defaultProps"
-        >
-          <span class="custom-tree-node" slot-scope="{ node, data }">
-            <span>
-              <span>
-                <img :src="node.data.icon" alt>
-              </span>
-              {{ node.data.menuName}}
-            </span>
-          </span>
-        </el-tree>
-      </el-scrollbar>
-    </div>
+  <div class="table">
+
+    <table border="1px" v-dragform>
+      <!-- 表格标题 -->
+        <thead>
+            <tr >
+                <th> </th>
+                <th><input type="checkbox" v-if="checkboxs"  v-model='checked' v-on:click='checkedAll' class="chestyle"></th>
+                <th v-for="(item,key) in tebleTop" :key="key"><span class="formtitle" :title="item">{{item}}</span></th>
+            </tr>
+        </thead>
+      <!-- 表格内容 -->
+        <tbody>
+            <tr v-for="(item1 ,key1) in tebleDate" :key="key1"   @dblclick.stop="tableEdit(key1,item1)">
+                  <td>{{key1+1}}</td>
+                   <td><input type="checkbox" v-if="checkboxs"   :value="item1"    v-model="tdPicth" class="chestyle"></td>
+
+                  <td v-for="(item2 ,key2) in tebleDate[key1]" :key="key2"   >
+                    <span  v-if="key1==i && Editchent? !thshow:true" class="formtitle" :title="item2.title">{{(item2.title?item2.title:'')}}</span>
+
+                    <span v-if="key1==i&& Editchent ? thshow:false" >
+                      <input type="text"  v-model="itemModel[key2].title" v-if="(item2.data==null)&&(item2.time==null)">
+
+                     <select v-model="item2.title " v-if="item2.data" @change ="dbselect(item2)">
+
+                        <option :value= item3.value?item3.value:item3.prodCode v-for="(item3,key3) in item2.data" :key="key3">{{item3.text?item3.text:item3.prodName}}</option>
+                      </select>
+                      <input type="date" v-model="itemModel[key2].title" v-if="item2.time!=null">
+                    </span>
+                  </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="block">
+
+        <el-pagination
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="currentPage4"
+          :page-sizes="[10, 20, 30, 40]"
+          :page-size="10"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total=pageTotal>
+        </el-pagination>
+        <button @click="export2Excelshow=true" class="excelBut"><i></i>导出</button>
+        <export2Excel v-if="export2Excelshow" @closeExce = "export2Excelshow=false" :tebleDateAll= "tebleDateAll" :tebleDate= "tebleDate" :tebleTop="tebleTop"></export2Excel>
+
+  </div>
+
+<el-dialog
+  title="提示"
+  :visible.sync="dialogVisible"
+  width="30%"
+  >
+  <span>{{dialogVisibleTitle}}</span>
+  <span slot="footer" class="dialog-footer">
+    <el-button @click="tabremoveBut(false)">取 消</el-button>
+    <el-button type="primary" @click="tabremoveBut(true)">确 定</el-button>
+  </span>
+</el-dialog>
   </div>
 </template>
-
 <script>
+import export2Excel from './exporExcel'
 export default {
   data () {
     return {
-      /* 分页 */
-      pageInfo: {
-        // 页码
-        page: 1,
-        // 每页显示的条数
-        limit: 20,
-        // 总共的条数
-        total: 100
-      },
-      // 编辑修改时默认的选中项
-      default_checked_keys: [],
-      default_expanded_keys: [],
-      // 编辑修改时默认的选中项
-      AddRoles: [],
-      defaultProps: {
-        children: 'chirlds',
-        label: 'menuName'
-      }
-    }
-  },
-  components: {
+      currentPage4: 1,
+      // Edit:false,
+      dialogVisible: false, // 提示面板
+      dialogVisibleTitle: '', // 面板提示信息
+      dialogVisibleType: '', // 提示面板触发的事件
+      tebleDate: [], //   某一页的值
+      thshow: false, // 显示编辑
+      i: Number, // 行的下标
+      checkboxs: true,
+      export2Excelshow: false,
+      checked: false, //
+      tdPicth: [], // 点击选中
+      itemModel: null, // 点击行的值
+      tabkey: Number, // 编辑的下标
+      tebleDateSize: Array, // 获取到的列表数据
+      pagesize: 10, // 每页显示的条数
+      pageTotal: 0, // 总共多少条数据
 
-  },
-  filters:{
-    formatDate:function(val){
-    let time=''
-      if(val){
-        time=moment(Number(val)).format('YYY-MM-DD')
-      }esle{
-        time=''
-      }
-    return time
     }
   },
+
+  components: {export2Excel},
+  props: ['tebleDateAll', 'addTableValue', 'tebleTop', 'Editchent'], // Editchent:是否需要编辑功能，tebleDateAll：格单内容，tebleTop：表格标题,dbselectShow:打开编码转换
+  watch: {
+    // 监听从父级传来的 表格数据变化
+    tebleDateAll (val) {
+      this.tablesave()
+      this.tebleDateSize = val
+      this.tebleDate = val.slice(0, 10) // 页面默认显示10条数据
+      this.pageTotal = val.length
+    }
+  },
+
   methods: {
-    loadNode (node, resolve) {
-      const params = {
-        buildNo: node.data.innerNo,
-        floorNo: node.data.innerNo,
-        menuType: 'DATA'
+
+    dbselect (s) { // 转换编码
+      function convert (all, val) {
+        let title
+        for (const i in all) {
+          if (all[i].prodCode == val) {
+            title = all[i].prodName
+          }
+          if (all[i].value == val) {
+            title = all[i].text
+          }
+        }
+        return title
       }
-      if (node.level >= 3) { return resolve([]) }
-      if (node.data.type === 'BUILD') {
-        if (node.data.children) {
-          // 结构树楼层接口
-          axios('/page/project/floor/list', params, 'POST').then(res => {
-            if (res.data.resultCode === '0000') {
-              node.data.children = res.data.data
-              node.data.children.forEach(item => {
-                item.icon = require('static/images/icon-1.png')
-              })
-              if (node.level === 1) {
-                return resolve(node.data.children)
+      const that = this
+      function correlation (value) { // 关联数据
+        for (const i in value) {
+          console.log()
+          if (value[i].relevance) {
+            for (const j in value) {
+              if (
+                value[i].relevance &&
+                value[i].relevance == value[j].relevance
+              ) {
+                if (i != j) {
+                  if (that.dbselectShow) {
+                    if (convert(s.data, value[j].title)) {
+                      value[i].title = convert(s.data, value[j].title)
+                    }
+                  } else {
+                    value[i].title = value[j].title
+                  }
+                }
+                break
               }
             }
-          })
+          }
         }
       }
-      // 
-      if (node.data.type === 'FLOOR') {
-        axios('/page/project/room/list', params, 'POST').then(res => {
-          if (res.data.resultCode === '0000') {
-            node.data.children = res.data.data
-            node.data.children.forEach(arritem => {
-              arritem.icon = require('static/images/icon-2.png')
-              arritem.leaf = true
-            })
-            if (node.level === 2) {
-              return resolve(node.data.children)
+
+      for (const i in this.tebleDate) {
+        correlation(this.tebleDate[i])
+      }
+    },
+    handleSizeChange (val) {
+      // 选择每页显示的数据
+      console.log(`每页 ${val} 条`)
+      this.pagesize = val
+
+      function sliceArr (array, size) {
+        const result = []
+        for (let x = 0; x < Math.ceil(array.length / size); x++) {
+          const start = x * size
+          const end = start + size
+          result.push(array.slice(start, end))
+        }
+        return result
+      }
+      this.tebleDate = sliceArr(this.tebleDateSize, val)[0]
+    },
+    handleCurrentChange (val) {
+      // 选择显示第几页
+      function sliceArr (array, size) {
+        const result = []
+        for (let x = 0; x < Math.ceil(array.length / size); x++) {
+          const start = x * size
+          const end = start + size
+          result.push(array.slice(start, end))
+        }
+        return result
+      }
+      this.tebleDate = sliceArr(this.tebleDateSize, this.pagesize)[val - 1]
+    },
+
+    getTableVlue () {
+      // 刷新
+
+      this.$store.dispatch('Warranty/getWarranty')
+    },
+
+    tableEdit (key, item) {
+      // 可编辑
+      console.log(this.Editchent)
+      this.itemModel = item // 点击时行的值写入到输入默认
+      this.i = key // 行的下标
+      this.thshow = true // 显示可以输入
+      this.tabkey = key // 输入行的下标
+    },
+    tablesave (title) {
+      // 保存
+      if (title) {
+        this.dialogVisibleTitle = title
+        this.dialogVisible = true
+        this.dialogVisibleType = 'tablesave'
+      } else {
+        if (this.tebleDate == '') {
+          // 判断添加时的值不能为空
+          return
+        }
+        for (const i in this.tebleDate) {
+          for (const j in this.tebleDate[i]) {
+            if (this.tebleDate[i][j].title == '') {
+              console.log('输入不能为空')
+              return
             }
           }
+        }
+        if (this.itemModel) {
+          console.log(this.itemModel)
+
+          this.tebleDate[this.tabkey] = this.itemModel
+          this.thshow = false
+          console.log(this.tebleDate)
+        }
+        this.tabkey = null
+      }
+    },
+
+    tabSaveSub (url) {
+      // 提交和保存
+      this.tablesave()
+      const that = this
+      this.$store.dispatch(url, that)
+    },
+
+    checkedAll () {
+      // 全选和反选
+      const _this = this
+      console.log(_this.checked)
+      if (this.checked) {
+        _this.tdPicth = []
+      } else {
+        _this.tdPicth = []
+        _this.tebleDate.forEach((item, key) => {
+          _this.tdPicth.push(item)
         })
       }
     },
-    // 拉取结构树
-    tree () {
-      const params = {
-        productId: this.id
-      }
-      this.$http('/page/product/queryRoleRelMenu', params, 'POST').then(res => {
-        if (res.data.resultCode === '0000') {
-          this.AddRoles = res.data.data.list
-          if (this.default_checked_keys.length === 0 && this.default_expanded_keys.length === 0) {
-            this.default_checked_keys = treeContruct(res.data.data.list)
-            this.default_expanded_keys = treeContruct(res.data.data.list, 1)
-          }
-          this.AddRoles.forEach(item => {
-            item.icon = require('static/images/icon-1.png')
-            item.chirlds.forEach(Elements => {
-              Elements.icon = require('static/images/icon-1.png')
-              Elements.chirlds.forEach(items => {
-                items.icon = require('static/images/icon-2.png')
-              })
-            })
-          })
-        }
-      })
-    },
-    // 勾选结构树复选框
-    handleCheckChange (checkedNodes, checkedKeys, halfCheckedNodes, halfCheckedKeys) {
-      this.halfCheckedNodes = []
-      checkedKeys.halfCheckedNodes.forEach(item1 => {
-        this.halfCheckedNodes.push(item1.id)
-        this.halfCheckedNodes = Array.from(new Set(this.halfCheckedNodes))
-      })
 
-      this.checkedNodes = []
-      checkedKeys.checkedNodes.forEach(item1 => {
-        this.checkedNodes.push(item1.id)
-        this.checkedNodes = Array.from(new Set(this.checkedNodes))
-        this.halfCheckedNodes.push(item1.id)
-        this.halfCheckedNodes = Array.from(new Set(this.halfCheckedNodes))
-      })
-    },
-    // 查看结构树
-    treeList () {
-      const params = {
-        roleId: sessionStorage.getItem('produclisttId'),
-        'productId': this.data.id
-      }
-      this.$http('/page/product/queryRoleRelMenu', params, 'POST').then(res => {
-        if (res.data.resultCode === '0000') {
-          // 默认选中项
-          this.default_checked_keys = treeContruct(res.data.data.list)
-          // 默认展开项
-          this.default_expanded_keys = treeContruct(res.data.data.list, 1)
-          
-          this.AddRoles = treeStatus(res.data.data.list)
+    tabremoveBut (v) {
+      // 提示面板事件
+      if (v) {
+        switch (this.dialogVisibleType) {
+        case 'tabremove':
+          this.tabremove()
+          this.dialogVisible = false
+          break
+        case 'tablesave':
+          this.tablesave()
+          this.dialogVisible = false
+          break
+        default:
         }
-      })
-    },
-    add (index) {
-      this.itemsNum.push(
-        {
-          paramKey: '',
-          paramValue: ''
-        }
-      )
-      this.$nextTick(() => {
-        this.$refs.propScroll.wrap.scrollTop = this.$refs.propScroll.$refs.resize.clientHeight
-      })
-    },
-    // 表格
-    List () {
-      const params = {
-        'levelReq1': sessionStorage.getItem('levelReq1') ? sessionStorage.getItem('levelReq1').split(',') : [],
-        'levelReq2': sessionStorage.getItem('levelReq2') ? sessionStorage.getItem('levelReq2').split(',') : [],
-        'levelReq3': sessionStorage.getItem('levelReq3') ? sessionStorage.getItem('levelReq3').split(',') : [],
-        'levelReq4': sessionStorage.getItem('levelReq4') ? sessionStorage.getItem('levelReq4').split(',') : [],
-        'levelReq5': sessionStorage.getItem('levelReq5') ? sessionStorage.getItem('levelReq5').split(',') : [],
-        'startTime': sessionStorage.getItem('startTime'),
-        'endTime': sessionStorage.getItem('endTime'),
-        pageNo: this.pageInfo.page,
-        pageSize: this.pageInfo.limit,
+      } else {
+        this.dialogVisible = false
       }
-      this.$http('/componentPool/list', params, 'POST').then(res => {
-        if (res.data.resultCode === '0000') {
-          console.log('99999', res.data.data)
-          this.pageInfo.total = res.data.data.totalSize
-          this.tableData = res.data.data.pageList
-          if (this.$refs['myScrollbar']) {
-            this.$refs['myScrollbar'].wrap.scrollTop = 0
-          }
+    },
 
-          this.isloading = false
+    tabremove (title) {
+      // 删除选中
+
+      if (title) {
+        this.dialogVisibleTitle = title
+        this.dialogVisible = true
+        this.dialogVisibleType = 'tabremove'
+      } else {
+        console.log(this.tdPicth)
+        function remove (ob, val) {
+          var ob = ob
+          var val = val
+          const index = ob.indexOf(val)
+          if (index > -1) {
+            ob.splice(index, 1)
+          }
+          return ob
         }
-      })
+
+        const tdPicth = this.tdPicth
+        for (const j in tdPicth) {
+          console.log(j)
+          remove(this.tebleDate, this.tdPicth[j])
+          //  remove(this.tebleDateAll, this.tdPicth[j]);
+        }
+
+        this.tdPicth = []
+      }
     },
-    handleSizeChange (val) {
-      this.pageInfo.limit = val
-      this.pageInfo.page = 1
-      this.List()
+    addTable () {
+      // 添加 table
+      this.itemModel = this.addTableValue
+      this.i = this.tebleDate.length
+      this.tebleDate.push(this.addTableValue)
+      this.tebleDateAll.push(this.addTableValue)
+      this.thshow = true
     },
-    handleCurrentChange (val) {
-      this.pageInfo.page = val
-      this.List()
-    }
+
   }
 }
 </script>
+<style scoped>
+.table{
+  width:100%;
+  overflow-x: auto
+}
+th {
+  border: 1px solid #dcdfe6;
+  padding: 5px;
+  white-space: nowrap;
+  text-align: center;
+  box-sizing: border-box;
+}
 
-<style scoped >
+td {
+  white-space: nowrap;
+  text-align: center;
+  border-width: 1px;
+  border-style: solid;
+  border: 1px solid #dcdfe6;
+  border-image: initial;
+  padding: 5px;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+.formtitle {
+  display: block;
+  width: 150px;
+  overflow: hidden;
+  white-space: nowrap;
+  word-wrap: normal;
+  text-overflow: ellipsis;
+
+    overflow: hidden;
+}
+.chestyle {
+  display: inline-block;
+  padding: 3px;
+}
+input {
+  display: inline-block;
+  max-width: 150px;
+  text-align: center;
+  border: 1px solid #dcdfe6;
+  padding: 5px;
+}
+table {
+  width: 200%;
+  display: block;
+  height: 430px;
+  overflow: auto;
+  cursor: default;
+  border-collapse:collapse
+}
+
+select {
+  display: inline-block;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  padding-left: 10px;
+  border: 1px solid #dcdfe6;
+}
+.excelBut{
+position: absolute;bottom: 5px;right: 25%;
+border: 0;background: #fff;width: 70px;
+background: url("../../assets/images/export.png")no-repeat 10% 53%;
+color: #606266;
+}
+/* .excelBut i{width: 14px;height: 14px;display: inline-block;background: url("../../assets/images/export.png")no-repeat;} */
+.block{position: relative}
 </style>

@@ -544,7 +544,7 @@ export default {
       }
     },
     // 选中
-    handleSelectionChange (selection,row) {
+    handleSelectionChange (selection, row) {
       let flag = true
       for (const i of this.multipleSelection) {
         if (i.id === row.id) {
@@ -561,7 +561,7 @@ export default {
     },
     SelectionRow (row, event, column) {
       console.log('单前行', row, event)
-      this.handleSelectionChange('',row)
+      this.handleSelectionChange('', row)
       let flag = false
       for (const i of this.multipleSelection) {
         if (i.id === row.id) {
@@ -570,7 +570,6 @@ export default {
         // flag = i.id === index.id ? false : true
       }
       this.$refs.multipleTable.toggleRowSelection(row, flag)
-
     },
     smalldeleteditem (index, rowdata) {
       this.multipleSelection.splice(index, 1)
