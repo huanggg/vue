@@ -1,76 +1,49 @@
 <template>
-  <div>
-    <!-- hello -->
-    <!-- <svg version="1.1" style="background:blue">
-      <circle
-        :cx="cx"
-        :cy="cy"
-        r="40"
-        stroke="black"
-        stroke-width="2"
-        fill="red"
-        @mousemove="getMousePos"
-        @click="getMousePos1"
-        v-if="true"
-      ></circle>
-    </svg>-->
-
-    <!-- <div
-      style="width:500px;height:500px;background:red;display:flex;justify-content:center;align-items:center"
-      v-on:click.self="kk()"
-    >
-      <div style="width:400px;height:400px;background:blue"></div>
-    </div>-->
-    <!-- <table>
-      <tr>
-        <td contenteditable="true"></td>
-        <td contenteditable="true"></td>
-        <td contenteditable="true"></td>
-        <td contenteditable="true"></td>
-      </tr>
-      <tr>
-        <td contenteditable="true"></td>
-        <td contenteditable="true"></td>
-        <td contenteditable="true"></td>
-        <td contenteditable="true"></td>
-      </tr>
-      <tr>
-        <td contenteditable="true"></td>
-        <td contenteditable="true"></td>
-        <td contenteditable="true"></td>
-        <td contenteditable="true"></td>
-      </tr>
-    </table>-->
-    <!-- <div @click="add(1)">圆形</div>
-    <div @click="add(2)">兔形</div>
-    <div v-for="(item,index) in arrt" :key="index">
-      <div v-if="item.type==='u'" class="uu">
-        <div contenteditable="true" class="kkk"></div>
-      </div>
-      <div v-if="item.type==='o'">{{item.type}}</div>
-    </div>-->
+  <div style="width:100%;height:100%;">
+    <el-button type="text" @click="seletetype('circle')">圆形</el-button>
+    <el-button type="text" @click="seletetype('triangle')">箭头三角形</el-button>
     <div
-      style="margin:200px;position:relative;left:0px;top:0px;background:orange;width:400px;height:100px;"
+      @mousedown="getMousePos('mousedown')"
+      @mousemove="getMousePos('mousemove')"
+      @mouseup="getMousePos('up')"
+      style="width:100%;height:100%;background:''"
     >
-      <div
-        contenteditable="true"
-        style="position:absolute;top:30%;left:0%;z-index:2000;background:'';width:50%;height:40%;"
-      >My first SVG</div>
-      <!-- <svg version="1.1" style="background:blue;width:100%;height:100%;">
-        <circle cx="50.5" cy="50" r="50" stroke="black" stroke-width="1" fill="white" style="transform:scale(1,1)"></circle>
-      </svg>-->
-      <svg version="1.1" style="background:blue;width:100%;height:100%;">
-        <polygon
-          points="0,30 50,30 50,0 100,50 50,100 50,70 0,70 "
-          style="fill:red;stroke:red;stroke-width:-0.8;transform:scale(4,1)"
-        ></polygon>
-      </svg>
-    </div>vxe-table
-    vue-treeselect
-    vue-crpopper
+      <div class="content" :style="{width:xx+'px',height:yy+'px',left:cx+'px',top:cy+'px'}">
+        <!-- cxcx -->
+        <!-- <div
+          contenteditable="true"
+          style="position:absolute;top:30%;left:0%;z-index:2000;background:'';width:50%;height:40%;"
+        >My first SVG</div>-->
+        <svg version="1.1" style="background:'';width:100%;height:100%;">
+          <circle
+            cx="50.5"
+            cy="50"
+            r="50"
+            stroke="black"
+            stroke-width="1"
+            fill="white"
+            v-if="ShapeType==='circle'"
+            :style="{transform:'scale('+xx/100+','+yy/100+')'}"
+          ></circle>
+
+          <polygon
+            points="0,30 50,30 50,0 100,50 50,100 50,70 0,70 "
+            stroke="black"
+            stroke-width="0.5"
+            fill="white"
+            v-if="ShapeType==='triangle'"
+            :style="{transform:'scale('+xx/100+','+yy/100+')'}"
+          ></polygon>
+        </svg>
+      </div>
+      <!-- vxe-table
+      vue-treeselect
+      vue-crpopper-->
+    </div>
   </div>
 </template>
 <script>
+// import { type } from 'os'
 // import { Message } from 'element-ui'
 // import aes from '@/util/aes'
 // import { setTimeout } from 'timers'
@@ -83,8 +56,17 @@ export default {
       password: '',
       cx: 110,
       cy: 110,
+      mousemovex: 0,
+      mousemovey: 0,
+      xx: 0,
+      yy: 0,
+      active: false,
+      ShapeType: '',
       num: 0,
-      arrt: []
+      arrt: [],
+      scalex: 3,
+      scaley: 5
+
     }
   },
   mounted () {
@@ -115,16 +97,42 @@ export default {
     kk () {
       console.log(22222)
     },
-    getMousePos (event) {
-      const e = event || window.event
-      const scrollX = document.documentElement.scrollLeft || document.body.scrollLeft
-      const scrollY = document.documentElement.scrollTop || document.body.scrollTop
-      const x = e.pageX || e.clientX + scrollX
-      const y = e.pageY || e.clientY + scrollY
-      console.log(x)
-      console.log(y)
-      this.cx = x
-      this.cy = y
+    seletetype (type) {
+      this.ShapeType = type
+      console.log('this.ShapeType', this.ShapeType)
+    },
+    getMousePos (type) {
+      if (this.ShapeType !== '') {
+        if (type === 'mousedown') {
+          const e = event || window.event
+          const scrollX = document.documentElement.scrollLeft || document.body.scrollLeft
+          const scrollY = document.documentElement.scrollTop || document.body.scrollTop
+          const x = e.pageX || e.clientX + scrollX
+          const y = e.pageY || e.clientY + scrollY
+          console.log(x)
+          console.log(y)
+          this.cx = x
+          this.cy = y
+          this.active = true
+        } else if (type === 'mousemove' && this.active === true) {
+          const e = event || window.event
+          const scrollX = document.documentElement.scrollLeft || document.body.scrollLeft
+          const scrollY = document.documentElement.scrollTop || document.body.scrollTop
+          const x = e.pageX || e.clientX + scrollX
+          const y = e.pageY || e.clientY + scrollY
+
+          this.mousemovex = x
+          this.mousemovey = y
+          console.log('mousemovex', this.mousemovex)
+          console.log('mousemovey', this.mousemovey)
+          this.xx = parseInt(this.mousemovex - this.cx)
+          this.yy = parseInt(this.mousemovey - this.cy)
+          console.log('xx', this.xx)
+          console.log('yy', this.yy)
+        } else if (type === 'up') {
+          this.active = false
+        }
+      }
     },
     getMousePos1 (event) {
       this.getMousePos2()
@@ -146,27 +154,6 @@ export default {
 </script>
 
 <style scoped>
-.box {
-  border: 1px dotted red;
-  width: 200px;
-  height: 200px;
-}
-td {
-  border: 1px solid red;
-  width: 50px;
-  height: 50px;
-}
-.uu {
-  width: 200px;
-  height: 200px;
-  border: 1px solid red;
-  background: blue;
-  border-radius: 50%;
-  margin-left: 50px;
-  position: absolute;
-  top: 0px;
-  left: 0px;
-}
 .kkk {
   position: absolute;
   top: 10%;
@@ -174,5 +161,10 @@ td {
   width: 50%;
   height: 80%;
   background: orange;
+}
+.content {
+  position: relative;
+
+  /* background: orange; */
 }
 </style>
