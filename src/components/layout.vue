@@ -28,54 +28,52 @@
         </div>
       </div>
       <div class="main">
-          <div class="leftsideconrent" ref="leftside">
-            <div
-              style="wdith:100%;height:100%;position:absolute;top:0px;left:0px;background:#242730"
-            >
-              <img src="/static/images/NavMenu-bg.png" alt style="width:100%;height:100%">
-            </div>
-            <div class="leftside">
-              <div style="background:black;opacity: 0.9;" class="menu">
-                <el-menu
-                  :default-active="'/'+this.$store.state.data.subindex"
-                  :collapse-transition="false"
-                  :unique-opened="true"
-                  text-color="gray"
-                  background-color="#454b5c"
-                  active-text-color="white"
-                  class="el-menu-vertical-demo"
-                  :collapse="isCollapse"
-                  @select="selectchange"
-                >
-                  <el-submenu :index="'/'+item.id" v-for="(item,index) in topmenu" :key="item.id">
-                    <template slot="title">
-                      <div
-                        @mouseover="mouseover(item,index)"
-                        @mouseout="mouseout(item,index)"
-                        @click="click(item,index)"
-                      >
-                        <img :src="item.iconAfter" class="submenuimg" v-if="item.imgshow0">
-                        <img :src="item.iconSelect" class="submenuimg" v-else-if="item.imgshow">
-                        <img :src="item.iconInit" class="submenuimg" v-else-if="item.imgshow2">
-                        <span slot="title">{{item.menuName}}</span>
-                      </div>
-                    </template>
-                    <el-menu-item-group style="text-indent:15px;">
-                      <div
-                        v-for="(item,index) in item.chirlds"
-                        :key="item.id"
-                        @mouseover="submouseover(item,index)"
-                      >
-                        <el-menu-item :index="'/'+item.id">
-                          <router-link :to="'/'+item.menuCode" tag="div">{{item.menuName}}</router-link>
-                        </el-menu-item>
-                      </div>
-                    </el-menu-item-group>
-                  </el-submenu>
-                </el-menu>
-              </div>
+        <div class="leftsideconrent" ref="leftside">
+          <div style="wdith:100%;height:100%;position:absolute;top:0px;left:0px;background:#242730">
+            <img src="/static/images/NavMenu-bg.png" alt style="width:100%;height:100%">
+          </div>
+          <div class="leftside">
+            <div style="background:black;opacity: 0.9;" class="menu">
+              <el-menu
+                :default-active="'/'+this.$store.state.data.subindex"
+                :collapse-transition="false"
+                :unique-opened="true"
+                text-color="gray"
+                background-color="#454b5c"
+                active-text-color="white"
+                class="el-menu-vertical-demo"
+                :collapse="isCollapse"
+                @select="selectchange"
+              >
+                <el-submenu :index="'/'+item.id" v-for="(item,index) in topmenu" :key="item.id">
+                  <template slot="title">
+                    <div
+                      @mouseover="mouseover(item,index)"
+                      @mouseout="mouseout(item,index)"
+                      @click="click(item,index)"
+                    >
+                      <img :src="item.iconAfter" class="submenuimg" v-if="item.imgshow0">
+                      <img :src="item.iconSelect" class="submenuimg" v-else-if="item.imgshow">
+                      <img :src="item.iconInit" class="submenuimg" v-else-if="item.imgshow2">
+                      <span slot="title">{{item.menuName}}</span>
+                    </div>
+                  </template>
+                  <el-menu-item-group style="text-indent:15px;">
+                    <div
+                      v-for="(item,index) in item.chirlds"
+                      :key="item.id"
+                      @mouseover="submouseover(item,index)"
+                    >
+                      <el-menu-item :index="'/'+item.id">
+                        <router-link :to="'/'+item.menuCode" tag="div">{{item.menuName}}</router-link>
+                      </el-menu-item>
+                    </div>
+                  </el-menu-item-group>
+                </el-submenu>
+              </el-menu>
             </div>
           </div>
+        </div>
       </div>
     </div>
     <div
@@ -186,6 +184,7 @@
 <script>
 import Layouthome from './layouthome'
 import { userProductList } from '@/util/fromat.js'
+
 export default {
   name: 'lyout',
   data () {
@@ -205,7 +204,8 @@ export default {
   created () {
   },
   components: {
-    Layouthome
+    Layouthome,
+
   },
   mounted () {
     console.log('/' + this.$store.state.data.subindex)

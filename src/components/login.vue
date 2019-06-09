@@ -2,43 +2,48 @@
   <div style="width:100%;height:100%;">
     <el-button type="text" @click="seletetype('circle')">圆形</el-button>
     <el-button type="text" @click="seletetype('triangle')">箭头三角形</el-button>
-    <div
-      @mousedown="getMousePos('mousedown')"
-      @mousemove="getMousePos('mousemove')"
-      @mouseup="getMousePos('up')"
-      style="width:100%;height:100%;background:''"
-    >
-      <div class="content" :style="{width:xx+'px',height:yy+'px',left:cx+'px',top:cy+'px'}">
-        <!-- cxcx -->
-        <!-- <div
+    <div style="display:flex">
+      <div
+        @mousedown="getMousePos('mousedown')"
+        @mousemove="getMousePos('mousemove')"
+        @mouseup="getMousePos('up')"
+        style="width:500px;height:500px;background:red"
+      >
+        <div class="content" :style="{width:xx+'px',height:yy+'px',left:cx+'px',top:cy+'px'}">
+          <!-- cxcx -->
+          <!-- <div
           contenteditable="true"
           style="position:absolute;top:30%;left:0%;z-index:2000;background:'';width:50%;height:40%;"
-        >My first SVG</div>-->
-        <svg version="1.1" style="background:'';width:100%;height:100%;">
-          <circle
-            cx="50.5"
-            cy="50"
-            r="50"
-            stroke="black"
-            stroke-width="1"
-            fill="white"
-            v-if="ShapeType==='circle'"
-            :style="{transform:'scale('+xx/100+','+yy/100+')'}"
-          ></circle>
+          >My first SVG</div>-->
+          <svg version="1.1" style="background:'';width:100%;height:100%;">
+            <circle
+              cx="50.5"
+              cy="50"
+              r="50"
+              stroke="black"
+              stroke-width="1"
+              fill="white"
+              v-if="ShapeType==='circle'"
+              :style="{transform:'scale('+xx/100+','+yy/100+')'}"
+            ></circle>
 
-          <polygon
-            points="0,30 50,30 50,0 100,50 50,100 50,70 0,70 "
-            stroke="black"
-            stroke-width="0.5"
-            fill="white"
-            v-if="ShapeType==='triangle'"
-            :style="{transform:'scale('+xx/100+','+yy/100+')'}"
-          ></polygon>
-        </svg>
-      </div>
-      <!-- vxe-table
+            <polygon
+              points="0,30 50,30 50,0 100,50 50,100 50,70 0,70 "
+              stroke="black"
+              stroke-width="0.5"
+              fill="white"
+              v-if="ShapeType==='triangle'"
+              :style="{transform:'scale('+xx/100+','+yy/100+')'}"
+            ></polygon>
+          </svg>
+        </div>
+        <!-- vxe-table
       vue-treeselect
-      vue-crpopper-->
+        vue-crpopper-->
+      </div>
+      <div style="width:502px;height:502px;background:blue">
+        <Demo></Demo>
+      </div>
     </div>
   </div>
 </template>
@@ -47,7 +52,7 @@
 // import { Message } from 'element-ui'
 // import aes from '@/util/aes'
 // import { setTimeout } from 'timers'
-
+import Demo from './demo'
 export default {
   name: 'login',
   data () {
@@ -72,7 +77,7 @@ export default {
   mounted () {
 
   },
-  components: {},
+  components: { Demo },
   methods: {
     add (n) {
       if (n === 1) {
@@ -165,6 +170,6 @@ export default {
 .content {
   position: relative;
 
-  /* background: orange; */
+  background: orange;
 }
 </style>
