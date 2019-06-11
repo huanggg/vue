@@ -22,6 +22,8 @@
               v-for="(nn,index) in xx"
               :key="index"
               style="border:1px solid #d4d4d4;width:20px;height:20px;background:gray"
+              ondragenter="dragenter()"
+              ondragover="dragover()"
             ></td>
           </tr>
         </table>
@@ -62,7 +64,10 @@ export default {
   },
   components: {},
   methods: {
-
+    dragenter (evt) {
+      evt.preventDefault()
+      console.log(555566)
+    },
     getMousePos (type) {
       // if (this.ShapeType !== '') {
       if (type === 'mousedown') {
@@ -71,11 +76,12 @@ export default {
         const scrollY = document.documentElement.scrollTop || document.body.scrollTop
         const x = e.pageX || e.clientX + scrollX
         const y = e.pageY || e.clientY + scrollY
-        console.log(x)
-        console.log(y)
+        // console.log(x)
+        // console.log(y)
         this.cx = x
         this.cy = y
         this.active = true
+        return false
       } else if (type === 'mousemove' && this.active === true) {
         const e = event || window.event
         const scrollX = document.documentElement.scrollLeft || document.body.scrollLeft
@@ -85,12 +91,13 @@ export default {
 
         this.mousemovex = x
         this.mousemovey = y
-        console.log('mousemovex', this.mousemovex)
-        console.log('mousemovey', this.mousemovey)
+        // console.log('mousemovex', this.mousemovex)
+        // console.log('mousemovey', this.mousemovey)
         this.xx = Math.ceil(parseInt(this.mousemovex - this.cx) * 0.05)
         this.yy = Math.ceil(parseInt(this.mousemovey - this.cy) * 0.05)
-        console.log('xx', Number(this.xx))
-        console.log('yy', Number(this.yy))
+        // console.log('xx', Number(this.xx))
+        // console.log('yy', Number(this.yy))
+        return false
       } else if (type === 'up') {
         this.active = false
       }
