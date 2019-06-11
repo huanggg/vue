@@ -113,12 +113,6 @@ export default {
   position: relative;
   background: red;
 }
-.content {
-  position: relative;
-  background: red;
-}.content {
-  position: relative;
-  background: red;
-}
+
 
 </style>
