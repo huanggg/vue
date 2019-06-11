@@ -30,7 +30,16 @@
       </div>
     </div>
     <div style="margin-top:10px">
-     
+      <table cellpadding="0" cellspacing="0">
+        <tr v-for="(n,index) in yy" :key="index">
+          <td
+            v-for="(nn,index) in xx"
+            :key="index"
+            style="border:1px solid #d4d4d4;width:76px;height:25px;background:''"
+            contenteditable="true"
+          ></td>
+        </tr>
+      </table>
     </div>
   </div>
 </template>
@@ -104,6 +113,4 @@ export default {
   position: relative;
   background: red;
 }
-
-
 </style>
