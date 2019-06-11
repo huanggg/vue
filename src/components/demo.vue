@@ -111,6 +111,6 @@ export default {
 <style scoped>
 .content {
   position: relative;
-  background: orange;
+  background: red;
 }
 </style>
