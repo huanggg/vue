@@ -2,7 +2,26 @@
   <div style="width:100%;height:100%;">
     <el-button type="text" @click="seletetype('circle')">圆形</el-button>
     <el-button type="text" @click="seletetype('triangle')">箭头三角形</el-button>
-    <div style="display:flex">
+    <div>
+      <div @click="toImage">截图</div>
+      <el-color-picker
+        v-model="color"
+        show-alpha
+        :predefine="predefineColors"
+        @active-change="activeChange"
+      ></el-color-picker>
+      <el-input v-model="input" placeholder="请输入内容"></el-input>
+      <div style="display:flex">
+        <div class="imageWrapper" ref="imageWrapper">
+          <div contenteditable="true" class="box" :style="{background:color}">{{input}}</div>
+          <img src="static/image/1.jpg" alt>
+        </div>
+        <div v-show="ishow">
+          <img class="real_pic" :src="dataURL" style="width:200px;height:200px">
+        </div>
+      </div>
+    </div>
+    <!-- <div style="display:flex">
       <div
         @mousedown="getMousePos('mousedown')"
         @mousemove="getMousePos('mousemove')"
@@ -10,11 +29,6 @@
         style="width:500px;height:500px;background:red"
       >
         <div class="content" :style="{width:xx+'px',height:yy+'px',left:cx+'px',top:cy+'px'}">
-          <!-- cxcx -->
-          <!-- <div
-          contenteditable="true"
-          style="position:absolute;top:30%;left:0%;z-index:2000;background:'';width:50%;height:40%;"
-          >My first SVG</div>-->
           <svg version="1.1" style="background:'';width:100%;height:100%;">
             <circle
               cx="50.5"
@@ -37,14 +51,21 @@
             ></polygon>
           </svg>
         </div>
-        <!-- vxe-table
-      vue-treeselect
-        vue-crpopper-->
       </div>
       <div style="width:502px;height:502px;background:blue">
         <Demo></Demo>
       </div>
+    </div>-->
+    <div>
+      <!-- vxe-table
+      vue-treeselect
+      vue-crpopper-->
+      <!-- <sortTable></sortTable> -->
     </div>
+    <!-- <div>
+      <treeselect v-model="value" :multiple="true" :options="options"/>
+    </div>
+    <div>{{value}}</div>-->
   </div>
 </template>
 <script>
@@ -53,10 +74,75 @@
 // import aes from '@/util/aes'
 // import { setTimeout } from 'timers'
 import Demo from './demo'
+import sortTable from '@/view/sortTable.vue'
+// import the component
+import Treeselect from '@riophae/vue-treeselect'
+import html2canvas from 'html2canvas'
+// import the styles
+import '@riophae/vue-treeselect/dist/vue-treeselect.css'
+import { setTimeout } from 'timers'
 export default {
   name: 'login',
   data () {
     return {
+      input: '',
+      ishow: false,
+      color: 'rgba(250, 250, 250, 1)',
+      predefineColors: [
+        '#ff4500',
+        '#ff8c00',
+        '#ffd700',
+        '#90ee90',
+        '#00ced1',
+        '#1e90ff',
+        '#c71585',
+        'rgba(255, 69, 0, 0.68)',
+        'rgb(255, 120, 0)',
+        'hsv(51, 100, 98)',
+        'hsva(120, 40, 94, 0.5)',
+        'hsl(181, 100%, 37%)',
+        'hsla(209, 100%, 56%, 0.73)',
+
+      ],
+      dataURL: '',
+      value: null,
+      options: [{
+        id: 'fruits',
+        label: 'Fruits',
+        children: [{
+          id: 'apple',
+          label: 'Apple 🍎',
+          isNew: true,
+        }, {
+          id: 'grapes',
+          label: 'Grapes 🍇',
+        }, {
+          id: 'pear',
+          label: 'Pear 🍐',
+        }, {
+          id: 'strawberry',
+          label: 'Strawberry 🍓',
+        }, {
+          id: 'watermelon',
+          label: 'Watermelon 🍉',
+        }],
+      }, {
+        id: 'vegetables',
+        label: 'Vegetables',
+        children: [{
+          id: 'corn',
+          label: 'Corn 🌽',
+        }, {
+          id: 'carrot',
+          label: 'Carrot 🥕',
+        }, {
+          id: 'eggplant',
+          label: 'Eggplant 🍆',
+        }, {
+          id: 'tomato',
+          label: 'Tomato 🍅',
+        }],
+      }],
       name: '',
       password: '',
       cx: 110,
@@ -77,8 +163,27 @@ export default {
   mounted () {
 
   },
-  components: { Demo },
+  updated () {
+    setTimeout(() => {
+      this.toImage()
+    }, 3000)
+    this.ishow = true
+  },
+  components: { Demo, sortTable, Treeselect },
   methods: {
+    activeChange (color) {
+      console.log(333333, color)
+      this.color = color
+    },
+    toImage () {
+      html2canvas(this.$refs.imageWrapper, {
+        backgroundColor: null
+      }).then((canvas) => {
+        const dataURL = canvas.toDataURL('image/png')
+        this.dataURL = dataURL
+        console.log(dataURL)
+      })
+    },
     add (n) {
       if (n === 1) {
         const ll = {
@@ -171,5 +276,10 @@ export default {
   position: relative;
 
   background: orange;
+}
+.box {
+  width: 500px;
+  height: 50px;
+  background: blue;
 }
 </style>
