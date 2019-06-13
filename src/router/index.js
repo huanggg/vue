@@ -1,36 +1,72 @@
 /* jshint esversion: 6 */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-
-// // 项目数据路由
-// import projectdata from './projectdata'
-// // 数据管理路由
-// import Datamanagement from './Datamanagement'
-// // 角色管理路由
-// import AuthorityManagement from './AuthorityManagement'
-// // 产品管理路由
-// import ProductManagement from './ProductManagement'
-// import store from '@/store/index'
 Vue.use(VueRouter)
 const router = new VueRouter({
   routes: [
-    // 首页
-    // {
-    //   path: '/home',
-    //   name: 'home',
-    //   // component: home,
-    //   component: (resolve) => require(['@/components/homed.vue'], resolve),
-    //   meta: { title: '首页', noCache: true, requiresAuth: true }
-    // },
     // 登录页
     {
       path: '/',
       name: 'login',
       // component: login,
       // 按需加载
-      component: (resolve) => require(['@/components/login.vue'], resolve),
+      component: resolve => require(['@/components/login.vue'], resolve),
+      children: [
+        {
+          path: '/',
+          name: 'excel',
+          // component: login,
+          // 按需加载
+          component: resolve => require(['@/components/excel.vue'], resolve),
+          meta: { title: 'excel', noCache: true }
+        },
+        {
+          path: 'sortTable',
+          name: 'sortTable',
+          // component: login,
+          // 按需加载
+          component: resolve =>
+            require(['@/components/sortTable.vue'], resolve),
+          meta: { title: 'sortTable', noCache: true }
+        },
+        {
+          path: 'vuephotopreview',
+          name: 'vuephotopreview',
+          // component: login,
+          // 按需加载
+          component: resolve =>
+            require(['@/components/vuephotopreview.vue'], resolve),
+          meta: { title: 'vuephotopreview', noCache: true }
+        },
+        {
+          path: 'html2canvas',
+          name: 'html2canvas',
+          // component: login,
+          // 按需加载
+          component: resolve =>
+            require(['@/components/html2canvas.vue'], resolve),
+          meta: { title: 'html2canvas', noCache: true }
+        },
+        {
+          path: 'graph',
+          name: 'graph',
+          // component: login,
+          // 按需加载
+          component: resolve => require(['@/components/graph.vue'], resolve),
+          meta: { title: 'graph', noCache: true }
+        },
+        {
+          path: 'newTable',
+          name: 'newTable',
+          // component: login,
+          // 按需加载
+          component: resolve => require(['@/components/newTable.vue'], resolve),
+          meta: { title: 'newTable', noCache: true }
+        }
+      ],
       meta: { title: '登陆页', noCache: true }
-    },
+    }
+
     // {
     //   // 控制中心
     //   path: '/layout',

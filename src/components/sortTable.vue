@@ -20,7 +20,7 @@
       <el-table-column prop="address" label="地址" sortable :formatter="formatter"></el-table-column>
       <el-table-column prop="age" label="年龄" sortable></el-table-column>
     </el-table>
-    <div style="width:200px;height:200px;background:red" @contextmenu.prevent="contextmenu"></div>
+    <div style="width:200px;height:200px;background:red" @contextmenu.prevent="contextmenu">右击</div>
   </div>
 </template>
 
