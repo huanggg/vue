@@ -5,12 +5,12 @@
         @mousedown="getMousePos('mousedown')"
         @mousemove="getMousePos('mousemove')"
         @mouseup="getMousePos('up')"
-        style="width:300px;height:100%;position:relative;top:0px;left:0px"
+        style="width:1000px;height:100%;position:relative;top:0px;left:0px"
       >
         <table cellpadding="0" cellspacing="0">
-          <tr v-for="(n,index) in 10" :key="index">
+          <tr v-for="(n,index) in 20" :key="index">
             <td
-              v-for="(nn,index) in 15"
+              v-for="(nn,index) in 26"
               :key="index"
               style="border:1px solid #d4d4d4;width:20px;height:20px;background:''"
             ></td>
@@ -30,7 +30,7 @@
           </table>
         </div>
       </div>
-      <div style>
+      <!-- <div style>
         <table cellpadding="0" cellspacing="0">
           <tr v-for="(n,index) in yy" :key="index">
             <td
@@ -41,23 +41,30 @@
             ></td>
           </tr>
         </table>
-      </div>
+      </div>-->
     </div>
     <div>
       <treeselect v-model="value" :multiple="true" :options="options"/>
     </div>
     <div>{{value}}</div>
+    <div>
+      <excel v-if="show"></excel>
+    </div>
   </div>
 </template>
 
 <script>
+
 import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 import Treeselect from '@riophae/vue-treeselect'
+import excel from './excel.vue'
 export default {
+
   name: 'login',
   data () {
     return {
 
+      show: false,
       cx: 0,
       cy: 0,
       mousemovex: 0,
@@ -114,10 +121,12 @@ export default {
 
     }
   },
+
   mounted () {
 
   },
-  components: { Treeselect },
+
+  components: { Treeselect, excel },
   methods: {
     dragenter (evt) {
       evt.preventDefault()
@@ -136,6 +145,7 @@ export default {
         this.cx = x
         this.cy = y
         this.active = true
+        this.show = false
         return false
       } else if (type === 'mousemove' && this.active === true) {
         const e = event || window.event
@@ -150,11 +160,16 @@ export default {
         // console.log('mousemovey', this.mousemovey)
         this.xx = Math.ceil(parseInt(this.mousemovex - this.cx) * 0.05)
         this.yy = Math.ceil(parseInt(this.mousemovey - this.cy) * 0.05)
-        // console.log('xx', Number(this.xx))
-        // console.log('yy', Number(this.yy))
+        console.log('xx', Number(this.xx))
+        console.log('yy', Number(this.yy))
+        sessionStorage.setItem('xx', this.xx)
+        sessionStorage.setItem('yy', this.yy)
         return false
       } else if (type === 'up') {
         this.active = false
+        this.show = true
+        this.xx = 0
+        this.yy = 0
       }
       // }
     },

@@ -13,7 +13,7 @@ const router = new VueRouter({
       component: resolve => require(['@/components/login.vue'], resolve),
       children: [
         {
-          path: '/',
+          path: 'excel',
           name: 'excel',
           // component: login,
           // 按需加载

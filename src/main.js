@@ -13,6 +13,7 @@ import 'viewerjs/dist/viewer.css'
 import Viewer from 'v-viewer'
 import VXETable from 'vxe-table'
 import 'vxe-table/lib/index.css'
+
 // import axios from 'axios'
 Vue.prototype.$http = axios
 // Vue.use(axios)
