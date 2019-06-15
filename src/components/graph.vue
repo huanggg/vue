@@ -7,9 +7,12 @@
         @mousedown="getMousePos('mousedown')"
         @mousemove="getMousePos('mousemove')"
         @mouseup="getMousePos('up')"
-        style="width:500px;height:500px;background:red"
+        style="width:1000px;height:800px;background:red"
       >
-        <div class="content" :style="{width:xx+'px',height:yy+'px',left:cx+'px',top:cy+'px'}">
+        <div
+          class="content"
+          :style="{width:xx+'px',height:yy+'px',left:cx+'px',top:cy+'px',transform:'rotate('+rotate+'deg)'}"
+        >
           <svg version="1.1" style="background:'';width:100%;height:100%;">
             <circle
               cx="50.5"
@@ -44,8 +47,8 @@ export default {
 
       name: '',
       password: '',
-      cx: 110,
-      cy: 110,
+      cx: 0,
+      cy: 0,
       mousemovex: 0,
       mousemovey: 0,
       xx: 0,
@@ -55,7 +58,8 @@ export default {
       num: 0,
       arrt: [],
       scalex: 3,
-      scaley: 5
+      scaley: 5,
+      rotate: 0
 
     }
   },
@@ -94,10 +98,12 @@ export default {
       if (this.ShapeType !== '') {
         if (type === 'mousedown') {
           const e = event || window.event
-          const scrollX = document.documentElement.scrollLeft || document.body.scrollLeft
-          const scrollY = document.documentElement.scrollTop || document.body.scrollTop
-          const x = e.pageX || e.clientX + scrollX
-          const y = e.pageY || e.clientY + scrollY
+          // const scrollX = document.documentElement.scrollLeft || document.body.scrollLeft
+          // const scrollY = document.documentElement.scrollTop || document.body.scrollTop
+          // const x = e.pageX || e.clientX + scrollX
+          // const y = e.pageY || e.clientY + scrollY
+          const x = e.offsetX
+          const y = e.offsetY
           console.log(x)
           console.log(y)
           this.cx = x
@@ -105,19 +111,24 @@ export default {
           this.active = true
         } else if (type === 'mousemove' && this.active === true) {
           const e = event || window.event
-          const scrollX = document.documentElement.scrollLeft || document.body.scrollLeft
-          const scrollY = document.documentElement.scrollTop || document.body.scrollTop
-          const x = e.pageX || e.clientX + scrollX
-          const y = e.pageY || e.clientY + scrollY
-
+          // const scrollX = document.documentElement.scrollLeft || document.body.scrollLeft
+          // const scrollY = document.documentElement.scrollTop || document.body.scrollTop
+          // const x = e.pageX || e.clientX + scrollX
+          // const y = e.pageY || e.clientY + scrollY
+          const x = e.offsetX
+          const y = e.offsetY
           this.mousemovex = x
           this.mousemovey = y
           console.log('mousemovex', this.mousemovex)
           console.log('mousemovey', this.mousemovey)
           this.xx = parseInt(this.mousemovex - this.cx)
           this.yy = parseInt(this.mousemovey - this.cy)
-          console.log('xx', this.xx)
-          console.log('yy', this.yy)
+          // console.log('xx', this.xx)
+          // console.log('yy', this.yy)
+          // const radians = Math.atan2(e.pageY - window.innerHeight * 0.5, e.pageX - window.innerWidth * 0.5)
+          // const deg = radians * (180 / Math.PI)
+          // console.log('deg', deg)
+          // this.rotate = deg
         } else if (type === 'up') {
           this.active = false
         }

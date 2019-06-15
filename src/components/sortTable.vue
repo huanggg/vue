@@ -20,7 +20,16 @@
       <el-table-column prop="address" label="地址" sortable :formatter="formatter"></el-table-column>
       <el-table-column prop="age" label="年龄" sortable></el-table-column>
     </el-table>
-    <div style="width:200px;height:200px;background:red" @contextmenu.prevent="contextmenu">右击</div>
+    <div style="width:500px;height:500px;border:1px solid blue;position:relative">
+      <!-- <vue-draggable-resizable :grid="[20,20]" :parent="true">
+        <div style="width:200px;height:200px;background:red" @contextmenu.prevent="contextmenu">右击</div>
+      </vue-draggable-resizable>-->
+
+        <vue-draggable-resizable :parent="true" :grid="[20,20]" >
+          <p>You cannot move me or resize me outside my parent.</p>
+        </vue-draggable-resizable>
+
+    </div>
   </div>
 </template>
 
@@ -72,4 +81,9 @@ export default {
 </script>
 
 <style scoped >
+.layout {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
 </style>

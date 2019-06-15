@@ -13,13 +13,17 @@ import 'viewerjs/dist/viewer.css'
 import Viewer from 'v-viewer'
 import VXETable from 'vxe-table'
 import 'vxe-table/lib/index.css'
-
+import 'vue-draggable-resizable/dist/VueDraggableResizable.css'
+import VueDraggableResizable from 'vue-draggable-resizable'
 // import axios from 'axios'
 Vue.prototype.$http = axios
+Vue.prototype.VueDraggableResizable = VueDraggableResizable
 // Vue.use(axios)
 // axios.defaults.baseURL = '/api'
 // axios.defaults.headers.post['Content-Type'] = 'application/json'
 Vue.config.productionTip = false
+
+Vue.component('vue-draggable-resizable', VueDraggableResizable)
 Vue.use(VXETable)
 Vue.use(Viewer)
 // 这里是插件的默认设置

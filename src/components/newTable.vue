@@ -7,13 +7,17 @@
         @mouseup="getMousePos('up')"
         style="width:1000px;height:100%;position:relative;top:0px;left:0px"
       >
+
         <table cellpadding="0" cellspacing="0">
           <tr v-for="(n,index) in 20" :key="index">
+
             <td
               v-for="(nn,index) in 26"
               :key="index"
               style="border:1px solid #d4d4d4;width:20px;height:20px;background:''"
-            ></td>
+            >
+
+            </td>
           </tr>
         </table>
         <div style="position:absolute;left:0px;top:0px">
@@ -30,18 +34,6 @@
           </table>
         </div>
       </div>
-      <!-- <div style>
-        <table cellpadding="0" cellspacing="0">
-          <tr v-for="(n,index) in yy" :key="index">
-            <td
-              v-for="(nn,index) in xx"
-              :key="index"
-              style="border:1px solid #d4d4d4;width:56px;height:25px;background:''"
-              contenteditable="true"
-            ></td>
-          </tr>
-        </table>
-      </div>-->
     </div>
     <div>
       <treeselect v-model="value" :multiple="true" :options="options"/>
@@ -145,7 +137,12 @@ export default {
         this.cx = x
         this.cy = y
         this.active = true
-        this.show = false
+        if (this.show === true) {
+          this.xx = 0
+          this.yy = 0
+          this.show = false
+        }
+
         return false
       } else if (type === 'mousemove' && this.active === true) {
         const e = event || window.event
@@ -168,8 +165,6 @@ export default {
       } else if (type === 'up') {
         this.active = false
         this.show = true
-        this.xx = 0
-        this.yy = 0
       }
       // }
     },

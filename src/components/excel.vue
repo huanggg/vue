@@ -102,8 +102,16 @@ export default {
         case '15':
           return sessionStorage.getItem('xx') * 77 + 36.8
           break
+        case '16':
+          return sessionStorage.getItem('xx') * 77 + 35.4
+          break
+        case '17':
+          return sessionStorage.getItem('xx') * 77 + 36.4
+          break
+     
+        
         default:
-        // return sessionStorage.getItem('xx') * 78 + 48.8
+          // return sessionStorage.getItem('xx') * 78 + 48.8
       }
     }
   },
@@ -139,6 +147,7 @@ export default {
     },
     exportCsvEvent () {
       this.$refs.xExcel.exportCsv()
+      console.log('this.$refs.xExcel.exportCsv()',this.$refs.xExcel.exportCsv())
     },
     fileChangeEvent (evnt) {
       const files = evnt.target.files
@@ -166,6 +175,7 @@ export default {
           return item
         })
         this.tableData = tableData
+        //  this.tableData.splice(0,1) 
         this.tableData.forEach((item, index) => {
           item.id = index
         })
@@ -185,10 +195,10 @@ export default {
 }
 </style>
 <style>
-.vxe-table .vxe-table--body-wrapper,
+/* .vxe-table .vxe-table--body-wrapper,
 .vxe-table .vxe-table--fixed-left-body-wrapper,
 .vxe-table .vxe-table--fixed-right-body-wrapper {
-  /* overflow-y: hidden !important ; */
-  /* overflow-x: auto !important; */
-}
+  overflow-y: hidden !important ;
+  overflow-x: auto !important;
+} */
 </style>
