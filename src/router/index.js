@@ -64,7 +64,7 @@ const router = new VueRouter({
           meta: { title: 'newTable', noCache: true }
         }
       ],
-      meta: { title: '登陆页', noCache: true }
+      meta: { title: 'copper', noCache: true }
     }
 
     // {

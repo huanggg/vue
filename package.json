@@ -26,6 +26,7 @@
     "moment": "^2.23.0",
     "vcolorpicker": "^0.1.8",
     "vue": "^2.5.2",
+    "vue-cropperjs": "^4.0.0",
     "vue-draggable-resizable": "^2.0.0-rc2",
     "vue-draggable-resizable-gorkys": "^1.1.2",
     "vue-photo-preview": "^1.1.3",

@@ -64,6 +64,9 @@ div {
   -webkit-box-sizing: border-box;
   /* Safari */
 }
+button {
+  outline: none;
+}
 /*滚动样式*/
 .el-scrollbar__wrap {
   overflow-x: hidden;

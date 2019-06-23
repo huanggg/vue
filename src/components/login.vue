@@ -49,7 +49,8 @@ export default {
         {
           id: 6,
           name: 'graph'
-        }
+        },
+
       ],
       isactive: 0,
     }

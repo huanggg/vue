@@ -20,16 +20,45 @@
       <el-table-column prop="address" label="地址" sortable :formatter="formatter"></el-table-column>
       <el-table-column prop="age" label="年龄" sortable></el-table-column>
     </el-table>
-    <div style="width:500px;height:500px;border:1px solid blue;position:relative">
-      <!-- <vue-draggable-resizable :grid="[20,20]" :parent="true">
-        <div style="width:200px;height:200px;background:red" @contextmenu.prevent="contextmenu">右击</div>
-      </vue-draggable-resizable>-->
 
-        <vue-draggable-resizable :parent="true" :grid="[20,20]" >
-          <p>You cannot move me or resize me outside my parent.</p>
-        </vue-draggable-resizable>
+    <button
+      style="width:500px;height:500px;border:0px solid blue;position:relative;display:block;background:orange;outline: none;"
+      @click.stop="test()"
+      @keyup.ctrl.86="ctrlv"
+    >
+      <!-- <vue-draggable-resizable :grid="[20,20]" :parent="false">
+        <div style="width:100%;height:100%;background:red" @contextmenu.prevent="contextmenu">右击</div>
+      </vue-draggable-resizable> -->
 
-    </div>
+      <vue-draggable-resizable :parent="false" :grid="[20,20]">
+        <div
+          @click.stop="kk()"
+          @dblclick="dblclick()"
+          @contextmenu.prevent="contextmenu"
+          style="width:100%;height:100%;"
+          class="box"
+        >
+          <!-- <el-color-picker v-model="color1" v-if="shoucolor_picker"></el-color-picker> -->
+          <button
+            @keyup.ctrl.67="ctrlc"
+            style="width:100%;height:100%;display:block;background:white;border:0px solid blue;"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" version="1.1" style="width:100%;height:100%;">
+              <rect
+                x="50"
+                y="20"
+                rx="50"
+                ry="50"
+                width="150"
+                height="150"
+                style="fill:blue;stroke:pink;stroke-width:5;fill-opacity:1;
+          stroke-opacity:0.9"
+              ></rect>
+            </svg>
+          </button>
+        </div>
+      </vue-draggable-resizable>
+    </button>
   </div>
 </template>
 
@@ -37,6 +66,8 @@
 export default {
   data () {
     return {
+      color1: '',
+      shoucolor_picker: false,
       tableData: [{
         hangdle: '22',
         date: '2016-05-02',
@@ -66,6 +97,12 @@ export default {
 
   },
   methods: {
+    ctrlc () {
+      console.log('ctrlc')
+    },
+    ctrlv () {
+      console.log('ctrlv')
+    },
     formatter (row, column) {
       return row.address
     },
@@ -75,6 +112,20 @@ export default {
     },
     contextmenu () {
       console.log('contextmenu')
+      this.shoucolor_picker = true
+    },
+    test () {
+      console.log('contextmenu')
+      this.shoucolor_picker = false
+    },
+    kk () {
+      console.log('kkk')
+    },
+    ll () {
+      console.log('lll')
+    },
+    dblclick () {
+      console.log('dblclick')
     }
   }
 }
@@ -85,5 +136,8 @@ export default {
   width: 100%;
   height: 100%;
   position: relative;
+}
+.box {
+  transform: rotate(0deg);
 }
 </style>
