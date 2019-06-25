@@ -22,15 +22,15 @@
     </el-table>
 
     <button
-      style="width:500px;height:20px;border:1px solid blue;position:relative;display:block;background:orange;outline: none;"
+      style="width:500px;height:200px;border:1px solid blue;position:relative;display:block;background:orange;outline: none;"
       @click.stop="test()"
       @keyup.ctrl.86="ctrlv"
     >
       <!-- <vue-draggable-resizable :grid="[20,20]" :parent="false">
         <div style="width:100%;height:100%;background:red" @contextmenu.prevent="contextmenu">右击</div>
-      </vue-draggable-resizable>-->
+      </vue-draggable-resizable> -->
 
-      <!-- <vue-draggable-resizable :grid="[20,20]" :parent="false" :draggable="false">
+      <vue-draggable-resizable :grid="[20,20]" :parent="false" :draggable="true">
         <div
           @click.stop="kk()"
           @dblclick="dblclick()"
@@ -55,7 +55,7 @@
             </div>
           </button>
         </div>
-      </vue-draggable-resizable>-->
+      </vue-draggable-resizable>
     </button>
     <button type="button">
       图片上传
