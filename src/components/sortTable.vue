@@ -22,7 +22,7 @@
     </el-table>
 
     <button
-      style="width:500px;height:500px;border:1px solid blue;position:relative;display:block;background:orange;outline: none;"
+      style="width:500px;height:20px;border:1px solid blue;position:relative;display:block;background:orange;outline: none;"
       @click.stop="test()"
       @keyup.ctrl.86="ctrlv"
     >
@@ -30,7 +30,7 @@
         <div style="width:100%;height:100%;background:red" @contextmenu.prevent="contextmenu">右击</div>
       </vue-draggable-resizable>-->
 
-      <vue-draggable-resizable :grid="[20,20]" :parent="false">
+      <!-- <vue-draggable-resizable :grid="[20,20]" :parent="false" :draggable="false">
         <div
           @click.stop="kk()"
           @dblclick="dblclick()"
@@ -38,23 +38,10 @@
           style="width:100%;height:100%;"
           class="box"
         >
-          <!-- <el-color-picker v-model="color1" v-if="shoucolor_picker"></el-color-picker> -->
           <button
             @keyup.ctrl.67="ctrlc"
             style="width:100%;height:100%;display:block;background:white;border:0px solid blue;"
           >
-            <!-- <svg xmlns="http://www.w3.org/2000/svg" version="1.1" style="width:100%;height:100%;">
-              <rect
-                x="50"
-                y="20"
-                rx="50"
-                ry="50"
-                width="150"
-                height="150"
-                style="fill:blue;stroke:pink;stroke-width:5;fill-opacity:1;
-          stroke-opacity:0.9"
-              ></rect>
-            </svg>-->
             <div style="position:absolute;top:0px;left:0px;width:100%">
               <quill-editor
                 v-model="content"
@@ -68,8 +55,14 @@
             </div>
           </button>
         </div>
-      </vue-draggable-resizable>
+      </vue-draggable-resizable>-->
     </button>
+    <button type="button">
+      图片上传
+      <input type="file" @change="Preview($event)" accept="image/*" ref="showinput">
+    </button>
+
+    <div :style="{width:200+'px',height:100+'px',backgroundImage:'url('+img+')'}"></div>
   </div>
 </template>
 
@@ -77,23 +70,25 @@
 export default {
   data () {
     return {
+      imgObj: '',
+      img: '',
       color1: '',
       content: '<p><span style="color: rgb(230, 0, 0);">ffdfd</span></p>',
 
       editorOption: {
         modules: {
           toolbar: [
-            ["bold", "italic", "underline", "strike"],
+            ['bold', 'italic', 'underline', 'strike'],
             // 加粗 斜体 下划线 删除线
-            ["code-block"],
+            ['code-block'],
             // 引用  代码块
             // [{ header: 1 }, { header: 2 }], // 1、2 级标题你怕吗
-            [{ list: "ordered" }, { list: "bullet" }],
+            [{ list: 'ordered' }, { list: 'bullet' }],
             // 有序、无序列表
             // [{ script: "sub" }, { script: "super" }], // 上标/下标
             // [{ indent: "-1" }, { indent: "+1" }], // 缩进
             // [{'direction': 'rtl'}],                         // 文本方向
-            [{ size: ["small", false, "large", "huge"] }],
+
             // 字体大小
             // [{ header: [1, 2, 3, 4, 5, 6, false] }], // 标题
             [{ color: [] }, { background: [] }],
@@ -102,43 +97,83 @@ export default {
             [{ align: [] }],
             // 对齐方式
             // ["clean"], // 清除文本格式
-            ["image"]
+            ['image'],
+            [{ size: ['small', false, 'large', 'huge'] }],
             // 链接、图片、视频
 
           ]
-        }
+        },
+        theme: 'bubble'
+
       },
       shoucolor_picker: false,
       quill_editor: false,
-      tableData: [{
-        hangdle: '22',
-        date: '2016-05-02',
-        name: '王小虎',
-        age: 20,
-        address: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        hangdle: '2222',
-        date: '2016-05-04',
-        name: '王小虎',
-        age: 22,
-        address: '上海市普陀区金沙江路 1517 弄'
-      }, {
-        date: '2016-05-01',
-        name: '王小虎',
-        age: 13,
-        address: '上海市普陀区金沙江路 1519 弄'
-      }, {
-        date: '2016-05-03',
-        name: '王小虎',
-        age: 30,
-        address: '上海市普陀区金沙江路 1516 弄'
-      }]
+      tableData: [
+        {
+          hangdle: '22',
+          date: '2016-05-02',
+          name: '王小虎',
+          age: 20,
+          address: '上海市普陀区金沙江路 1518 弄'
+        },
+        {
+          hangdle: '2222',
+          date: '2016-05-04',
+          name: '王小虎',
+          age: 22,
+          address: '上海市普陀区金沙江路 1517 弄'
+        }, {
+          date: '2016-05-01',
+          name: '王小虎',
+          age: 13,
+          address: '上海市普陀区金沙江路 1519 弄'
+        }, {
+          date: '2016-05-03',
+          name: '王小虎',
+          age: 30,
+          address: '上海市普陀区金沙江路 1516 弄'
+        }
+      ]
     }
   },
   components: {
 
   },
   methods: {
+    Preview (ev) {
+      // const self=this;
+      const file = ev.target.files[0]
+      this.imgObj = ev.target.files[0]
+      const obj = new FileReader()
+      obj.readAsDataURL(file)
+      // obj.onload=function(){
+      //   self.img=obj.result;
+      // }
+      obj.onload = () => {
+        this.picReduce(obj.result, base64 => {
+          this.img = base64
+        })
+      }
+    },
+    // 图片压缩
+    // picReduce (picObj, callback) {
+    //   const img = new Image()
+    //   img.src = picObj
+    //   img.onload = () => {
+    //     const w = img.width
+    //     const h = img.height
+    //     const scale = w / h
+    //     const max_w = w > 1080 ? 1080 : w
+    //     const max_h = h * max_w / w
+    //     const canvas = document.createElement('canvas')
+    //     const ctx = canvas.getContext('2d')
+    //     canvas.width = max_w
+    //     canvas.height = max_h
+    //     ctx.drawImage(img, 0, 0, max_w, max_h)
+    //     const base64 = canvas.toDataURL('image/jpeg', 0.7)
+    //     callback(base64)
+    //   }
+    // },
     ctrlc () {
       console.log('ctrlc')
     },
@@ -147,7 +182,6 @@ export default {
     },
     onEditorBlur () {
       console.log('失去焦点事件')
-
     },
     onEditorFocus () {
       console.log('获得焦点事件')
@@ -167,7 +201,6 @@ export default {
     contextmenu () {
       console.log('contextmenu')
       this.shoucolor_picker = true
-
     },
     test () {
       console.log('contextmenu')
@@ -197,10 +230,24 @@ export default {
   transform: rotate3d(0, 0, 1, 0deg);
   font-size: 30px;
 }
+button {
+  background: rgb(7, 193, 96);
+  border: 1px solid rgb(7, 193, 96);
+  border-radius: 5px;
+  position: relative;
+  overflow: hidden; /* 超出button的input部分会被切掉 */
+}
+input {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  opacity: 0; /* 透明度为零。隐藏input的默认样式，即整个input被隐藏了，但功能还在 */
+}
 </style>
 <style >
 .ql-container.ql-snow {
   border: 0px solid #ccc;
 }
 </style>
-
