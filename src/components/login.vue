@@ -14,6 +14,7 @@
     <div style="width:calc(100% - 200px);border:1px solid blue;height:100%">
       <router-view/>
     </div>
+
   </div>
 </template>
 <script>
@@ -71,4 +72,5 @@ export default {
 .active {
   background: lightgray;
 }
+
 </style>

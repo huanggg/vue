@@ -31,6 +31,7 @@
               stroke-width="0.5"
               fill="white"
               v-if="ShapeType==='triangle'"
+              stroke-dasharray="0   0"
               :style="{transform:'scale('+xx/100+','+yy/100+')'}"
             ></polygon>
           </svg>

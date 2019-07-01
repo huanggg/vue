@@ -1,12 +1,11 @@
 <template>
   <div class="layout">
-    <el-table
+    <!-- <el-table
       :data="tableData"
       style="width: 100%"
       :default-sort="{prop: 'date', order: 'descending'}"
       @select="select"
     >
-      <!-- ascending -->
       <el-table-column type="selection" width="55"></el-table-column>
       <el-table-column label="操作" width="180">
         <template slot-scope="scope">
@@ -19,61 +18,66 @@
       <el-table-column prop="name" label="姓名" sortable width="180"></el-table-column>
       <el-table-column prop="address" label="地址" sortable :formatter="formatter"></el-table-column>
       <el-table-column prop="age" label="年龄" sortable></el-table-column>
-    </el-table>
+    </el-table>-->
+    <el-color-picker v-model="color" show-alpha></el-color-picker>
 
-    <button
-      style="width:500px;height:200px;border:1px solid blue;position:relative;display:block;background:orange;outline: none;"
-      @click.stop="test()"
-      @keyup.ctrl.86="ctrlv"
-    >
-      <!-- <vue-draggable-resizable :grid="[20,20]" :parent="false">
-        <div style="width:100%;height:100%;background:red" @contextmenu.prevent="contextmenu">右击</div>
-      </vue-draggable-resizable> -->
-
-      <vue-draggable-resizable :grid="[20,20]" :parent="false" :draggable="true">
-        <div
-          @click.stop="kk()"
-          @dblclick="dblclick()"
-          @contextmenu.prevent="contextmenu"
-          style="width:100%;height:100%;"
-          class="box"
+    <div style="position:relative">
+      <button
+        class="buttonbox"
+        @click.stop="test()"
+        @keyup.ctrl.86="ctrlv"
+        :style="{background:color}"
+      >
+        <vue-draggable-resizable
+          :grid="[20,20]"
+          :parent="true"
+          :draggable="true"
+          class-name="my-class"
         >
-          <button
-            @keyup.ctrl.67="ctrlc"
-            style="width:100%;height:100%;display:block;background:white;border:0px solid blue;"
+          <div
+            @click.stop="kk()"
+            @dblclick="dblclick()"
+            @contextmenu.prevent="contextmenu"
+            style="width:100%;height:100%;"
+            class="box"
           >
-            <div style="position:absolute;top:0px;left:0px;width:100%">
-              <quill-editor
-                v-model="content"
-                ref="myQuillEditor"
-                :options="editorOption"
-                @blur="onEditorBlur($event)"
-                @focus="onEditorFocus($event)"
-                @change="onEditorChange($event)"
-                v-if="quill_editor"
-              ></quill-editor>
-            </div>
-          </button>
-        </div>
-      </vue-draggable-resizable>
-    </button>
-    <button type="button">
+            <button
+              @keyup.ctrl.67="ctrlc"
+              style="width:100%;height:100%;display:block;background:white;border:0px solid blue;"
+            >
+              <div class="quill_box">
+                <quill-editor
+                  v-model="content"
+                  ref="myQuillEditor"
+                  :options="editorOption"
+                  @blur="onEditorBlur($event)"
+                  @focus="onEditorFocus($event)"
+                  @change="onEditorChange($event)"
+                ></quill-editor>
+              </div>
+            </button>
+          </div>
+        </vue-draggable-resizable>
+      </button>
+    </div>
+
+    <!-- <div style="width:500px;height:500px;position:absolute;">fdsf</div> -->
+    <button type="button" class="button">
       图片上传
       <input type="file" @change="Preview($event)" accept="image/*" ref="showinput">
     </button>
-
     <div :style="{width:200+'px',height:100+'px',backgroundImage:'url('+img+')'}"></div>
   </div>
 </template>
-
 <script>
 export default {
   data () {
     return {
+      color: 'rgba(19, 206, 102, 0.8)',
       imgObj: '',
       img: '',
       color1: '',
-      content: '<p><span style="color: rgb(230, 0, 0);">ffdfd</span></p>',
+      content: ' ',
 
       editorOption: {
         modules: {
@@ -103,7 +107,8 @@ export default {
 
           ]
         },
-        theme: 'bubble'
+        theme: 'bubble',
+        placeholder: 'here'
 
       },
       shoucolor_picker: false,
@@ -226,11 +231,23 @@ export default {
   height: 100%;
   position: relative;
 }
+.my-class {
+  z-index: 200;
+}
+.buttonbox {
+  width: 500px;
+  height: 500px;
+  border: 1px solid blue;
+  position: absolute;
+  display: block;
+  outline: none;
+  opacity: 1;
+}
 .box {
   transform: rotate3d(0, 0, 1, 0deg);
   font-size: 30px;
 }
-button {
+.button {
   background: rgb(7, 193, 96);
   border: 1px solid rgb(7, 193, 96);
   border-radius: 5px;
@@ -245,9 +262,18 @@ input {
   bottom: 0;
   opacity: 0; /* 透明度为零。隐藏input的默认样式，即整个input被隐藏了，但功能还在 */
 }
+.quill_box {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+}
 </style>
 <style >
 .ql-container.ql-snow {
   border: 0px solid #ccc;
+}
+.ql-editor {
+  padding: 0px !important;
 }
 </style>

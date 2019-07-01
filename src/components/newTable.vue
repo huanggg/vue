@@ -1,5 +1,8 @@
 <template>
   <div style="width:100%;height:100%;">
+    <div class="test">
+      <vue-draggable-resizable :parent="true" :draggable="true">范德萨范德萨</vue-draggable-resizable>
+    </div>
     <div style="display:flex">
       <div
         @mousedown="getMousePos('mousedown')"
@@ -7,17 +10,13 @@
         @mouseup="getMousePos('up')"
         style="width:1000px;height:100%;position:relative;top:0px;left:0px"
       >
-
         <table cellpadding="0" cellspacing="0">
           <tr v-for="(n,index) in 20" :key="index">
-
             <td
               v-for="(nn,index) in 26"
               :key="index"
               style="border:1px solid #d4d4d4;width:20px;height:20px;background:''"
-            >
-
-            </td>
+            ></td>
           </tr>
         </table>
         <div style="position:absolute;left:0px;top:0px">
@@ -177,5 +176,17 @@ export default {
 .content {
   position: relative;
   background: red;
+}
+.test {
+  width: 500px;
+  height: 100px;
+  border: 1px solid red;
+  position: relative;
+  background: linear-gradient(-90deg, rgba(0, 0, 0, 0.1) 1px, transparent 1px)
+      0% 0% / 20px 20px,
+    linear-gradient(rgba(0, 0, 0, 0.1) 1px, transparent 1px) 0% 0% / 20px 20px;
+  background-color: red;
+  background-image: url("../images/2.jpg");
+  /* background-repeat:no-repeat  */
 }
 </style>
