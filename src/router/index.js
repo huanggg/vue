@@ -62,6 +62,14 @@ const router = new VueRouter({
           // 按需加载
           component: resolve => require(['@/components/newTable.vue'], resolve),
           meta: { title: 'newTable', noCache: true }
+        },
+        {
+          path: 'cropper',
+          name: 'cropper',
+          // component: login,
+          // 按需加载
+          component: resolve => require(['@/components/cropper.vue'], resolve),
+          meta: { title: 'cropper', noCache: true }
         }
       ],
       meta: { title: 'copper', noCache: true }

@@ -20,59 +20,65 @@
       <el-table-column prop="age" label="年龄" sortable></el-table-column>
     </el-table>-->
     <el-color-picker v-model="color" show-alpha></el-color-picker>
-
-    <div style="position:relative">
-      <button
-        class="buttonbox"
-        @click.stop="test()"
-        @keyup.ctrl.86="ctrlv"
-        :style="{background:color}"
-      >
-        <vue-draggable-resizable
-          :grid="[20,20]"
-          :parent="true"
-          :draggable="true"
-          class-name="my-class"
+    <button type="button" @click="toggle">Fullscreen</button>
+    <fullscreen ref="fullscreen">
+      <div style="position:relative;width:1000px;height:800px">
+        <button
+          class="buttonbox"
+          @click.stop="test()"
+          @keyup.ctrl.86="ctrlv"
+          :style="{background:color}"
         >
-          <div
-            @click.stop="kk()"
-            @dblclick="dblclick()"
-            @contextmenu.prevent="contextmenu"
-            style="width:100%;height:100%;"
-            class="box"
+          <vue-draggable-resizable
+            :grid="[20,20]"
+            :parent="true"
+            :draggable="true"
+            class-name="my-class"
           >
-            <button
-              @keyup.ctrl.67="ctrlc"
-              style="width:100%;height:100%;display:block;background:white;border:0px solid blue;"
+            <div
+              @click.stop="kk()"
+              @dblclick="dblclick()"
+              @contextmenu.prevent="contextmenu"
+              style="width:100%;height:100%;"
+              class="box"
             >
-              <div class="quill_box">
-                <quill-editor
-                  v-model="content"
-                  ref="myQuillEditor"
-                  :options="editorOption"
-                  @blur="onEditorBlur($event)"
-                  @focus="onEditorFocus($event)"
-                  @change="onEditorChange($event)"
-                ></quill-editor>
-              </div>
-            </button>
-          </div>
-        </vue-draggable-resizable>
-      </button>
-    </div>
+              <button
+                @keyup.ctrl.67="ctrlc"
+                style="width:100%;height:100%;display:block;background:white;border:0px solid blue;"
+              >
+                <div class="quill_box">
+                  <quill-editor
+                    v-model="content"
+                    ref="myQuillEditor"
+                    :options="editorOption"
+                    @blur="onEditorBlur($event)"
+                    @focus="onEditorFocus($event)"
+                    @change="onEditorChange($event)"
+                  ></quill-editor>
+                </div>
+              </button>
+            </div>
+          </vue-draggable-resizable>
+        </button>
+      </div>
 
-    <!-- <div style="width:500px;height:500px;position:absolute;">fdsf</div> -->
-    <button type="button" class="button">
-      图片上传
-      <input type="file" @change="Preview($event)" accept="image/*" ref="showinput">
-    </button>
-    <div :style="{width:200+'px',height:100+'px',backgroundImage:'url('+img+')'}"></div>
+      <!-- <div style="width:500px;height:500px;position:absolute;">fdsf</div> -->
+      <button type="button" class="button">
+        图片上传
+        <input type="file" @change="Preview($event)" accept="image/*" ref="showinput" />
+      </button>
+      <div :style="{width:200+'px',height:100+'px',backgroundImage:'url('+img+')'}"></div>
+    </fullscreen>
   </div>
 </template>
 <script>
+import fullscreen from 'vue-fullscreen'
+import Vue from 'vue'
+Vue.use(fullscreen)
 export default {
   data () {
     return {
+      fullscreen: false,
       color: 'rgba(19, 206, 102, 0.8)',
       imgObj: '',
       img: '',
@@ -145,6 +151,11 @@ export default {
 
   },
   methods: {
+    toggle () {
+      this.$refs['fullscreen'].toggle()
+      // this.fullscreen = !this.fullscreen // deprecated
+    },
+
     Preview (ev) {
       // const self=this;
       const file = ev.target.files[0]
@@ -235,13 +246,14 @@ export default {
   z-index: 200;
 }
 .buttonbox {
-  width: 500px;
-  height: 500px;
+  width: 100%;
+  height: 100%;
   border: 1px solid blue;
   position: absolute;
   display: block;
   outline: none;
   opacity: 1;
+  margin: 100px;
 }
 .box {
   transform: rotate3d(0, 0, 1, 0deg);

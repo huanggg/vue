@@ -3,8 +3,7 @@
     <!-- <img width="150" height="150" v-for="(item,index) in images" :src="item.src" :key="index"> -->
     <div class="el-input el-input--small" v-if="images.length>0">
       <viewer>
-        <img width="150" v-for="(item,index) in images" :src="item.src" :key="index">
-
+        <img width="150" v-for="(item,index) in images" :src="item.src" :key="index" />
       </viewer>
     </div>
   </div>
