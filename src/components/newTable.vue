@@ -37,7 +37,7 @@
       </div>
     </div>
     <div>
-      <treeselect v-model="value" :multiple="false" :options="options" />
+      <treeselect v-model="value" :multiple="true" :options="options" />
     </div>
     <div>{{value}}</div>
     <div>

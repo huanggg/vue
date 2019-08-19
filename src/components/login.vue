@@ -12,9 +12,8 @@
       </div>
     </div>
     <div style="width:calc(100% - 200px);border:1px solid blue;height:100%">
-      <router-view/>
+      <router-view />
     </div>
-
   </div>
 </template>
 <script>
@@ -51,6 +50,10 @@ export default {
           id: 6,
           name: 'graph'
         },
+        {
+          id: 7,
+          name: 'cropper'
+        },
 
       ],
       isactive: 0,
@@ -72,5 +75,4 @@ export default {
 .active {
   background: lightgray;
 }
-
 </style>
