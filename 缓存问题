@@ -1,0 +1,20 @@
+const version = new Date().getTime();
+output: {
+	path: config.build.assetsRoot,
+	filename: utils.assetsPath('js/[name].[chunkhash:8].' + version + '.js'),
+	chunkFilename: utils.assetsPath('js/[name].[chunkhash:8].' + version + '.js')
+}
+1
+2
+3
+4
+5
+6
+2、在 html 页面前面加 meta 标签。
+
+<meta http-equiv="pragram" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+————————————————
+版权声明：本文为CSDN博主「随遇而安、1314」的原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/LonewoIf/article/details/89388843
