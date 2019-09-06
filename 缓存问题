@@ -1,15 +1,14 @@
+解决方法：找到webpack .prod.conf.js
 const version = new Date().getTime();
 output: {
 	path: config.build.assetsRoot,
 	filename: utils.assetsPath('js/[name].[chunkhash:8].' + version + '.js'),
 	chunkFilename: utils.assetsPath('js/[name].[chunkhash:8].' + version + '.js')
 }
-1
-2
-3
-4
-5
-6
+ new ExtractTextPlugin({
+      filename: utils.assetsPath('css/[name].[contenthash]'+Version+'.css'),
+      allChunks: true
+  }),
 2、在 html 页面前面加 meta 标签。
 
 <meta http-equiv="pragram" content="no-cache">
