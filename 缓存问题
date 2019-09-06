@@ -1,4 +1,4 @@
-解决方法：找到webpack .prod.conf.js
+解决前端缓存方法：找到webpack .prod.conf.js
 const version = new Date().getTime();
 output: {
 	path: config.build.assetsRoot,
