@@ -15,6 +15,9 @@ output: {
 <meta http-equiv="pragram" content="no-cache">
 <meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-————————————————
-版权声明：本文为CSDN博主「随遇而安、1314」的原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接及本声明。
-原文链接：https://blog.csdn.net/LonewoIf/article/details/89388843
+
+4、nginx 配置，让 index.html 不缓存。
+
+location = /index.html {
+    add_header Cache-Control "no-cache, no-store";
+}
