@@ -1,0 +1,22 @@
+解决前端缓存方法：找到webpack .prod.conf.js
+const version = new Date().getTime();
+output: {
+	path: config.build.assetsRoot,
+	  filename: utils.assetsPath(`js/[name].[chunkhash]${version}.js`),
+    chunkFilename: utils.assetsPath(`js/[id].[chunkhash]${version}.js`)
+}
+ new ExtractTextPlugin({
+      filename: utils.assetsPath(`css/[name].[contenthash]${version}.css`),
+      allChunks: true
+  }),
+2、在 html 页面前面加 meta 标签。
+
+<meta http-equiv="pragram" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache, no-store, must-revalidate">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+4、nginx 配置，让 index.html 不缓存。
+
+location = /index.html {
+    add_header Cache-Control "no-cache, no-store";
+}
