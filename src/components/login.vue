@@ -11,20 +11,21 @@
         <router-link :to="{name:item.name,query:{id:item.id}}" tag="div">{{item.name}}</router-link>
       </div>
     </div>
-    <div style="width:calc(100% - 200px);border:1px solid blue;height:100%">
+    <!-- <div style="width:calc(100% - 200px);border:1px solid blue;height:100%" v-if="isactive==1">
       <router-view />
+    </div>-->
+    <div style="width:calc(100% - 200px);border:1px solid blue;height:100%">
+      <router-view :key="kkk" />
     </div>
   </div>
 </template>
 <script>
-// import { type } from 'os'
-// import { Message } from 'element-ui'
-// import aes from '@/util/aes'
-// import { setTimeout } from 'timers'
+import Graph from './graph.vue'
 export default {
   name: 'login',
   data () {
     return {
+      kkk: 0,
       routerLink: [
         {
           id: 1,
@@ -61,8 +62,16 @@ export default {
   },
   mounted () {
   },
+  watch: {
+    $route: function (val) {
 
-  components: {},
+      this.kkk += 1
+      console.log(666333366, this.kkk)  
+    }
+  },
+  components: {
+    Graph
+  },
   methods: {
     seletactive (index) {
       this.isactive = index

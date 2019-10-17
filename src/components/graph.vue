@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <el-button type="text" @click="seletetype('circle')">圆形</el-button>
+    <el-button type="text" @click="seletetype('circle')">圆形FDF</el-button>
     <el-button type="text" @click="seletetype('triangle')">箭头三角形</el-button>
     <div style="display:flex">
       <div
@@ -23,7 +23,7 @@
               fill="white"
               v-if="ShapeType==='circle'"
               :style="{transform:'scale('+xx/100+','+yy/100+')'}"
-            ></circle>
+            />
 
             <polygon
               points="0,30 50,30 50,0 100,50 50,100 50,70 0,70 "
@@ -32,7 +32,7 @@
               fill="white"
               v-if="ShapeType==='triangle'"
               :style="{transform:'scale('+xx/100+','+yy/100+')'}"
-            ></polygon>
+            />
           </svg>
         </div>
       </div>

@@ -1,194 +1,143 @@
+
 <template>
-  <div style="width:100%;height:100%;">
-    <div style="display:flex">
-      <div class="test">
-        <vue-draggable-resizable :parent="true" :draggable="true" :w="100" :h="100">范德萨范德萨</vue-draggable-resizable>
-      </div>
-      <div style="display:flex">
-        <div
-          @mousedown="getMousePos('mousedown')"
-          @mousemove="getMousePos('mousemove')"
-          @mouseup="getMousePos('up')"
-          style="width:1000px;height:100%;position:relative;top:0px;left:0px"
-        >
-          <table cellpadding="0" cellspacing="0">
-            <tr v-for="(n,index) in 10" :key="index">
-              <td
-                v-for="(nn,index) in 15"
-                :key="index"
-                style="border:1px solid #d4d4d4;width:20px;height:20px;background:''"
-              ></td>
-            </tr>
-          </table>
-          <div style="position:absolute;left:0px;top:0px">
-            <table cellpadding="0" cellspacing="0">
-              <tr v-for="(n,index) in yy" :key="index">
-                <td
-                  v-for="(nn,index) in xx"
-                  :key="index"
-                  style="border:1px solid #d4d4d4;width:20px;height:20px;background:gray"
-                  ondragenter="dragenter()"
-                  ondragover="dragover()"
-                ></td>
-              </tr>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div>
-      <treeselect v-model="value" :multiple="true" :options="options" />
-    </div>
-    <div>{{value}}</div>
-    <div>
-      <excel v-if="show"></excel>
-    </div>
-  </div>
+  <el-select
+    :value="valueTitle"
+    :clearable="clearable"
+    @clear="clearHandle"
+  >
+    <el-option
+      :value="valueTitle"
+      :label="valueTitle"
+    >
+      <el-tree
+        id="tree-option"
+        ref="selectTree"
+        :accordion="accordion"
+        :data="options"
+        :props="props"
+        :node-key="props.value"
+        :default-expanded-keys="defaultExpandedKey"
+        @node-click="handleNodeClick"
+      ></el-tree>
+    </el-option>
+  </el-select>
 </template>
 
 <script>
-
-import '@riophae/vue-treeselect/dist/vue-treeselect.css'
-import Treeselect from '@riophae/vue-treeselect'
-import excel from './excel.vue'
 export default {
-
-  name: 'login',
+  name: "el-tree-select",
+  props: {
+    /* 配置项 */
+    props: {
+      type: Object,
+      default: () => {
+        return {
+          value: 'id',             // ID字段名
+          label: 'title',         // 显示名称
+          children: 'children'    // 子级字段名
+        }
+      }
+    },
+    /* 选项列表数据(树形结构的对象数组) */
+    options: {
+      type: Array,
+      default: () => { return [] }
+    },
+    /* 初始值 */
+    value: {
+      type: Number,
+      default: () => { return null }
+    },
+    /* 可清空选项 */
+    clearable: {
+      type: Boolean,
+      default: () => { return true }
+    },
+    /* 自动收起 */
+    accordion: {
+      type: Boolean,
+      default: () => { return false }
+    },
+  },
   data () {
     return {
-
-      show: false,
-      cx: 0,
-      cy: 0,
-      mousemovex: 0,
-      mousemovey: 0,
-      xx: 0,
-      yy: 0,
-      active: false,
-      value: null,
-      options: [
-        {
-          id: 'fruits',
-          label: 'Fruits',
-          children: [{
-            id: 'apple',
-            label: 'Apple 🍎',
-            isNew: true,
-          }, {
-            id: 'grapes',
-            label: 'Grapes 🍇',
-          }, {
-            id: 'pear',
-            label: 'Pear 🍐',
-          }, {
-            id: 'strawberry',
-            label: 'Strawberry 🍓',
-          }, {
-            id: 'watermelon',
-            label: 'Watermelon 🍉',
-          }],
-        },
-        {
-          id: 'vegetables',
-          label: 'Vegetables',
-          children: [
-            {
-              id: 'corn',
-              label: 'Corn 🌽',
-            },
-            {
-              id: 'carrot',
-              label: 'Carrot 🥕',
-            },
-            {
-              id: 'eggplant',
-              label: 'Eggplant 🍆',
-            },
-            {
-              id: 'tomato',
-              label: 'Tomato 🍅',
-            }
-          ],
-        }
-      ],
-
+      valueId: this.value,    // 初始值
+      valueTitle: '',
+      defaultExpandedKey: []
     }
   },
-
   mounted () {
-
+    this.initHandle()
   },
-
-  components: { Treeselect, excel },
   methods: {
-    dragenter (evt) {
-      evt.preventDefault()
-      console.log(555566)
-    },
-    getMousePos (type) {
-      // if (this.ShapeType !== '') {
-      if (type === 'mousedown') {
-        const e = event || window.event
-        const scrollX = document.documentElement.scrollLeft || document.body.scrollLeft
-        const scrollY = document.documentElement.scrollTop || document.body.scrollTop
-        const x = e.pageX || e.clientX + scrollX
-        const y = e.pageY || e.clientY + scrollY
-        // console.log(x)
-        // console.log(y)
-        this.cx = x
-        this.cy = y
-        this.active = true
-        if (this.show === true) {
-          this.xx = 0
-          this.yy = 0
-          this.show = false
-        }
-
-        return false
-      } else if (type === 'mousemove' && this.active === true) {
-        const e = event || window.event
-        const scrollX = document.documentElement.scrollLeft || document.body.scrollLeft
-        const scrollY = document.documentElement.scrollTop || document.body.scrollTop
-        const x = e.pageX || e.clientX + scrollX
-        const y = e.pageY || e.clientY + scrollY
-
-        this.mousemovex = x
-        this.mousemovey = y
-        // console.log('mousemovex', this.mousemovex)
-        // console.log('mousemovey', this.mousemovey)
-        this.xx = Math.ceil(parseInt(this.mousemovex - this.cx) * 0.05)
-        this.yy = Math.ceil(parseInt(this.mousemovey - this.cy) * 0.05)
-        console.log('xx', Number(this.xx))
-        console.log('yy', Number(this.yy))
-        sessionStorage.setItem('xx', this.xx)
-        sessionStorage.setItem('yy', this.yy)
-        return false
-      } else if (type === 'up') {
-        this.active = false
-        this.show = true
+    // 初始化值
+    initHandle () {
+      if (this.valueId) {
+        this.valueTitle = this.$refs.selectTree.getNode(this.valueId).data[this.props.label]     // 初始化显示
+        this.$refs.selectTree.setCurrentKey(this.valueId)       // 设置默认选中
+        this.defaultExpandedKey = [this.valueId]      // 设置默认展开
       }
-      // }
+      this.$nextTick(() => {
+        let scrollWrap = document.querySelectorAll('.el-scrollbar .el-select-dropdown__wrap')[0]
+        let scrollBar = document.querySelectorAll('.el-scrollbar .el-scrollbar__bar')
+        scrollWrap.style.cssText = 'margin: 0px; max-height: none; overflow: hidden;'
+        scrollBar.forEach(ele => ele.style.width = 0)
+      })
+
     },
-
-  }
-}
+    // 切换选项
+    handleNodeClick (node) {
+      this.valueTitle = node[this.props.label]
+      this.valueId = node[this.props.value]
+      this.$emit('getValue', this.valueId)
+      this.defaultExpandedKey = []
+    },
+    // 清除选中
+    clearHandle () {
+      this.valueTitle = ''
+      this.valueId = null
+      this.defaultExpandedKey = []
+      this.clearSelected()
+      this.$emit('getValue', null)
+    },
+    /* 清空选中样式 */
+    clearSelected () {
+      let allNode = document.querySelectorAll('#tree-option .el-tree-node')
+      allNode.forEach((element) => element.classList.remove('is-current'))
+    }
+  },
+  watch: {
+    value () {
+      this.valueId = this.value
+      this.initHandle()
+    }
+  },
+};
 </script>
-
 <style scoped>
-.content {
-  position: relative;
-  background: red;
+.el-scrollbar .el-scrollbar__view .el-select-dropdown__item {
+  height: auto;
+  max-height: 274px;
+  padding: 0;
+  overflow: hidden;
+  overflow-y: auto;
 }
-.test {
-  width: 500px;
-  height: 200px;
-  border: 1px solid red;
-  position: relative;
-  background: linear-gradient(-90deg, rgba(0, 0, 0, 0.1) 1px, transparent 1px)
-      0% 0% / 20px 20px,
-    linear-gradient(rgba(0, 0, 0, 0.1) 1px, transparent 1px) 0% 0% / 20px 20px;
-  background-color: red;
-
-  /* background-repeat:no-repeat  */
+.el-select-dropdown__item.selected {
+  font-weight: normal;
+}
+ul li >>> .el-tree .el-tree-node__content {
+  height: auto;
+  padding: 0 20px;
+}
+.el-tree-node__label {
+  font-weight: normal;
+}
+.el-tree >>> .is-current .el-tree-node__label {
+  color: #409eff;
+  font-weight: 700;
+}
+.el-tree >>> .is-current .el-tree-node__children .el-tree-node__label {
+  color: #606266;
+  font-weight: normal;
 }
 </style>

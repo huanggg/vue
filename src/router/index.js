@@ -27,7 +27,26 @@ const router = new VueRouter({
           // 按需加载
           component: resolve =>
             require(['@/components/sortTable.vue'], resolve),
-          meta: { title: 'sortTable', noCache: true }
+          meta: { title: 'sortTable', noCache: true },
+          children: [
+            {
+              path: 'graphee',
+              name: 'graphee',
+              // component: login,
+              // 按需加载
+              component: resolve => require(['@/components/graph.vue'], resolve),
+              meta: { title: 'graph', noCache: true }
+            },
+            {
+              path: 'excelee',
+              name: 'excelee',
+              // component: login,
+              // 按需加载
+              component: resolve => require(['@/components/excel.vue'], resolve),
+              meta: { title: 'graph', noCache: true }
+            },
+         
+          ]
         },
         {
           path: 'vuephotopreview',

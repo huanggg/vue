@@ -1,5 +1,21 @@
 <template>
   <div class="layout">
+    <el-input
+      type="textarea"
+      :autosize="{ minRows: 2}"
+      placeholder="请输入内容"
+      v-model="textarea"
+      @change="changetextarea"
+      @keydown.native="enterBtn($event)"
+    ></el-input>
+    <el-input
+      class="text"
+      type="textarea"
+      placeholder="请输入您要咨询的问题......"
+      v-model="textarea"
+      :maxlength="100"
+      @keydown.native="listen($event)"
+    ></el-input>
     <!-- <el-table
       :data="tableData"
       style="width: 100%"
@@ -78,6 +94,8 @@ Vue.use(fullscreen)
 export default {
   data () {
     return {
+      textarea: '',
+      num: 0,
       fullscreen: false,
       color: 'rgba(19, 206, 102, 0.8)',
       imgObj: '',
@@ -150,7 +168,38 @@ export default {
   components: {
 
   },
+  watch: {
+    textarea: function (newval, oldval) {
+
+      // setTimeout(function () {
+
+
+      //   console.log(this.textarea)
+      // }, 2000)
+    }
+  },
   methods: {
+    enterBtn (event) {
+      if (event.keyCode === 13) {
+        console.log('enterBtn')
+        this.textarea = 556666666
+        event.preventDefault() // 阻止浏览器默认换行操作
+        return false
+      }
+
+    },
+    listen (event) {
+      if (event.keyCode === 13) {
+        // this.send() // 发送文本
+        event.preventDefault() // 阻止浏览器默认换行操作
+        return false
+      }
+    },
+    changetextarea () {
+      // alert(222)
+      // this.textarea = 555
+
+    },
     toggle () {
       this.$refs['fullscreen'].toggle()
       // this.fullscreen = !this.fullscreen // deprecated
