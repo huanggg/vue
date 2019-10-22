@@ -1,5 +1,6 @@
 <template>
   <div class="layout">
+    <div @click="handleDownload()">下载zip</div>
     <el-input
       type="textarea"
       :autosize="{ minRows: 2}"
@@ -90,6 +91,7 @@
 <script>
 import fullscreen from 'vue-fullscreen'
 import Vue from 'vue'
+import jszip from '@/vendor/jszip.js'
 Vue.use(fullscreen)
 export default {
   data () {
@@ -179,6 +181,20 @@ export default {
     }
   },
   methods: {
+    //触发事件进项调用
+    handleDownload () {
+      var zip = new JSZip();
+      zip.file("Hello.txt", "Hello worlddddd\n");
+      console.log(5555, zip)
+      zip.generateAsync({ type: "base64" }).then(function (base64) {
+        window.location = "data:application/zip;base64," + base64;
+      }, function (err) {
+        // jQuery("#data_uri").text(err);
+      });
+    },
+    formatJson (filterVal, jsonData) {
+      // return jsonData.map(v => filterVal.map(j => v[j]))
+    },
     enterBtn (event) {
       if (event.keyCode === 13) {
         console.log('enterBtn')
