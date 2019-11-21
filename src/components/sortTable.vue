@@ -8,7 +8,8 @@
       v-model="textarea"
       @change="changetextarea"
       @keydown.native="enterBtn($event)"
-    ></el-input>
+      @paste.native.capture.prevent="handlePaste"
+    >></el-input>
     <el-input
       class="text"
       type="textarea"
@@ -96,7 +97,7 @@ Vue.use(fullscreen)
 export default {
   data () {
     return {
-      textarea: '',
+      textarea: 'eeeeee',
       num: 0,
       fullscreen: false,
       color: 'rgba(19, 206, 102, 0.8)',
@@ -171,16 +172,13 @@ export default {
 
   },
   watch: {
-    textarea: function (newval, oldval) {
 
-      // setTimeout(function () {
-
-
-      //   console.log(this.textarea)
-      // }, 2000)
-    }
   },
   methods: {
+    handlePaste () {
+      console.log(2222222)
+      this.textarea = this.textarea + 5555
+    },
     //触发事件进项调用
     handleDownload () {
       var zip = new JSZip();
@@ -188,6 +186,7 @@ export default {
       console.log(5555, zip)
       zip.generateAsync({ type: "base64" }).then(function (base64) {
         window.location = "data:application/zip;base64," + base64;
+        console.log(5555, zip)
       }, function (err) {
         // jQuery("#data_uri").text(err);
       });
@@ -198,7 +197,23 @@ export default {
     enterBtn (event) {
       if (event.keyCode === 13) {
         console.log('enterBtn')
-        this.textarea = 556666666
+        let arr = [
+          {
+            value: 'one'
+          },
+          {
+            value: 'tow'
+          },
+          {
+            value: 'three'
+          }
+        ]
+        arr.forEach((item, index) => {
+          console.log('enterBtn', item.value)
+          this.textarea = this.textarea + item.value
+        })
+        console.log('this.textarea', this.textarea)
+        // this.textarea = `${this.textarea}556666666`
         event.preventDefault() // 阻止浏览器默认换行操作
         return false
       }

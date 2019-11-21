@@ -10,9 +10,12 @@
     "unit": "jest --config test/unit/jest.conf.js --coverage",
     "e2e": "node test/e2e/runner.js",
     "test": "npm run unit && npm run e2e",
-    "lint": "eslint --fix --ext .js,.vue src test/unit test/e2e/specs",
     "build": "node build/build.js",
-    "analyzer": "npm run build --report"
+    "client": "node build/client.js",
+    "build:client": "cross-env NODE_ENV=production env_config=client node build/build.js",
+    "build:driver": "cross-env NODE_ENV=production env_config=driver node build/build.js",
+    "build:prod": "cross-env NODE_ENV=production env_config=prod node build/build.js",
+    "build:dev": "cross-env NODE_ENV=production env_config=dev node build/build.js"
   },
   "dependencies": {
     "@riophae/vue-treeselect": "^0.0.38",

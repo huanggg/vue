@@ -40,6 +40,7 @@ Viewer.setDefaults({
 Vue.use(ElementUI, {
   size: 'medium'
 })
+console.log('process.env.NODE_ENV', process.env.NODE_ENV)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
