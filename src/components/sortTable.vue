@@ -212,10 +212,20 @@ export default {
     },
     changselect () {
 
-      this.textarea = this.textarea.split(';')[1] + ';' + this.value
+      // this.textarea = this.textarea.split(';')[1] + ';' + this.value
       this.textbollen = false
+      // this.textarea.split(';').splice(this.textarea.length - 1, 1)
+      console.log('this.textarea.sp22222222222lit', this.textarea)
       console.log('this.textarea.split', this.textarea.split(';'))
-      console.log('this.textarea.split', this.textarea.split(';')[3])
+      let str = ''
+      str = this.textarea.split(';')
+      console.log('str', str)
+      str.splice(str.length - 1, 1)
+      console.log('str', str)
+      let str2 = ''
+      str2 = str.join(';')
+      console.log('str33333', str2)
+      this.textarea = str2 + ";" + this.value
     },
     changetextarea () {
       // alert(222)
