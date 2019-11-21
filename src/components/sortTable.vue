@@ -1,15 +1,20 @@
 <template>
   <div class="layout">
     <div @click="handleDownload()">下载zip</div>
+    <textarea name id cols="100" rows="10" style="text-indent:20px"></textarea>
     <el-input
       type="textarea"
       :autosize="{ minRows: 2}"
       placeholder="请输入内容"
       v-model="textarea"
       @change="changetextarea"
+      @focus="focus"
       @keydown.native="enterBtn($event)"
       @paste.native.capture.prevent="handlePaste"
-    >></el-input>
+    ></el-input>
+    <el-select v-model="value" placeholder="请选择" @change="changselect()">
+      <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
+    </el-select>
     <el-input
       class="text"
       type="textarea"
@@ -97,7 +102,25 @@ Vue.use(fullscreen)
 export default {
   data () {
     return {
-      textarea: 'eeeeee',
+      options: [{
+        value: '选项',
+        label: '黄金糕'
+      }, {
+        value: '选项2',
+        label: '双皮奶'
+      }, {
+        value: '选项3',
+        label: '蚵仔煎'
+      }, {
+        value: '选项4',
+        label: '龙须面'
+      }, {
+        value: '选项5',
+        label: '北京烤鸭'
+      }],
+      value: '',
+
+      textarea: '',
       num: 0,
       fullscreen: false,
       color: 'rgba(19, 206, 102, 0.8)',
@@ -105,7 +128,7 @@ export default {
       img: '',
       color1: '',
       content: ' ',
-
+      textbollen: true,
       editorOption: {
         modules: {
           toolbar: [
@@ -172,12 +195,36 @@ export default {
 
   },
   watch: {
+    textarea: function (newQuestion, oldQuestion) {
+      if (newQuestion.length >= 3) {
+        if (this.textbollen) {
+          console.log(newQuestion)
+        }
 
+        // this.textarea = '5555555555555'
+      }
+    }
   },
   methods: {
     handlePaste () {
       console.log(2222222)
-      this.textarea = this.textarea + 5555
+      this.textarea = this.textarea + 55
+    },
+    changselect () {
+
+      this.textarea = this.textarea.split(';')[1] + ';' + this.value
+      this.textbollen = false
+      console.log('this.textarea.split', this.textarea.split(';'))
+      console.log('this.textarea.split', this.textarea.split(';')[3])
+    },
+    changetextarea () {
+      // alert(222)
+      console.log(22222222222222222)
+      // this.textbollen = true
+
+    },
+    focus () {
+      this.textbollen = true
     },
     //触发事件进项调用
     handleDownload () {
@@ -226,11 +273,7 @@ export default {
         return false
       }
     },
-    changetextarea () {
-      // alert(222)
-      // this.textarea = 555
 
-    },
     toggle () {
       this.$refs['fullscreen'].toggle()
       // this.fullscreen = !this.fullscreen // deprecated
