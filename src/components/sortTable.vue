@@ -10,7 +10,7 @@
       @change="changetextarea"
       @focus="focus"
       @keydown.native="enterBtn($event)"
-      @paste.native.capture.prevent="handlePaste"
+      @paste.native.capture.prevent="handlePaste($event)"
     ></el-input>
     <el-select v-model="value" placeholder="请选择" @change="changselect()">
       <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value"></el-option>
@@ -206,9 +206,22 @@ export default {
     }
   },
   methods: {
-    handlePaste () {
-      console.log(2222222)
-      this.textarea = this.textarea + 55
+    handlePaste (e) {
+      console.log(2222222, e)
+      var pastedText = undefined;
+      if (e.clipboardData && e.clipboardData.getData) { // IE
+        pastedText = e.clipboardData.getData('Text');
+        console.log(111111, pastedText)
+        this.textarea = this.textarea + pastedText
+
+      } else if (window.clipboardData && window.clipboardData.getData) { // IE
+        pastedText = window.clipboardData.getData('Text');
+        console.log(66666, pastedText)
+        this.textarea = this.textarea + pastedText
+
+     
+      }
+      // this.textarea = this.textarea + 55
     },
     changselect () {
 
@@ -267,7 +280,8 @@ export default {
         ]
         arr.forEach((item, index) => {
           console.log('enterBtn', item.value)
-          this.textarea = this.textarea + item.value
+          // this.textarea = this.textarea + item.value
+
         })
         console.log('this.textarea', this.textarea)
         // this.textarea = `${this.textarea}556666666`
