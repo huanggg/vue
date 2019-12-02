@@ -1,11 +1,18 @@
 <template>
   <div class="excel">
+    <el-date-picker
+      v-model="time"
+      type="date"
+      placeholder="选择日期"
+      :picker-options="expireTimeOption"
+    ></el-date-picker>
+
     <vxe-button @click="getValidEvent">获取有效数据</vxe-button>
     <vxe-button @click="getInsertEvent">获取新增</vxe-button>
     <vxe-button @click="getRemoveEvent">获取删除</vxe-button>
     <vxe-button @click="getUpdateEvent">获取修改</vxe-button>
     <vxe-button @click="exportCsvEvent">导出.csv</vxe-button>
-    <input type="file" @change="fileChangeEvent" accept=".csv, .xls, .xlsx">
+    <input type="file" @change="fileChangeEvent" accept=".csv, .xls, .xlsx" />
     <div :style="{width:returnWidth+'px'}">
       <vxe-excel ref="xExcel" :columns="columns" :data.sync="tableData" :edit-config="{key: 'id'}"></vxe-excel>
     </div>
@@ -16,6 +23,7 @@
 import XLSX from 'xlsx'
 export default {
   data () {
+
     const column = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
     const columns = []
     const sessio = sessionStorage.getItem('xx')
@@ -24,7 +32,13 @@ export default {
       columns.push(column[i])
     }
     return {
+      time: '',
       width: 0,
+      expireTimeOption: {
+        disabledDate (time) {
+          return time.getTime() > Date.now() - 8.64e7;
+        }
+      },
       columns: [
         {
           type: 'index',
@@ -110,10 +124,10 @@ export default {
         case '17':
           return sessionStorage.getItem('xx') * 77 + 36.4
           break
-     
-        
+
+
         default:
-          // return sessionStorage.getItem('xx') * 78 + 48.8
+        // return sessionStorage.getItem('xx') * 78 + 48.8
       }
     }
   },
@@ -149,7 +163,7 @@ export default {
     },
     exportCsvEvent () {
       this.$refs.xExcel.exportCsv()
-      console.log('this.$refs.xExcel.exportCsv()',this.$refs.xExcel.exportCsv())
+      console.log('this.$refs.xExcel.exportCsv()', this.$refs.xExcel.exportCsv())
     },
     fileChangeEvent (evnt) {
       const files = evnt.target.files
