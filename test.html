@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>菜鸟教程(runoob.com)</title>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script> -->
+    <script src="vue.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"
+    />
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <p v-if="seen">现在你看dd到我了{{ messge }}</p>
+      <el-button>默认按钮</el-button>
+      <el-button type="primary">主要按钮</el-button>
+      <el-button type="success">成功按钮</el-button>
+      <el-button type="info">信息按钮</el-button>
+      <el-button type="warning">警告按钮</el-button>
+      <el-button type="danger">危险按钮</el-button>
+
+      <el-input
+        type="textarea"
+        :autosize="{ minRows: 2}"
+        placeholder="请输入内容"
+        v-model="textarea"
+        @change="changetextarea"
+        @focus="focus"
+        @keydown.native="enterBtn($event)"
+        @paste.native.capture.prevent="handlePaste($event)"
+      ></el-input>
+      <el-select v-model="value" placeholder="请选择" @change="changselect()">
+        <el-option
+          v-for="item in options"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        ></el-option>
+      </el-select>
+      <el-input
+        class="text"
+        type="textarea"
+        placeholder="请输入您要咨询的问题......"
+        v-model="textarea"
+        :maxlength="100"
+        @keydown.native="listen($event)"
+      ></el-input>
+    </div>
+    <script>
+      var app = new Vue({
+        el: "#app",
+        data: {
+          seen: true,
+          messge: 2222555552,
+          options: [
+            {
+              value: "选项",
+              label: "黄金糕"
+            },
+            {
+              value: "选项2",
+              label: "双皮奶"
+            },
+            {
+              value: "选项3",
+              label: "蚵仔煎"
+            },
+            {
+              value: "选项4",
+              label: "龙须面"
+            },
+            {
+              value: "选项5",
+              label: "北京烤鸭"
+            }
+          ],
+          value: "",
+
+          textarea: ""
+        },
+        methods: {
+          test() {
+            console.log(555555555566666666);
+          },
+          handlePaste(e) {
+            console.log(2222222, e);
+            var pastedText = undefined;
+            if (e.clipboardData && e.clipboardData.getData) {
+              // IE
+              pastedText = e.clipboardData.getData("Text");
+              console.log(111111, pastedText);
+              this.textarea = this.textarea + pastedText;
+            } else if (window.clipboardData && window.clipboardData.getData) {
+              // IE
+              pastedText = window.clipboardData.getData("Text");
+              console.log(66666, pastedText);
+              this.textarea = this.textarea + pastedText;
+            }
+            // this.textarea = this.textarea + 55
+          },
+          changselect() {
+            // this.textarea = this.textarea.split(';')[1] + ';' + this.value
+            this.textbollen = false;
+            // this.textarea.split(';').splice(this.textarea.length - 1, 1)
+            console.log("this.textarea.sp22222222222lit", this.textarea);
+            console.log("this.textarea.split", this.textarea.split(";"));
+            let str = "";
+            str = this.textarea.split(";");
+            console.log("str", str);
+            str.splice(str.length - 1, 1);
+            console.log("str", str);
+            let str2 = "";
+            str2 = str.join(";");
+            console.log("str33333", str2);
+            this.textarea = str2 + ";" + this.value;
+          },
+          changetextarea() {
+            // alert(222)
+            console.log(22222222222222222);
+            // this.textbollen = true
+          },
+          focus() {
+            this.textbollen = true;
+          },
+          enterBtn(event) {
+            if (event.keyCode === 13) {
+              console.log("enterBtn");
+              let arr = [
+                {
+                  value: "one"
+                },
+                {
+                  value: "tow"
+                },
+                {
+                  value: "three"
+                }
+              ];
+              arr.forEach((item, index) => {
+                console.log("enterBtn", item.value);
+                // this.textarea = this.textarea + item.value
+              });
+              console.log("this.textarea", this.textarea);
+              // this.textarea = `${this.textarea}556666666`
+              event.preventDefault(); // 阻止浏览器默认换行操作
+              return false;
+            }
+          }
+        }
+      });
+      $(document).ready(function() {
+        $("p").click(function() {
+          console.log(22222222222226666, app.textarea);
+          app.test();
+        });
+      });
+    </script>
+  </body>
+</html>
