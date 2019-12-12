@@ -11,7 +11,7 @@
       @focus="focus"
       @blur="blur"
       @keydown.native="enterBtn($event)"
-      @keyup.native="keyup($event)"
+      @keyup.native.once="keyup($event)"
       @paste.native.capture.prevent="handlePaste($event)"
     ></el-input>
     <el-select v-model="value" placeholder="请选择" @change="changselect()">
@@ -272,7 +272,7 @@ export default {
             this.blur()
             resolve(timer)
           }, 3000)
-         
+ debugger
         }).then(res => {
           console.log(res)
           clearInterval(res)
