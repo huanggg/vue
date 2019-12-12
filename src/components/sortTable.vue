@@ -9,7 +9,9 @@
       v-model="textarea"
       @change="changetextarea"
       @focus="focus"
+      @blur="blur"
       @keydown.native="enterBtn($event)"
+      @keyup.native="keyup($event)"
       @paste.native.capture.prevent="handlePaste($event)"
     ></el-input>
     <el-select v-model="value" placeholder="请选择" @change="changselect()">
@@ -163,6 +165,7 @@ export default {
       },
       shoucolor_picker: false,
       quill_editor: false,
+      timer: null,
       tableData: [
         {
           hangdle: '22',
@@ -205,8 +208,14 @@ export default {
       }
     }
   },
+  beforeDestroy () {
+    clearInterval(this.timer);
+    this.timer = null;
+    debugger
+  },
   methods: {
     handlePaste (e) {
+
       console.log(2222222, e)
       var pastedText = undefined;
       if (e.clipboardData && e.clipboardData.getData) { // IE
@@ -219,7 +228,7 @@ export default {
         console.log(66666, pastedText)
         this.textarea = this.textarea + pastedText
 
-     
+
       }
       // this.textarea = this.textarea + 55
     },
@@ -247,8 +256,35 @@ export default {
 
     },
     focus () {
+
       this.textbollen = true
     },
+    keyup (e) {
+      var num = 1
+      if (num == 1) {
+
+        new Promise(resolve => {
+          // setTimeout(() => {
+          //   resolve('hello')
+          // }, 2000)
+          let timer = setInterval(() => {
+            console.log(5, e)
+            this.blur()
+            resolve(timer)
+          }, 3000)
+         
+        }).then(res => {
+          console.log(res)
+          clearInterval(res)
+        })
+
+      }
+    },
+    blur () {
+
+      this.textarea = 555 + ";" + this.textarea
+    },
+
     //触发事件进项调用
     handleDownload () {
       var zip = new JSZip();
