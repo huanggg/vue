@@ -55,6 +55,10 @@ export default {
           id: 7,
           name: 'cropper'
         },
+        {
+          id: 8,
+          name: 'cropper2'
+        }
 
       ],
       isactive: 0,
@@ -66,7 +70,7 @@ export default {
     $route: function (val) {
 
       this.kkk += 1
-      console.log(666333366, this.kkk)  
+      console.log(666333366, this.kkk)
     }
   },
   components: {

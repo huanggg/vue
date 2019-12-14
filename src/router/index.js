@@ -1,97 +1,106 @@
 /* jshint esversion: 6 */
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-Vue.use(VueRouter)
+import Vue from "vue";
+import VueRouter from "vue-router";
+Vue.use(VueRouter);
 const router = new VueRouter({
   routes: [
     // 登录页
     {
-      path: '/',
-      name: 'login',
+      path: "/",
+      name: "login",
       // component: login,
       // 按需加载
-      component: resolve => require(['@/components/login.vue'], resolve),
+      component: resolve => require(["@/components/login.vue"], resolve),
       children: [
         {
-          path: 'excel',
-          name: 'excel',
+          path: "excel",
+          name: "excel",
           // component: login,
           // 按需加载
-          component: resolve => require(['@/components/excel.vue'], resolve),
-          meta: { title: 'excel', noCache: true }
+          component: resolve => require(["@/components/excel.vue"], resolve),
+          meta: { title: "excel", noCache: true }
         },
         {
-          path: 'sortTable',
-          name: 'sortTable',
+          path: "sortTable",
+          name: "sortTable",
           // component: login,
           // 按需加载
           component: resolve =>
-            require(['@/components/sortTable.vue'], resolve),
-          meta: { title: 'sortTable', noCache: true },
+            require(["@/components/sortTable.vue"], resolve),
+          meta: { title: "sortTable", noCache: true },
           children: [
             {
-              path: 'graphee',
-              name: 'graphee',
+              path: "graphee",
+              name: "graphee",
               // component: login,
               // 按需加载
-              component: resolve => require(['@/components/graph.vue'], resolve),
-              meta: { title: 'graph', noCache: true }
+              component: resolve =>
+                require(["@/components/graph.vue"], resolve),
+              meta: { title: "graph", noCache: true }
             },
             {
-              path: 'excelee',
-              name: 'excelee',
+              path: "excelee",
+              name: "excelee",
               // component: login,
               // 按需加载
-              component: resolve => require(['@/components/excel.vue'], resolve),
-              meta: { title: 'graph', noCache: true }
-            },
-         
+              component: resolve =>
+                require(["@/components/excel.vue"], resolve),
+              meta: { title: "graph", noCache: true }
+            }
           ]
         },
         {
-          path: 'vuephotopreview',
-          name: 'vuephotopreview',
+          path: "vuephotopreview",
+          name: "vuephotopreview",
           // component: login,
           // 按需加载
           component: resolve =>
-            require(['@/components/vuephotopreview.vue'], resolve),
-          meta: { title: 'vuephotopreview', noCache: true }
+            require(["@/components/vuephotopreview.vue"], resolve),
+          meta: { title: "vuephotopreview", noCache: true }
         },
         {
-          path: 'html2canvas',
-          name: 'html2canvas',
+          path: "html2canvas",
+          name: "html2canvas",
           // component: login,
           // 按需加载
           component: resolve =>
-            require(['@/components/html2canvas.vue'], resolve),
-          meta: { title: 'html2canvas', noCache: true }
+            require(["@/components/html2canvas.vue"], resolve),
+          meta: { title: "html2canvas", noCache: true }
         },
         {
-          path: 'graph',
-          name: 'graph',
+          path: "graph",
+          name: "graph",
           // component: login,
           // 按需加载
-          component: resolve => require(['@/components/graph.vue'], resolve),
-          meta: { title: 'graph', noCache: true }
+          component: resolve => require(["@/components/graph.vue"], resolve),
+          meta: { title: "graph", noCache: true }
         },
         {
-          path: 'newTable',
-          name: 'newTable',
+          path: "newTable",
+          name: "newTable",
           // component: login,
           // 按需加载
-          component: resolve => require(['@/components/newTable.vue'], resolve),
-          meta: { title: 'newTable', noCache: true }
+          component: resolve => require(["@/components/newTable.vue"], resolve),
+          meta: { title: "newTable", noCache: true }
         },
         {
-          path: 'cropper',
-          name: 'cropper',
+          path: "cropper",
+          name: "cropper",
           // component: login,
           // 按需加载
-          component: resolve => require(['@/components/cropper.vue'], resolve),
-          meta: { title: 'cropper', noCache: true }
+          component: resolve => require(["@/components/cropper.vue"], resolve),
+          meta: { title: "cropper", noCache: true }
+        },
+        {
+          path: "cropper2",
+          name: "cropper2",
+          // component: login,
+          // 按需加载
+          component: resolve => require(["@/components/chart.vue"], resolve),
+          meta: { title: "chart", noCache: true }
         }
       ],
-      meta: { title: 'copper', noCache: true }
+      meta: { title: "copper", noCache: true }
     }
 
     // {
@@ -110,7 +119,7 @@ const router = new VueRouter({
     //   )
     // }
   ]
-})
+});
 
 // router.beforeEach((to, from, next) => {
 //   const token = store.state.login.token ? store.state.login.token : ''
@@ -141,4 +150,4 @@ const router = new VueRouter({
 //   window.document.title = ` | ${to.meta.title}`
 // })
 
-export default router
+export default router;

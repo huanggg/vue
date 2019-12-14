@@ -5,6 +5,7 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import store from './store'
+import VCharts from "v-charts"
 import 'element-ui/lib/theme-chalk/index.css'
 import ElementUI from 'element-ui'
 import './style/index.css'
@@ -33,6 +34,7 @@ Vue.component('vue-draggable-resizable', VueDraggableResizable)
 Vue.use(VXETable)
 Vue.use(Viewer)
 Vue.use(VueQuillEditor)
+Vue.use(VCharts)
 // 这里是插件的默认设置
 Viewer.setDefaults({
   zIndexInline: 9999
