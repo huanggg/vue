@@ -1,8 +1,5 @@
 <template>
   <ve-line :data="chartData" :settings="chartSettings"></ve-line>
-  <!-- cnpm install echarts --save cnpm install --save drag-tree-table -->
-
-  <!-- npm install --save echarts-amap echarts-liquidfill echarts-wordcloud -->
 </template>
 
 <script>
