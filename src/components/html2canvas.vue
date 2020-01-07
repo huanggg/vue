@@ -12,10 +12,38 @@
       <div style="display:flex">
         <div class="imageWrapper" ref="imageWrapper">
           <div contenteditable="true" class="box" :style="{background:color}">{{input}}</div>
-          <img src="static/image/1.jpg" alt>
+          <table border="1">
+            <tbody>
+              <tr>
+                <th rowspan="2">我是占位符</th>
+                <th colspan="3">我是占位符</th>
+                <th>我是占位符</th>
+              </tr>
+              <tr>
+                <th>我是占位符</th>
+                <th rowspan="5">我是占位符</th>
+                <th>我是占位符</th>
+                <th>我是占位符</th>
+              </tr>
+              <tr>
+                <th>我是占位符</th>
+                <th>我是占位符</th>
+                <th>我是占位符</th>
+                <th>我是占位符</th>
+              </tr>
+
+              <tr>
+                <th>我是占位符</th>
+                <th>我是占位符</th>
+                <th>我是占位符</th>
+                <th>我是占位符</th>
+              </tr>
+            </tbody>
+          </table>
+          <img src="static/image/1.jpg" alt />
         </div>
         <div v-show="ishow">
-          <img class="real_pic" :src="dataURL" style="width:200px;height:200px">
+          <img class="real_pic" :src="dataURL" style="width:800px;height:800px" />
         </div>
       </div>
     </div>
@@ -61,7 +89,8 @@ export default {
   methods: {
     toImage () {
       html2canvas(this.$refs.imageWrapper, {
-        backgroundColor: null
+        width: 600,
+        useCORS: true
       }).then((canvas) => {
         const dataURL = canvas.toDataURL('image/png')
         this.dataURL = dataURL

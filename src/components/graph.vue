@@ -6,15 +6,14 @@
       action="https://jsonplaceholder.typicode.com/posts/"
       :on-preview="handlePreview"
       :on-remove="handleRemove"
-      :file-list="fileList"
       :on-change="change"
       :auto-upload="false"
     >
       <el-button slot="trigger" size="small" type="primary">选取文件</el-button>
-
+      <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
       <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
     </el-upload>
-    <el-button style="margin-left: 10px;" size="small" type="success" @click="submitUpload">上传到服务器</el-button>
+    <iframe src="http://www.baidu.com" ref="iframe"></iframe>
   </div>
 </template>
 
@@ -28,7 +27,9 @@ export default {
   },
   methods: {
     submitUpload () {
-      this.$refs.upload.submit();
+      // this.$refs.upload.submit();
+      // let kk = window.open('http://segmentfault.com');
+      console.log(44, this.$refs.iframe);
     },
     handleRemove (file, fileList) {
       // console.log(file, fileList);
@@ -40,7 +41,7 @@ export default {
         alert(file)
       } else {
         this.$refs.upload.submit();
-        
+
       }
     },
     handlePreview (file) {
