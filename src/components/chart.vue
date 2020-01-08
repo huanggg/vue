@@ -73,6 +73,15 @@ export default {
               interval: 'auto',
               formatter: '{value}% '
             },
+          },
+          {
+            type: 'value',
+            name: "标准保费333",
+            axisLabel: {
+              show: true,
+              interval: 'auto',
+              formatter: '{value}'
+            },
           }
         ],
         series: [
@@ -87,7 +96,7 @@ export default {
             name: '联盟广告',
             type: 'line',
             stack: '总量',
-
+            yAxisIndex: '1',
 
           },
           {
