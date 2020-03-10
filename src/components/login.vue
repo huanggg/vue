@@ -59,10 +59,15 @@ export default {
           id: 8,
           name: 'cropper2'
         },
-         {
+        {
           id: 9,
           name: 'Dragablenode'
-        }
+        },
+        {
+          id: 10,
+          name: 'componenttree'
+        },
+
 
       ],
       isactive: 0,

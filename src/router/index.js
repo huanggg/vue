@@ -76,6 +76,15 @@ const router = new VueRouter({
             require(["@/components/Dragablenode.vue"], resolve),
           meta: { title: "Dragablenode", noCache: true }
         },
+        {
+          path: "componenttree",
+          name: "componenttree",
+          // component: login,
+          // 按需加载
+          component: resolve =>
+            require(["@/components/componenttree.vue"], resolve),
+          meta: { title: "componenttree", noCache: true }
+        },
         
         {
           path: "graph",
