@@ -68,6 +68,16 @@ const router = new VueRouter({
           meta: { title: "html2canvas", noCache: true }
         },
         {
+          path: "Dragablenode",
+          name: "Dragablenode",
+          // component: login,
+          // 按需加载
+          component: resolve =>
+            require(["@/components/Dragablenode.vue"], resolve),
+          meta: { title: "Dragablenode", noCache: true }
+        },
+        
+        {
           path: "graph",
           name: "graph",
           // component: login,
