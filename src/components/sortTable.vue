@@ -40,6 +40,7 @@ export default {
       this.treeData = data
       this.treeNode = node
       this.input = data.label
+      this.input2 = data.ll
     }
 
 
