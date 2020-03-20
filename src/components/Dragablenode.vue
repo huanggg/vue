@@ -47,6 +47,14 @@ export default {
   watch: {
     filterText (val) {
       this.$refs.tree.filter(val);
+    },
+
+    treeData: {
+      handler (newName, oldName) {
+        console.log(newName, 'newvalnewvalnewvalnewval')
+      },
+
+      deep: true
     }
   },
   data () {
@@ -71,71 +79,15 @@ export default {
                     isEdit: false,
                     children: []
                   },
-                  {
-                    id: 10,
-                    label: '三级 1-1-2',
-                    isEdit: false,
-                    children: []
-                  },
-                  {
-                    id: 11,
-                    label: '三级 1-1-3',
-                    isEdit: false,
-                    children: []
-                  }
+
                 ]
               },
-              {
-                id: 12,
-                label: '二级 1-2',
-                isEdit: false,
-                children: []
-              },
-              {
-                id: 13,
-                label: '二级 1-3',
-                isEdit: false,
-                children: []
-              }
+
+
+
             ]
           },
-          {
-            id: 2,
-            label: '一级 2',
-            isEdit: false,
-            children: [
-              {
-                id: 5,
-                label: '二级 2-1',
-                isEdit: false,
-                children: []
-              },
-              {
-                id: 6,
-                label: '二级 2-2',
-                isEdit: false,
-                children: []
-              }
-            ]
-          },
-          {
-            id: 3,
-            label: '一级 3',
-            isEdit: false,
-            children: [
-              {                id: 7,
-                label: '二级 3-1',
-                isEdit: false,
-                children: []
-              },
-              {
-                id: 8,
-                label: '二级 3-2',
-                isEdit: false,
-                children: []
-              }
-            ]
-          }
+
         ],
       add_question_flag: false,
       new_question_name: '',
@@ -144,8 +96,10 @@ export default {
     }
   },
   methods: {
-    nodeClick (node) {
-      console.log('node', node)
+    nodeClick (data, node) {
+      console.log('data', data, node)
+
+      this.$emit('showInput', true, data, node)
     },
     filterNode (value, data) {
       if (!value) return true;
@@ -153,10 +107,12 @@ export default {
     },
     // 添加新大题
     add_new_question () {
+      const nodeObj = { id: '', label: 'new menu', isEdit: false, children: [] }
+      this.treeData.push(nodeObj)
       this.add_question_flag = true
     },
     add_question_sure () {   //确定
-      const nodeObj = { id: '', label: this.new_question_name, isEdit: false, children: [] }
+      const nodeObj = { id: ++maxid, label: this.new_question_name, isEdit: false, children: [] }
       this.treeData.push(nodeObj)
       this.add_question_flag = false
     },
@@ -168,7 +124,7 @@ export default {
     append (store, node, data) {
 
       //新增数据
-      const nodeapp = { id: ++maxid, label: '增加节点', isEdit: false, children: [] }
+      const nodeapp = { id: ++maxid, label: '增加节点', isEdit: false, children: [], ll: 'ggg' }
       console.log(data, node, store, 'data')
 
       if (!data.children) {
