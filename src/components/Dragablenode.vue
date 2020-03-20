@@ -36,6 +36,7 @@
         </el-col>
       </el-row>
     </div>
+    <el-button type="primary" @click="nodeClick2">主要按钮</el-button>
   </div>
 </template>
  
@@ -56,6 +57,9 @@ export default {
 
       deep: true
     }
+  },
+  mounted () {
+    // this.nodeClick2()
   },
   data () {
 
@@ -96,10 +100,20 @@ export default {
     }
   },
   methods: {
-    nodeClick (data, node) {
-      console.log('data', data, node)
+    nodeClick2 () {
+      // console.log('data', document.getElementsByClassName('el-tree').background)
+      // document.querySelector(".el-tree").style.backgroundColor = "red";
+      document.querySelector(".el-tree-node__content").style.backgroundColor = "red";
+      document.querySelector(".el-tree-node__content").style.color = "white";
 
+      // this.$emit('showInput', true, data, node)
+      // this.$refs.tree.style.background = 'red'
+    },
+    nodeClick (data, node) {
+      // console.log('data', document.getElementsByClassName('el-tree').background)
+      // document.querySelector(".el-tree").style.backgroundColor = "red";
       this.$emit('showInput', true, data, node)
+      // this.$refs.tree.style.background = 'red'
     },
     filterNode (value, data) {
       if (!value) return true;
@@ -242,10 +256,20 @@ export default {
         return <span className="node_labe">{data.label}</span>
       }
     },
+    mouseovere () {
+      document.querySelector(".el-tree-node__content:hover").style.backgroundColor = "black";
+      document.querySelector(".el-tree-node__content:hover").style.color = "white";
+    },
+    mouseouttt () {
+      document.querySelector(".el-tree-node__content:hover").style.backgroundColor = "gray";
+      document.querySelector(".el-tree-node__content:hover").style.color = "black";
+    },
     // 结构树操作group node,
     renderContent (h, { node, data, store }) {
       return (
-        <span class="test">
+        <span class="test" on-mouseover={(ev) => this.mouseovere(ev, store, data)}
+          on-mouseout={(ev) => this.mouseouttt(ev, store, data)}
+        >
           <span class="el-icon-document ">
             {this.showOrEdit(data)}
           </span>
@@ -256,7 +280,7 @@ export default {
             <i class="el-icon-download" on-click={() => this.nodeDown(store, node, data)} style='margin-right:6px'></i>
             <i class="el-icon-plus" on-click={() => this.append(store, node, data)}></i>
           </div>
-        </span>)
+        </ span>)
     }
   }
 }
