@@ -2,7 +2,10 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 Vue.use(VueRouter);
+//   const routes = [...oneRoutes, ...towRoutes]
+//   const router = new Router({ routes })
 const router = new VueRouter({
+
   routes: [
     // 登录页
     {
