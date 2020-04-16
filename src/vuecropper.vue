@@ -7,11 +7,31 @@
                   ref="vueCropper"
                   v-if="scope.row.vueCropperVisible"
                   @previewImg="previewImg"
-                  :iocvueCropper="iocvueCropper"
+                  :iocvueCropper="iocvueCropper"  //width
                   @handleClose="closeCropperDialog(scope.row)"
                   :vueCropperVisible="scope.row.vueCropperVisible"
-                  :option="scope.row.option"
+                  :option="scope.row.option"  //配置项
                 />
+               <img :src="scope.row.showCropperImg"/>
+                  
+                 
+            
+              let option = {
+                img: '',
+                size: 1,
+                full: false,
+                outputType: 'png',
+                canMove: true,
+                fixedBox: false,
+                original: false,
+                canMoveBox: true,
+                autoCrop: true,
+                // 只有自动截图开启 宽度高度才生效
+                autoCropWidth: 200,
+                autoCropHeight: 150,
+                centerBox: false,
+                high: true
+              }
               previewImg(preview) {
                // 获取上传图片
                 this.tableData = this.tableData.map((item, index) => {
