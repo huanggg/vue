@@ -1,6 +1,6 @@
 
-import iUser from './index.js';
-import towUser from './towUser/index.js';
+import iUser from './iUser.js';
+import towUser from './towUser/towUser.js';
 
 
 export default [
