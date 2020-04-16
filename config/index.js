@@ -18,7 +18,24 @@ module.exports = {
         pathRewrite: {}
       }
     },
-
+// proxyTable: {
+//       "/ipdgo/services/*": {
+//         //如需本地联调，则用这个，如果不需要就和测试地址一样
+//         target: 'http://10.98.12.88:9010',
+//         changeOrigin: true,
+//         secure: false
+//       },
+//       "/ipdgo/*": {
+//         target: 'http://10.98.12.88:9010',
+//         changeOrigin: true,
+//         secure: false
+//       },
+//       "/ipdgo/servlet/*": {
+//         target: 'http://10.98.12.88:9010',
+//         changeOrigin: true,
+//         secure: false
+//       }
+//     },
     // Various Dev Server settings
     host: "localhost", // can be overwritten by process.env.HOST
     port: 8080, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
