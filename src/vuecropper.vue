@@ -1,4 +1,39 @@
 <template>
+
+<div>
+//使用
+              <div @click="uploadCropperImage(scope.row)" class="addIcon">添加图标</div>
+                <vue-croper
+                  ref="vueCropper"
+                  v-if="scope.row.vueCropperVisible"
+                  @previewImg="previewImg"
+                  :iocvueCropper="iocvueCropper"
+                  @handleClose="closeCropperDialog(scope.row)"
+                  :vueCropperVisible="scope.row.vueCropperVisible"
+                  :option="scope.row.option"
+                />
+              previewImg(preview) {
+               // 获取上传图片
+                this.tableData = this.tableData.map((item, index) => {
+                  if (item.resourceId == this.rowdata.resourceId) {
+                    item.showCropperImg = preview.imageUrl
+                    item.vueCropperVisible = false
+                    console.log(' preview.imageUrl', preview.imageUrl)
+                  }
+                  return item
+                })
+               },
+              uploadCropperImage(rowdata) {
+                // 相应上传图片弹框弹出
+                this.rowdata = rowdata
+                rowdata.vueCropperVisible = true
+
+              },
+              closeCropperDialog(rowdata) {
+                // 关闭上传图片弹框
+                rowdata.vueCropperVisible = false
+              },
+
   <el-dialog
     class="vue-cropper-wrapper"
     width="600px"
@@ -45,6 +80,7 @@
       <el-button @click="handleConfirm('blob')" class="operaor-btn">确认</el-button>
     </div>
   </el-dialog>
+  </div>
 </template>
 
 <script>
