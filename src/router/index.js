@@ -2,6 +2,8 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 Vue.use(VueRouter);
+// import oneRoutes from './oneRoutes.js'
+// import towRoutes from './towRoutes.js'
 //   const routes = [...oneRoutes, ...towRoutes]
 //   const router = new Router({ routes })
 const router = new VueRouter({
