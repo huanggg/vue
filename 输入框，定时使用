@@ -1,0 +1,5 @@
+clearTimeout(window.settime)
+				window.settime = setTimeout(function () {
+					console.log(dropdownValue, 'dropdownValuedropdownValuedropdownValue')
+					debugger
+				}, 2000)
