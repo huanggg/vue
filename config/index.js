@@ -19,9 +19,9 @@ module.exports = {
       }
     },
 // proxyTable: {
-//       "/ipdgo/services/*": {
+//       "/ipdgo/services/*": {  
 //         //如需本地联调，则用这个，如果不需要就和测试地址一样
-//         target: 'http://10.98.12.88:9010',
+//         target: 'http://10.98.12.88:9010',  gox-uat.hua.wei.com:8080   (域名或者联调电脑ip)  把请求代理到其他主机
 //         changeOrigin: true,
 //         secure: false
 //       },
