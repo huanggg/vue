@@ -1,0 +1,21 @@
+ v-bind:class="{ active: isActive, 'text-danger': hasError }"
+ <div v-bind:class="classObject(1)"></div>
+ methods: {
+    classObject (val) {
+        if(1){
+           return  calss1+' cc'
+        }else{
+           return  calss2+' cc'
+          } 
+    }
+}
+<style scoped>
+  class1.cc{
+    width:200px;
+  }
+</style>
+//utils.js 文件
+export const getSeviserUrl=()=>{
+   return window.location.hostName+'/ipdgo/'
+}
+
