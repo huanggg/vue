@@ -1,0 +1,918 @@
+Vue Treeselect下拉树实现，选择部门下拉树，下拉树菜单
+2018年10月17日 20:49:25 Dream_xun 阅读数 27758
+版权声明：本文为博主原创文章，遵循 CC 4.0 by-sa 版权协议，转载请附上原文出处链接和本声明。
+本文链接：https://blog.csdn.net/Dream_xun/article/details/83116804
+先来看一张最基本的效果图：
+
+
+ 
+
+介绍
+vue-treeselect是一个多选组件，具有对Vue.js的嵌套选项支持。
+
+具有嵌套选项支持的单个和多个选择
+模糊匹配
+异步搜索
+延迟加载（仅在需要时加载深层选项的数据）
+键盘支持（使用Arrow Up＆Arrow Down键导航，使用键选择选项Enter等）
+丰富的选项和高度可定制
+支持各种浏览器
+需要Vue 2.2+
+
+入门
+建议通过npm安装vue-treeselect，并使用像webpack这样的捆绑器构建你的应用程序。
+
+npm install --save @riophae/vue-treeselect
+此示例显示如何将vue-treeselect与Vue SFC集成。
+
+<!-- Vue SFC -->
+<template>
+  <div id="app">
+    <treeselect v-model="value" :multiple="true" :options="options" />
+  </div>
+</template>
+ 
+<script>
+  // import the component
+  import Treeselect from '@riophae/vue-treeselect'
+  // import the styles
+  import '@riophae/vue-treeselect/dist/vue-treeselect.css'
+ 
+  export default {
+    // register the component
+    components: { Treeselect },
+    data() {
+      return {
+        // define default value
+        value: null,
+        // define options
+        options: [ {
+          id: 'a',
+          label: 'a',
+          children: [ {
+            id: 'aa',
+            label: 'aa',
+          }, {
+            id: 'ab',
+            label: 'ab',
+          } ],
+        }, {
+          id: 'b',
+          label: 'b',
+        }, {
+          id: 'c',
+          label: 'c',
+        } ],
+      }
+    },
+  }
+</script>
+如果您只是不想使用webpack或其他捆绑包，您还可以在页面中简单地包含独立的UMD版本。这样，确保在vue-treeselect之前包含Vue作为依赖项。
+
+ 
+<html>
+  <head>
+    <!-- include Vue 2.x -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@^2"></script>
+    <!-- include vue-treeselect & its styles. you can change the version tag to better suit your need. -->
+    <script src="https://cdn.jsdelivr.net/npm/@riophae/vue-treeselect@0.0.37/dist/vue-treeselect.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@riophae/vue-treeselect@0.0.37/dist/vue-treeselect.min.css">
+  </head>
+  <body>
+    <div id="app">
+      <treeselect v-model="value" :multiple="true" :options="options" />
+    </div>
+  </body>
+  <script>
+    // register the component
+    Vue.component('treeselect', VueTreeselect.Treeselect)
+ 
+    new Vue({
+      el: '#app',
+      data: {
+        // define default value
+        value: null,
+        // define options
+        options: [ {
+          id: 'a',
+          label: 'a',
+          children: [ {
+            id: 'aa',
+            label: 'aa',
+          }, {
+            id: 'ab',
+            label: 'ab',
+          } ],
+        }, {
+          id: 'b',
+          label: 'b',
+        }, {
+          id: 'c',
+          label: 'c',
+        } ],
+      },
+    })
+  </script>
+</html>
+指南
+基本功能
+此示例演示了vue-treeselect最常用的功能。通过键入几个字母来尝试模糊匹配功能。
+
+
+
+HTML代码:
+
+<div>
+  <treeselect
+    :multiple="true"
+    :options="options"
+    placeholder="Select your favourite(s)..."
+    v-model="value"
+    />
+  <pre class="result">{{ value }}</pre>
+</div>
+JAVASCRIPT代码：
+
+export default {
+  data: () => ({
+    value: [],
+    options: [ {
+      id: 'fruits',
+      label: 'Fruits',
+      children: [ {
+        id: 'apple',
+        label: 'Apple ??',
+        isNew: true,
+      }, {
+        id: 'grapes',
+        label: 'Grapes ??',
+      }, {
+        id: 'pear',
+        label: 'Pear ??',
+      }, {
+        id: 'strawberry',
+        label: 'Strawberry ??',
+      }, {
+        id: 'watermelon',
+        label: 'Watermelon ??',
+      } ],
+    }, {
+      id: 'vegetables',
+      label: 'Vegetables',
+      children: [ {
+        id: 'corn',
+        label: 'Corn ??',
+      }, {
+        id: 'carrot',
+        label: 'Carrot ??',
+      }, {
+        id: 'eggplant',
+        label: 'Eggplant ??',
+      }, {
+        id: 'tomato',
+        label: 'Tomato ??',
+      } ],
+    } ],
+  }),
+}
+ 
+
+您需要学习的第一件事是如何定义选项。有两种选择：a。可折叠且可能有子选项的文件夹选项，以及b。正常选项不是和不是。在这里，我想借用计算机科学的基本概念，将前者称为分支节点，将后者称为叶节点。这两种节点一起组成树。
+
+定义叶节点非常简单：
+
+{
+  id: '<id>', // used to identify the option within the tree so it's value must be unique across all options
+  label: '<label>', // used to display the option
+}
+定义分支节点只需要一个额外的children属性：
+
+{
+  id: '<id>',
+  label: '<label>',
+  children: [
+    {
+      id: '<child id>',
+      label: '<child label>',
+    },
+    ...
+  ],
+}
+然后你可以传递这些节点的数组作为options道具。请注意，即使您为children属性分配一个空数组，它仍然被认为是一个分支节点。这可能与您从计算机科学中学到的不同，在计算机科学中，没有子节点的节点通常称为叶节点。
+
+有关node对象中所有可用属性的信息，请参阅下文。
+
+更多功能
+这表明了更多功能。
+
+
+
+HTML代码:
+
+<div>
+  <treeselect
+    name="demo"
+    :multiple="multiple"
+    :clearable="clearable"
+    :searchable="searchable"
+    :disabled="disabled"
+    :open-on-click="openOnClick"
+    :open-on-focus="openOnFocus"
+    :clear-on-select="clearOnSelect"
+    :close-on-select="closeOnSelect"
+    :always-open="alwaysOpen"
+    :append-to-body="appendToBody"
+    :options="options"
+    :limit="3"
+    :max-height="200"
+    v-model="value"
+    />
+  <pre class="result">{{ value }}</pre>
+  <p>
+    <label><input type="checkbox" v-model="multiple">Multi-select</label>
+    <label><input type="checkbox" v-model="clearable">Clearable</label>
+    <label><input type="checkbox" v-model="searchable">Searchable</label>
+    <label><input type="checkbox" v-model="disabled">Disabled</label>
+  </p>
+  <p>
+    <label><input type="checkbox" v-model="openOnClick">Open on click</label>
+    <label><input type="checkbox" v-model="openOnFocus">Open on focus</label>
+  </p>
+  <p>
+    <label><input type="checkbox" v-model="clearOnSelect">Clear on select</label>
+    <label><input type="checkbox" v-model="closeOnSelect">Close on select</label>
+  </p>
+  <p>
+    <label><input type="checkbox" v-model="alwaysOpen">Always open</label>
+    <label><input type="checkbox" v-model="appendToBody">Append to body</label>
+  </p>
+</div>
+JAVASCRIPT代码：
+
+import { generateOptions } from './utils'
+ 
+export default {
+  data: () => ({
+    multiple: true,
+    clearable: true,
+    searchable: true,
+    disabled: false,
+    openOnClick: true,
+    openOnFocus: false,
+    clearOnSelect: true,
+    closeOnSelect: false,
+    alwaysOpen: false,
+    appendToBody: false,
+    value: [ 'a' ],
+    options: generateOptions(2, 3),
+  }),
+ 
+  watch: {
+    multiple(newValue) {
+      if (newValue) {
+        this.value = this.value ? [ this.value ] : []
+      } else {
+        this.value = this.value[0]
+      }
+    },
+  },
+}
+延迟加载
+如果您有大量深层嵌套选项，则可能需要在初始加载时仅加载最高级别的选项，并仅在需要时加载其余选项。您可以通过以下步骤实现这一目标：
+
+通过设置声明一个卸载的分支节点children: null
+添加loadOptions道具
+每当卸载的分支节点被扩展时，loadOptions({ action, parentNode, callback, instanceId })将被调用，然后您可以执行从远程服务器请求数据的作业
+
+
+HTML代码：
+
+<treeselect
+  :multiple="true"
+  :options="options"
+  :load-options="loadOptions"
+  placeholder="Try expanding any folder option..."
+  v-model="value"
+  />
+JAVASCRIPT代码：
+
+import { LOAD_CHILDREN_OPTIONS } from '@riophae/vue-treeselect'
+ 
+// We just use `setTimeout()` here to simulate an async operation
+// instead of requesting a real API server for demo purpose.
+const simulateAsyncOperation = fn => {
+  setTimeout(fn, 2000)
+}
+ 
+export default {
+  data: () => ({
+    value: null,
+    options: [ {
+      id: 'success',
+      label: 'With children',
+      // Declare an unloaded branch node.
+      children: null,
+    }, {
+      id: 'no-children',
+      label: 'With no children',
+      children: null,
+    }, {
+      id: 'failure',
+      label: 'Demonstrates error handling',
+      children: null,
+    } ],
+  }),
+ 
+  methods: {
+    loadOptions({ action, parentNode, callback }) {
+      // Typically, do the AJAX stuff here.
+      // Once the server has responded,
+      // assign children options to the parent node & call the callback.
+ 
+      if (action === LOAD_CHILDREN_OPTIONS) {
+        switch (parentNode.id) {
+        case 'success': {
+          simulateAsyncOperation(() => {
+            parentNode.children = [ {
+              id: 'child',
+              label: 'Child option',
+            } ]
+            callback()
+          })
+          break
+        }
+        case 'no-children': {
+          simulateAsyncOperation(() => {
+            parentNode.children = []
+            callback()
+          })
+          break
+        }
+        case 'failure': {
+          simulateAsyncOperation(() => {
+            callback(new Error('Failed to load options: network error.'))
+          })
+          break
+        }
+        default: /* empty */
+        }
+      }
+    },
+  },
+}
+也可以将根级别选项加载延迟。如果最初没有注册选项（options: null），则vue-treeselect将尝试loadOptions({ action, callback, instanceId })在安装组件后通过调用加载根选项。在此示例中，我通过设置禁用了自动加载功能autoLoadRootOptions: false，并且在打开菜单时将加载根选项。
+
+
+
+HTML代码：
+
+<treeselect
+  :load-options="loadOptions"
+  :options="options"
+  :auto-load-root-options="false"
+  :multiple="true"
+  placeholder="Open the menu..."
+  />
+JAVASCRIPT代码：
+
+import { LOAD_ROOT_OPTIONS } from '@riophae/vue-treeselect'
+ 
+const sleep = d => new Promise(r => setTimeout(r, d))
+let called = false
+ 
+export default {
+  data: () => ({
+    options: null,
+  }),
+ 
+  methods: {
+    // You can either use callback or return a Promise.
+    async loadOptions({ action/*, callback*/ }) {
+      if (action === LOAD_ROOT_OPTIONS) {
+        if (!called) {
+          // First try: simulate an exception.
+          await sleep(2000) // Simulate an async operation.
+          called = true
+          throw new Error('Failed to load options: test.')
+        } else {
+          // Second try: simulate a successful loading.
+          await sleep(2000)
+          this.options = [ 'a', 'b', 'c', 'd', 'e' ].map(id => ({
+            id,
+            label: `option-${id}`,
+          }))
+        }
+      }
+    },
+  },
+}
+ 
+
+异步搜索
+vue-treeselect支持在用户输入时动态加载和更改整个选项列表。默认情况下，vue-treeselect将缓存每个AJAX请求的结果，因此用户可以等待更少。
+
+
+
+HTML代码：
+
+<treeselect
+  :multiple="true"
+  :async="true"
+  :load-options="loadOptions"
+  />
+JAVASCRIPT代码：
+
+import { ASYNC_SEARCH } from '@riophae/vue-treeselect'
+ 
+const simulateAsyncOperation = fn => {
+  setTimeout(fn, 2000)
+}
+ 
+export default {
+  methods: {
+    loadOptions({ action, searchQuery, callback }) {
+      if (action === ASYNC_SEARCH) {
+        simulateAsyncOperation(() => {
+          const options = [ 1, 2, 3, 4, 5 ].map(i => ({
+            id: `${searchQuery}-${i}`,
+            label: `${searchQuery}-${i}`,
+          }))
+          callback(null, options)
+        })
+      }
+    },
+  },
+}
+ 
+
+平面模式和排序值
+在前面的所有示例中，我们使用了vue-treeselect的默认非平面模式，这意味着：
+
+每当检查分支节点时，也会检查其所有子节点
+每当分支节点检查所有子节点时，也将检查分支节点本身
+有时我们不需要该机制，并且希望分支节点和叶节点不会相互影响。在这种情况下，应使用平面模式，如下所示。
+
+如果要控制显示所选选项的顺序，请使用sortValueByprop。这个道具有三个选择：
+
+"ORDER_SELECTED" （默认） - 已选择订单
+"LEVEL" - 选项等级：C??BB??AAA
+"INDEX" - 期权指数：AAA??BB??C
+
+
+HTML代码：
+
+<div>
+  <treeselect
+    :multiple="true"
+    :options="options"
+    :flat="true"
+    :sort-value-by="sortValueBy"
+    :default-expand-level="1"
+    placeholder="Try selecting some options."
+    v-model="value"
+    />
+  <pre class="result">{{ value }}</pre>
+  <p><strong>Sort value by:</strong></p>
+  <p class="options">
+    <label><input type="radio" value="ORDER_SELECTED" v-model="sortValueBy">Order selected</label>
+    <label><input type="radio" value="LEVEL" v-model="sortValueBy">Level</label>
+    <label><input type="radio" value="INDEX" v-model="sortValueBy">Index</label>
+  </p>
+</div>
+JAVASCRIPT代码：
+
+import { generateOptions } from './utils'
+ 
+export default {
+  data() {
+    return {
+      value: [ 'c', 'aaa', 'bb' ],
+      options: generateOptions(3),
+      sortValueBy: 'ORDER_SELECTED',
+    }
+  },
+}
+防止价值组合
+对于非平面和多选模式，如果检查了分支节点及其所有后代，则vue-treeselect将它们组合到值数组中的单个项目中，如以下示例所示。通过使用valueConsistsOfprop，您可以更改该行为。这个道具有四个选择：
+
+"ALL"- 任何已检查的节点都将包含在value数组中
+"BRANCH_PRIORITY"（默认） - 如果选中了分支节点，则将在value数组中排除其所有后代
+"LEAF_PRIORITY"- 如果选中了一个分支节点，该节点本身及其分支后代将从value数组中排除，但它的叶子后代将被包含在内
+"ALL_WITH_INDETERMINATE"- 任何已检查的节点都将包含在value阵列中，加上不确定的节点
+
+
+HTML代码：
+
+<div>
+  <treeselect
+    :multiple="true"
+    :options="options"
+    :value-consists-of="valueConsistsOf"
+    v-model="value"
+    />
+  <pre class="result">{{ value }}</pre>
+  <p><strong>Value consists of:</strong></p>
+  <p class="options">
+    <label><input type="radio" value="ALL" v-model="valueConsistsOf">All</label><br>
+    <label><input type="radio" value="BRANCH_PRIORITY" v-model="valueConsistsOf">Branch priority</label><br>
+    <label><input type="radio" value="LEAF_PRIORITY" v-model="valueConsistsOf">Leaf priority</label><br>
+    <label><input type="radio" value="ALL_WITH_INDETERMINATE" v-model="valueConsistsOf">All with indeterminate</label>
+  </p>
+</div>
+JAVASCRIPT代码：  
+
+export default {
+  data: () => ({
+    value: [ 'team-i' ],
+    valueConsistsOf: 'BRANCH_PRIORITY',
+    options: [ {
+      id: 'company',
+      label: 'Company ??',
+      children: [ {
+        id: 'team-i',
+        label: 'Team I ??',
+        children: [ {
+          id: 'person-a',
+          label: 'Person A ??',
+        }, {
+          id: 'person-b',
+          label: 'Person B ??',
+        } ],
+      }, {
+        id: 'team-ii',
+        label: 'Team II ??',
+        children: [ {
+          id: 'person-c',
+          label: 'Person C ??',
+        }, {
+          id: 'person-d',
+          label: 'Person D ??',
+        } ],
+      }, {
+        id: 'person-e',
+        label: 'Person E ??',
+      } ],
+    } ],
+  }),
+}
+您可以通过设置isDisabled: true任何叶节点或分支节点来禁用项目选择。对于非平面模式，在分支节点上设置也将禁用其所有后代。
+
+
+
+HTML代码：
+
+<treeselect
+  :multiple="true"
+  :options="options"
+  :value="value"
+  />
+JAVASCRIPT代码：
+
+export default {
+  data: () => ({
+    options: [ {
+      id: 'folder',
+      label: 'Normal Folder',
+      children: [ {
+        id: 'disabled-checked',
+        label: 'Checked',
+        isDisabled: true,
+      }, {
+        id: 'disabled-unchecked',
+        label: 'Unchecked',
+        isDisabled: true,
+      }, {
+        id: 'item-1',
+        label: 'Item',
+      } ],
+    }, {
+      id: 'disabled-folder',
+      label: 'Disabled Folder',
+      isDisabled: true,
+      children: [ {
+        id: 'item-2',
+        label: 'Item',
+      }, {
+        id: 'item-3',
+        label: 'Item',
+      } ],
+    } ],
+    value: [ 'disabled-checked' ],
+  }),
+}
+嵌套搜索
+有时我们需要在特定分支内搜索选项的可能性。例如，你的分店是不同的餐馆，叶子是他们订购的食物。要搜索“McDonals”餐厅的沙拉订单，只需搜索“mc salad”。您也可以尝试搜索“沙拉”来感受差异。
+
+具体来说，您的搜索查询会在空格上分割。如果在节点的路径中找到每个分割的字符串，那么我们匹配。
+
+HTML代码：
+
+<treeselect
+  :multiple="true"
+  :options="options"
+  :disable-branch-nodes="true"
+  v-model="value"
+  search-nested
+  />
+JAVASCRIPT代码：
+
+export default {
+  data: () => ({
+    value: null,
+    options: [ {
+      key: 'a',
+      name: 'a',
+      subOptions: [ {
+        key: 'aa',
+        name: 'aa',
+      } ],
+    } ],
+    normalizer(node) {
+      return {
+        id: node.key,
+        label: node.name,
+        children: node.subOptions,
+      }
+    },
+  }),
+}
+自定义选项标签
+您可以自定义每个选项的标签。vue-treeselect利用了Vue的作用域插槽功能，并提供了一些你应该在自定义模板中使用的道具：
+
+node- 一个规范化的节点对象（请注意，这与您从normalizer()prop 返回的内容不同）
+count＆shouldShowCount- 计数和布尔值表示是否应显示计数
+labelClassName＆countClassName- 使样式正确的CSS类名
+
+
+HTML代码：
+
+<treeselect
+  :options="options"
+  :value="value"
+  :searchable="false"
+  :show-count="true"
+  :default-expand-level="1"
+  >
+  <label slot="option-label" slot-scope="{ node, shouldShowCount, count, labelClassName, countClassName }" :class="labelClassName">
+    {{ node.isBranch ? 'Branch' : 'Leaf' }}: {{ node.label }}
+    <span v-if="shouldShowCount" :class="countClassName">({{ count }})</span>
+  </label>
+</treeselect>
+JAVASCRIPT代码：
+
+import { generateOptions } from './utils'
+ 
+export default {
+  data: () => ({
+    value: null,
+    options: generateOptions(2),
+  }),
+}
+自定义值标签
+您可以自定义有价物品的标签（多项选择时的每个项目）。vue-treeselect利用了Vue的作用域插槽功能，并提供了一些你应该在自定义模板中使用的道具：
+
+node- 一个规范化的节点对象（请注意，这与您从normalizer()prop 返回的内容不同）
+
+
+HTML代码：
+
+<div>
+  <treeselect :options="options" :value="value" :multiple="multiple">
+    <div slot="value-label" slot-scope="{ node }">{{ node.raw.customLabel }}</div>
+  </treeselect>
+  <p>
+    <label><input type="checkbox" v-model="multiple">Multi-select</label>
+  </p>
+</div>
+JAVASCRIPT代码：
+
+export default {
+  data: () => ({
+    multiple: true,
+    value: null,
+    options: [ 1, 2, 3 ].map(i => ({
+      id: i,
+      label: `Label ${i}`,
+      customLabel: `Custom Label ${i}`,
+    })),
+  }),
+}
+Vuex支持
+在前面的所有示例中，我们用于v-model在应用程序状态和vue-treeselect之间同步值，也称为双向数据绑定。如果你正在使用Vuex，我们可以使用:value和@input，因为v-model它只是Vue 2中的语法糖。
+
+具体而言，我们可以绑定getter到:value使VUE-treeselect反映您Vuex状态的任何变化，并结合action或mutation以@input更新您的Vuex状态每当值改变。
+
+
+
+HTML代码：
+
+<div>
+  <treeselect
+    :options="options"
+    :value="value"
+    :searchable="false"
+    @input="updateValue"
+    />
+  <pre class="result">{{ value }}</pre>
+</div>
+JAVASCRIPT代码：
+
+import Vue from 'vue'
+import Vuex, { mapState, mapMutations } from 'vuex'
+import { generateOptions } from './utils'
+ 
+Vue.use(Vuex)
+ 
+const store = new Vuex.Store({
+  state: {
+    value: 'a',
+  },
+  mutations: {
+    updateValue(state, value) {
+      state.value = value
+    },
+  },
+})
+ 
+export default {
+  store,
+ 
+  data: () => ({
+    options: generateOptions(2),
+  }),
+ 
+  computed: {
+    ...mapState([ 'value' ]),
+  },
+ 
+  methods: {
+    ...mapMutations([ 'updateValue' ]),
+  },
+}
+API
+节点
+node对象的可用属性。
+
+键	类型	描述
+id（必填）	号码| 串	用于标识树中的选项。它的价值必须在所有选项中都是唯一的。
+标签（必填）	串	用于显示选项。
+孩子	node[] | null	声明一个分支节点。您可以：
+1）设置为由a组成的子选项数组。叶节点，b。分支节点，或c。这两者的混合物。或者
+2）设置为空数组，没有子选项。或者
+3）设置为null声明一个卸载的分支节点以进行延迟加载。您可以稍后重新分配一个数组（无论它是否为空）loadOptions()来注册这些子选项，并将此分支节点标记为已加载。
+如果要声明叶节点，请设置children: undefined或只是省略此属性。
+被禁用	布尔	用于禁用项目选择。有关详细信息，请参见此处
+是新的	布尔	用于为新节点提供不同的颜色。
+isDefaultExpanded	布尔	是否应默认扩展此文件夹选项。
+的值label，children或isDisabled可以随时重新分配。
+
+添加比列出的属性更多的属性是可以的。您甚至可以通过访问在自定义模板中使用这些额外的属性node.raw.xxx。
+
+道具
+名称	输入/默认	描述
+allowClearingDisabled	类型：布尔
+值默认值：false	即使存在禁用的选定节点，是否允许重置值。
+allowSelectingDisabledDescendants	类型：布尔
+值默认值：false	选择/取消选择祖先节点时，是否应选择/取消选择其禁用的后代。您可能希望将此与allowClearingDisabledprop 结合使用。
+alwaysOpen	类型：布尔
+值默认值：false	菜单是否应始终打开。
+appendToBody	类型：布尔
+值默认值：false	将菜单附加到<body />。
+异步	类型：布尔
+值默认值：false	是否启用异步搜索模式。
+自动对焦	类型：布尔
+值默认值：false	自动将组件聚焦在mount上。
+autoLoadRootOptions	类型：布尔
+值默认值：true	在mount上自动加载root选项。设置false为时，将在打开菜单时加载根选项。
+autoDeselectAncestors	类型：布尔
+值默认值：false	当用户取消选择节点时，会自动取消选择其祖先。仅适用于平面模式。
+autoDeselectDescendants	类型：布尔
+值默认值：false	当用户取消选择节点时，会自动取消选择其后代。仅适用于平面模式。
+autoSelectAncestors	类型：布尔
+值默认值：false	当用户选择节点时，自动选择其祖先。仅适用于平面模式。
+autoSelectDescendants	类型：布尔
+值默认值：false	当用户选择节点时，自动选择其后代。仅适用于平面模式。
+backspaceRemoves	类型：布尔
+值默认值：true	Backspace如果没有文本输入，是否删除最后一项。
+beforeClearAll	类型：Fn（）??（布尔| Promise <布尔>）
+默认值：() => true	在清除所有输入字段之前处理的函数。返回false到被清除的停止值。
+branchNodesFirst	类型：布尔
+值默认值：false	在叶节点之前显示分支节点。
+cacheOptions	类型：布尔
+值默认值：true	是否为异步搜索模式缓存每个搜索请求的结果。
+可清除	类型：布尔
+值默认值：true	是否显示重置值的“×”按钮。
+clearAllText	类型：字符串
+默认值："Clear all"	标题为“×”按钮时:multiple="true"。
+clearOnSelect	类型：Boolean 
+默认值：默认为falsewhen :multiple="true"; 总是true否则。	选择选项后是否清除搜索输入。仅在使用时使用:multiple="true"。对于单选模式，无论prop值如何，它总是在选择后清除输入。
+clearValueText	类型：字符串
+默认值："Clear value"	“×”按钮的标题。
+closeOnSelect	类型：布尔
+值默认值：true	选择选项后是否关闭菜单。仅在使用时使用:multiple="true"。
+defaultExpandLevel	类型：数字
+默认值：0	加载时应自动扩展多少级别的分支节点。设置Infinity为默认情况下展开所有分支节点。
+defaultOptions	类型：布尔值| node[]
+默认：false	用户开始搜索之前显示的默认选项集。用于异步搜索模式。设置true为时，搜索查询作为空字符串的结果将自动加载。
+deleteRemoves	类型：布尔
+值默认值：true	Delete如果没有文本输入，是否删除最后一项。
+分隔符	类型：字符串
+默认值：","	用于连接隐藏字段值的多个值的分隔符。
+disableBranchNodes	类型：布尔
+值默认值：false	是否阻止选择分支节点。见这里的例子。
+残	类型：布尔
+值默认值：false	是否禁用控件。
+disableFuzzyMatching	类型：布尔
+值默认值：false	设置为true禁用模糊匹配功能，默认情况下启用此功能。
+平面	类型：布尔
+值默认值：false	是否启用平面模式。有关详细信息，请参见此处
+实例Id	类型：字符串| 号码
+默认值："<auto-incrementing number>$$"	将作为最后一个参数传递所有事件。用于识别事件来源。
+joinValues	类型：布尔
+值默认值：false	使用delimiter（传统模式）将多个值连接到单个表单字段中。
+限制	类型：数字
+默认值：Infinity	限制所选选项的显示。其余的将隐藏在limitText字符串中。
+limitText	类型：Fn（count）??字符串
+默认值：count => `and ${count} more`	处理所选元素超出定义限制时显示的消息的函数。
+装载	类型：布尔
+值默认值：false	是否是外部加载选项。设置true为显示微调器。
+loadingText	类型：字符串
+默认值："Loading..."	加载选项时显示的文本。
+loadOptions	类型：FN（{ action，callback，parentNode?，instanceId}）??（void|服务承诺）
+默认值：-	用于动态加载选项。有关详细信息，请参见此处 
+可能的值action："LOAD_ROOT_OPTIONS"，"LOAD_CHILDREN_OPTIONS"或"ASYNC_SEARCH"。
+callback- 一个接受可选error参数的函数
+parentNode- 仅在加载子选项时显示
+searchQuery- 仅在搜索异步选项时显示
+instanceId- instanceIdeqauls为传递给vue-treeselect 的prop 的值
+matchKeys	类型：String [] 
+默认值：[ "label" ]	node要过滤的对象的哪些键。
+最大高度	类型：数字
+默认值：300	设置maxHeight菜单的样式值。
+多	类型：布尔
+值默认值：false	设置true为允许选择多个选项（也称为多选模式）。
+名称	类型：字符串
+默认值：-	<input />为html表单生成带有此字段名称的隐藏标记。
+noChildrenText	类型：字符串
+默认值："No sub-options."	分支节点没有子节点时显示的文本。
+noOptionsText	类型：字符串
+默认值："No options available."	没有可用选项时显示的文本。
+noResultsText	类型：字符串
+默认值："No results found..."	没有匹配的搜索结果时显示的文本。
+正规化	类型：Fn（node，instanceId）?? node
+默认值：node => node	用于规范化源数据。有关详细信息，请参见此处
+openDirection	类型：字符串
+默认值："auto"	默认情况下（"auto"），菜单将在控件下方打开。如果空间不足，vue-treeselect将自动翻转菜单。您可以使用其他四个选项之一强制菜单始终打开到指定的方向。
+可接受的值："auto"，"below"，"bottom"，"above"或"top"。
+openOnClick	类型：布尔
+值默认值：true	是否在单击控件时自动打开菜单。
+openOnFocus	类型：布尔
+值默认值：false	是否在控件聚焦时自动打开菜单。
+选项	类型：默认：-node[]	一系列可用选项。请参阅此处以了解如何定义它们。
+占位符	类型：字符串
+默认值："Select..."	字段占位符，在没有值时显示。
+需要	类型：布尔
+值默认值：false	required需要时应用HTML5 属性。
+retryText	类型：字符串
+默认值："Retry?"	显示的文本询问用户是否重试加载子选项。
+retryTitle	类型：字符串
+默认值："Click to retry"	重试按钮的标题。
+搜索	类型：布尔
+值默认值：true	是否启用搜索功能。
+searchNested	类型：布尔
+值默认值：false	设置true是否搜索查询也应搜索所有祖先节点。见这里的例子。
+searchPromptText	类型：字符串
+默认值："Type to search..."	文本提示以提示异步搜索。用于异步搜索模式。
+showCount	类型：布尔
+值默认值：false	是否在每个分支节点的标签旁边显示子项。见这里的例子。
+showCountOf	类型：字符串
+默认值："ALL_CHILDREN"	与结合使用showCount以指定应显示哪种类型的计数。
+可接受的值："ALL_CHILDREN"，"ALL_DESCENDANTS"，"LEAF_CHILDREN"或"LEAF_DESCENDANTS"。
+showCountOnSearch	类型：布尔
+值默认值：-	是否在搜索时向孩子们展示。回退到showCount未指定时的值。
+sortValueBy	类型：字符串
+默认值："ORDER_SELECTED"	选择的选项应以哪种顺序显示在触发器中并按value数组排序。仅在使用时使用:multiple="true"。见这里的例子。
+可接受的值："ORDER_SELECTED"，"LEVEL"或"INDEX"。
+的tabIndex	类型：数字
+默认值：0	控件的Tab索引。
+值	输入：id| node| id[]| node[]
+默认值：-	控件的值。
+应当id或node对象何时:multiple="false"，或者数组id或node对象何时:multiple="true"。它的格式取决于valueFormat道具。
+对于大多数情况，只需使用v-model。
+valueConsistsOf	类型：字符串
+默认值："BRANCH_PRIORITY"	value在多选模式下，阵列中应包含哪种节点。见这里的例子。
+可接受的值："ALL"，"BRANCH_PRIORITY"，"LEAF_PRIORITY"或"ALL_WITH_INDETERMINATE"。
+valueFormat	类型：字符串
+默认值："id"	value道具的格式。
+请注意，设置为时，每个对象中"object"只需要id＆label属性。可接受的值：或。nodevalue
+"id""object"
+用zIndex	类型：数字| String 
+默认值：999	z-index 的菜单。
+活动
+名称	属性	描述
+打开	（instanceId）	菜单打开时发出。
+关	（value，instanceId）	菜单关闭时发出。
+输入	（value，instanceId）	价值变动后发布。
+选择	（node，instanceId）	选择选项后发出。
+取消	（node，instanceId）	取消选择选项后发出。
+搜索的变化	（searchQuery，instanceId）	搜索查询更改后发出。
