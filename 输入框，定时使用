@@ -1,5 +1,10 @@
-clearTimeout(window.settime)
-				window.settime = setTimeout(function () {
-					console.log(dropdownValue, 'dropdownValuedropdownValuedropdownValue')
-					debugger
-				}, 2000)
+     methods:{
+       input(){  //输入框输入动作停止2000后执行
+          clearTimeout(window.settime)
+          window.settime = setTimeout(function () {			    
+					  //输入框输入动作停止2000后执行
+				   }, 2000)   
+       }
+     } 
+       
+			
