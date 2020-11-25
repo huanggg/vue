@@ -1,1 +1,10 @@
-供奉的是
+ <style>
+    /* 解决el-table 表头错位问题 */
+    body .el-table th.gutter {
+      display: table-cell !important;
+    }
+
+    body .el-table colgroup.gutter {
+      display: table-cell !important;
+    }
+  </style>
