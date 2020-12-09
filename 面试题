@@ -21,7 +21,22 @@
             这个属性包含一个指向prototype属性所在函数的指针
             把这个有__proto__串起来的直到Object.prototype.__proto__为null的链叫做原型链。原型链实际上就是js中数据继承的继承链          
 第7题 怎么判断对象类型？
+            console.log(Object.prototype.toString.call("jerry"));//[object String]
+            console.log(Object.prototype.toString.call(12));//[object Number]
+            console.log(Object.prototype.toString.call(true));//[object Boolean]
+            console.log(Object.prototype.toString.call(undefined));//[object Undefined]
+            console.log(Object.prototype.toString.call(null));//[object Null]
+            console.log(Object.prototype.toString.call({name: "jerry"}));//[object Object]
+            console.log(Object.prototype.toString.call(function(){}));//[object Function]
+            console.log(Object.prototype.toString.call([]));//[object Array]
+            console.log(Object.prototype.toString.call(new Date));//[object Date]
+            console.log(Object.prototype.toString.call(/\d/));//[object RegExp]
+            function Person(){};
+            console.log(Object.prototype.toString.call(new Person));//[object Object]
 第8题 说说箭头函数的特点
+            普通函数与箭头函数有个微小的不同点。 箭头函数没有自己的this值 ，其this值是通
+            过继承其它传入对象而获得的,通常来说是上一级外部函数的 this 的指向。
+            函数体内的this对象就是定义时所在的对象，而不是使用时所在的对象
 第9题 如何确定This指向
            1.以函数的形式调用时，this永远都是window
            2.以方法的形式调用时，this就是调用方法的那个对象
@@ -34,6 +49,18 @@
             3、async函数的返回值是 Promise 对象，这比 Generator 函数的返回值是 Iterator
             async和await，比起星号和yield，语义更清楚了。async表示函数里有异步操作，await表示紧跟在后面的表达式需要等待结果
 第11题 generator 原理
+            function* gen(arg){
+              yield 2;
+              yield arg;
+            }
+            let genHandle = gen(3);
+            for(let i of genHandle){
+              console.log(i);   // 依次打印：2，3
+            }
+            let genHandle2 = gen(4);
+            console.log(genHandle2.next()); // { value: 2, done: false }  返回值可以作为下一个next()的入参
+            console.log(genHandle2.next()); // { value: 4, done: false }
+            console.log(genHandle2.next()); // { value: undefined, done: true }
 第12题 对Promise的理解
          Promise 的 API
             三个状态：pending，fulfilled，or rejected
