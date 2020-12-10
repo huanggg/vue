@@ -263,10 +263,46 @@
            6 浏览器对页面进行渲染呈现给用户
 第57题 HTTP 常用状态码 301 302 304 403
 第58题 常见排序-冒泡排序
+       let array=[5,2,4,3,1,9,8]
+
+      function bubbleSort(array){ 
+       for(let i=0;i<array.length;i++){//第一次遍历数组，控制数组经过多少轮排序
+         for(let j=0;j<array.length-1;j++){ //第二次遍历，比较任意相邻两项的大小
+           if( array[j]>array[j+1] ){// 交换两项值得位置，值小的项排在前面
+              let tem=''
+              tem=array[j]
+              array[j]=array[j+1]
+              array[j+1]=tem
+           }
+         }
+       }
+       return array
+     }
 第59题 常见排序-插入排序
 第60题 常见排序-选择排序
 第61题 常见排序-归并排序
 第62题 常见排序-快排
+        let array=[5,2,4,3,1,9,8]
+   
+         function quickSort(arr){
+
+            if(arr.length<=1){
+              return arr
+            }
+            let leftArr=[]
+            let rightArr=[]
+            let q=arr[0]
+            for(let i=1;i<arr.length;i++){
+              if( q < arr[i] ){
+                rightArr.push( arr[i] )
+              }else{
+                leftArr.push( arr[i] )
+              }
+            }
+            return [].concat(quickSort(leftArr),[q],quickSort(rightArr))
+       }
+        quickSort(array)
+
 第63题 常见排序-堆排序
 第64题 常见排序-系统自带排序实现
 第65题 介绍下设计模式-工厂模式
