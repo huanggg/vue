@@ -256,4 +256,20 @@
 第120题 获取元素的最终background-color
 第121题 xss与csrf 的理解
        xss 跨站脚本攻击    恶意攻击者往 Web 页面里插入恶意 Script 代码，当用户浏览该页之时，嵌入其中 Web 里面的 Script 代码会被执行，从而达到恶意攻击用户的目的。
-       csrf 跨站请求伪造
+         类型: 
+             1 反射攻击（是指xss代码在请求的url中） 
+             2 存储的 XSS攻击 （具有攻击性的脚本被保存到了服务器端（数据库，内存，文件系统））
+         情景再现
+            （1）在网页 input 或者 textarea 中输入 <script>alert('xss')</script>或者其他脚本
+            （2）直接使用 URL 参数攻击
+                 https://www.baidu.com?jarttoTest=<script>alert(document.cookie)</script>
+          XSS防御
+             （1）输入过滤，避免 XSS 的方法之一主要是将用户输入的内容进行过滤。对所有用户提交内容进行可靠的输入验证，包括对 URL、查询关键字、POST数据等，仅接受指定长度范围内、采用适当格式、采用所预期的字符的内容提交，对其他的一律过滤。(客户端和服务器都要)
+             （2）输出转义
+               
+       csrf 跨站请求伪造   冒充用户在站内的正常操作
+          csrf防御
+             （1）验证 HTTP Referer 字段，利用 HTTP 头中的 Referer 判断请求来源是否合法，Referer记录了该 HTTP 请求的来源地址。
+             （2）在请求地址中添加 token 并验证
+             （3）在 HTTP 头中自定义属性并验证
+        
