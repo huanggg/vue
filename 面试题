@@ -136,9 +136,18 @@
             通过上述的 `Event loop` 顺序可知，如果宏任务中的异步代码有大量的计算并且需要操作 `DOM` 的话，
             为了更快的 界面响应，我们可以把操作 `DOM` 放入微任务中
 第18题 怎样理解setTimeout 执行误差
+            要先执行同步任务，才会执行异步任务；
+            异步任务中，微任务执行顺序大于宏任务执行顺序。
 第19题 说说函数节流和防抖
 第20题 数组降维
 第21题 请实现一个深拷贝
+            function deepCope(obj){
+                  let _obj = JSON.stringify(obj),
+                  objClone = JSON.parse(_obj);
+                return objClone  
+            }
+              let a=[0,1,[2,3],4],
+              b=deepClone(a);
 第22题 typeof 于 instanceof 区别
 第23题 cookie和localSrorage、session、indexDB 的区别
 第24题 怎么判断页面是否加载完成？
@@ -218,6 +227,14 @@
             2:路由守卫
             3:组件守卫
 第49题 TCP 3次握手
+       （1）第一次握手：建立连接时，客户端A发送SYN包（SYN=j）到服务器B，并进入SYN_SEND状态，等待服务器B确认。
+       （2）第二次握手：服务器B收到SYN包，必须确认客户A的SYN（ACK=j+1），同时自己也发送一个SYN包（SYN=k），即SYN+ACK包，此时服务器B进入SYN_RECV状态。
+       （3）第三次握手：客户端A收到服务器B的SYN＋ACK包，向服务器B发送确认包ACK（ACK=k+1），此包发送完毕，客户端A和服务器B进入ESTABLISHED状态，完成三次握手。
+     四次挥手
+       （1）客户端A发送一个FIN，用来关闭客户A到服务器B的数据传送。
+       （2）服务器B收到这个FIN，它发回一个ACK，确认序号为收到的序号加1。和SYN一样，一个FIN将占用一个序号。
+       （3）服务器B关闭与客户端A的连接，发送一个FIN给客户端A。
+       （4）客户端A发回ACK报文确认，并将确认序号设置为收到序号加1。
 第50题 TCP 拥塞控制
 第51题 慢开始算法
 第52题 拥塞避免算法
