@@ -148,7 +148,9 @@
                      Vue 实例销毁后调用。调用后，Vue 实例指示的所有东西都会解绑定，所有的事件监听器会被移除，
                      所有的子实例也会被销毁。 该钩子在服务器端渲染期间不被调用。                
 第38题 Vue 双向绑定
+             vue.js 是采用数据劫持结合发布者-订阅者模式的方式，通过Object.defineProperty()来劫持各个属性的setter，getter，在数据变动时发布消息给订阅者，触发相应的监听回调。
 第39题 v-model原理
+            <input type="text" :value="msg" @change="msg=$event.target.value">
 第40题 watch 和 computed 的区别和运用的场景
              1 从属性名上，computed是计算属性，也就是依赖其它的属性计算所得出最后的值。watch是去监听一个值的变化，然后执行相对应的函数。
              2 从实现上，computed的值在getter执行后是会缓存的，只有在它依赖的属性值改变之后，下一次获取computed的值时才会重新调用对应的getter来计算。watch在每次监听的值变化时，都会执行回调。
@@ -158,6 +160,18 @@
              4 watch和computed并没有哪个更底层，watch内部调用的是vm.$watch，它们的共同之处就是每个定义的属性都单独建立了一个Watcher对象。
 
 第41题 Vue 的父子通信
+       父组件通过 prop 给子组件下发数据，子组件通过$emit触发事件给父组件发送消息，即 prop 向下传递，事件向上传递。
+                父子组件的生命执行顺序
+                      父beforeCreate->父created->父beforeMount->子beforeCreate->子created->子beforeMount->子mounted->父mounted
+
+                       子组件更新过程
+                    父beforeUpdate->子beforeUpdate->子updated->父updated
+
+                        父组件更新过程
+                    父beforeUpdate->父updated
+
+                         销毁过程
+                    父beforeDestroy->子beforeDestroy->子destroyed->父destroyed 
 第42题 简述路由原理
 第43题 MVVM-脏数据检测
 第44题 MVVM-数据劫持
@@ -365,5 +379,6 @@
                 1 事件代理基于冒泡，对于不冒泡的事件不支持
                 2 层级过多，冒泡过程中，可能会被某层阻止掉
           
- 第123题   
+ 第123题  
+  
                   
