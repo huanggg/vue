@@ -358,6 +358,46 @@
 第69题 介绍下设计模式-代理模式
 第70题 介绍下设计模式-发布-订阅模式
 第71题 Vue 响应式原理
+     实现一个Vue的双向绑定      
+          // 数据
+          const data = {
+            text: 'default'
+          };
+          const input = document.getElementById('input');
+          const span = document.getElementById('span');
+          // 数据劫持
+          Object.defineProperty(data, 'text', {
+            // 数据变化 —> 修改视图
+            set(newVal) {
+              input.value = newVal;
+              span.innerHTML = newVal;
+            }
+          });
+          // 视图更改 --> 数据变化
+          input.addEventListener('keyup', function(e) {
+            data.text = e.target.value;
+          });
+     实现一个事件代理
+          <ul id="color-list">
+          <li>red</li>
+          <li>yellow</li>
+          <li>blue</li>
+          <li>green</li>
+          <li>black</li>
+          <li>white</li>
+        </ul>
+        <script>
+          (function () {
+            var color_list = document.getElementById('color-list');
+            color_list.addEventListener('click', showColor, true);
+            function showColor(e) {
+              var x = e.target;
+              if (x.nodeName.toLowerCase() === 'li') {
+                alert(x.innerHTML);
+              }
+            }
+          })();
+        </script>
 第72题 实现一个new操作符
 第73题 实现一个JSON.stringify
 第74题 实现一个JSON.parse
@@ -369,6 +409,8 @@
 第80题 实现一个私有变量
 第81题 使用setTimeout代替setInterval进行间歇调用
 第82题 数组中的forEach和map的区别
+        forEach会改变原数组,是异步的,map不会改变原数组,会返回新数组,
+        没有办法终止或者跳出forEach()循环，除非抛出异常，所以想执行一个数组是否满足什么条件，返回布尔值，可以用一般的for循环实现，
 第83题 for in和for of的区别
 第84题 写一个发布订阅 EventEmitter方法
 第85题 let、var、const区别
