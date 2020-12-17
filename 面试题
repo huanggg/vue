@@ -83,8 +83,7 @@
             Promise.prototype.catch()
             Promise.prototype.finally()
             Promise.all()
-            Promise.race(）
-第13题 == 和 ===区别，什么情况用 ==
+
 第14题 垃圾回收 
            1 标记回收
            2 引用回收
@@ -610,38 +609,7 @@
                 选择性子树渲染。开发人员可以重写 shouldComponentUpdate 提高 diff 的性能。
 
  第128题    React 中 refs 的作用是什么？
-                  Refs 是 React 提供给我们的安全访问 DOM 元素或者某个组件实例的句柄。我们可以为元素添加 ref 属性然后在回调函数中接受该元素在 DOM 树中的句柄，该值会作为回调函数的第一个参数返回：
-
-                  class CustomForm extends Component {
-                    handleSubmit = () => {
-                      console.log("Input Value: ", this.input.value)
-                    }
-                    render () {
-                      return (
-                        <form onSubmit={this.handleSubmit}>
-                          <input
-                            type='text'
-                            ref={(input) => this.input = input} />
-                          <button type='submit'>Submit</button>
-                        </form>
-                      )
-                    }
-                  }
-                  上述代码中的 input 域包含了一个 ref 属性，该属性声明的回调函数会接收 input 对应的 DOM 元素，我们将其绑定到 this 指针以便在其他的类函数中使用。另外值得一提的是，refs 并不是类组件的专属，函数式组件同样能够利用闭包暂存其值：
-
-                  function CustomForm ({handleSubmit}) {
-                    let inputElement
-                    return (
-                      <form onSubmit={() => handleSubmit(inputElement.value)}>
-                        <input
-                          type='text'
-                          ref={(input) => inputElement = input} />
-                        <button type='submit'>Submit</button>
-                      </form>
-                    )
-                  }
-
-
+                  Refs 是 React 提供给我们的安全访问 DOM 元素或者某个组件实例的句柄。我们可以为元素添加 ref 属性然后在回调函数中接受该元素在 DOM 树中的句柄
  第129题      展示组件(Presentational component)和容器组件(Container component)之间有何不同
                       展示组件关心组件看起来是什么。展示专门通过 props 接受数据和回调，并且几乎不会有自身的状态，但当展示组件拥有自身的状态时，通常也只关心 UI 状态而不是数据的状态。
                       容器组件则更关心组件是如何运作的。容器组件会为展示组件或者其它容器组件提供数据和行为(behavior)，它们会调用 Flux actions，并将其作为回调提供给展示组件。容器组件经常是有状态的，因为它们是(其它组件的)数据源。
@@ -661,6 +629,14 @@
                        因为 this.props 和 this.state 的更新可能是异步的，不能依赖它们的值去计算下一个 state。
 
 
+ 第135题        (在构造函数中)调用 super(props) 的目的是什么
+                       在 super() 被调用之前，子类是不能使用 this 的，在 ES2015 中，子类必须在 constructor 中调用 super()。传递 props 给 super() 的原因则是便于(在子类中)能在 constructor 访问 this.props。
 
- 
+ 第135题       应该在 React 组件的何处发起 Ajax 请求
+                       在 React 组件中，应该在 componentDidMount 中发起网络请求。这个方法会在组件第一次“挂载”(被添加到 DOM)时执行，在组件的生命周期中仅会执行一次。更重要的是，你不能保证在组件挂载之前 Ajax 请求已经完成，如果是这样，也就意味着你将尝试在一个未挂载的组件上调用 setState，这将不起作用。在 componentDidMount 中发起网络请求将保证这有一个组件可以更新了。
+
+
+
+
+
                   
